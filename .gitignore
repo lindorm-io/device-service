@@ -1,0 +1,14 @@
+/.idea
+/.vscode
+/coverage
+/data
+/dist
+/node_modules
+/tmp
+
+.DS_Store
+.env
+.npmrc
+Thumbs.db
+
+*.sublime-*

@@ -1,0 +1,114 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Device.ts should create 1`] = `
+Array [
+  Object {
+    "date": 2020-01-01T07:00:00.000Z,
+    "name": "device_created",
+    "payload": Object {
+      "accountId": "accountId",
+      "created": 2020-01-01T07:00:00.000Z,
+      "macAddress": null,
+      "name": "name",
+      "pin": Object {
+        "signature": "pin",
+        "updated": 2020-01-01T07:00:00.000Z,
+      },
+      "publicKey": "publicKey",
+      "secret": Object {
+        "signature": "secret",
+        "updated": 2020-01-01T07:00:00.000Z,
+      },
+      "updated": 2020-01-01T07:00:00.000Z,
+    },
+  },
+]
+`;
+
+exports[`Device.ts should get/set name 1`] = `
+Array [
+  Object {
+    "date": 2020-01-01T07:00:00.000Z,
+    "name": "device_name_changed",
+    "payload": Object {
+      "name": "new-name",
+    },
+  },
+]
+`;
+
+exports[`Device.ts should get/set pin 1`] = `
+Array [
+  Object {
+    "date": 2020-01-01T07:00:00.000Z,
+    "name": "device_pin_changed",
+    "payload": Object {
+      "pin": Object {
+        "signature": "new-pin",
+        "updated": 2020-01-01T07:00:00.000Z,
+      },
+    },
+  },
+]
+`;
+
+exports[`Device.ts should get/set secret 1`] = `
+Array [
+  Object {
+    "date": 2020-01-01T07:00:00.000Z,
+    "name": "device_secret_changed",
+    "payload": Object {
+      "secret": Object {
+        "signature": "new-secret",
+        "updated": 2020-01-01T07:00:00.000Z,
+      },
+    },
+  },
+]
+`;
+
+exports[`Device.ts should have all data 1`] = `
+Device {
+  "_accountId": "accountId",
+  "_created": 2020-01-01T07:00:00.000Z,
+  "_events": Array [],
+  "_id": "be3a62d1-24a0-401c-96dd-3aff95356811",
+  "_macAddress": null,
+  "_name": "name",
+  "_pin": Object {
+    "signature": "pin",
+    "updated": 2020-01-01T07:00:00.000Z,
+  },
+  "_publicKey": "publicKey",
+  "_secret": Object {
+    "signature": "secret",
+    "updated": 2020-01-01T07:00:00.000Z,
+  },
+  "_uniqueId": null,
+  "_updated": 2020-01-01T07:00:00.000Z,
+  "_version": 0,
+}
+`;
+
+exports[`Device.ts should have optional data 1`] = `
+Device {
+  "_accountId": "accountId",
+  "_created": 2020-01-01T07:00:00.000Z,
+  "_events": Array [],
+  "_id": "be3a62d1-24a0-401c-96dd-3aff95356811",
+  "_macAddress": null,
+  "_name": null,
+  "_pin": Object {
+    "signature": null,
+    "updated": null,
+  },
+  "_publicKey": "publicKey",
+  "_secret": Object {
+    "signature": null,
+    "updated": null,
+  },
+  "_uniqueId": null,
+  "_updated": 2020-01-01T07:00:00.000Z,
+  "_version": 0,
+}
+`;

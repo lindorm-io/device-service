@@ -1,0 +1,28 @@
+{
+  "root": true,
+  "env": {
+    "node":true,
+    "es6": true,
+    "jest": true
+  },
+  "globals": {
+    "Promise": "readonly"
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "@typescript-eslint/eslint-plugin"
+  ],
+  "rules": {
+    "comma-dangle": ["error", "always-multiline"],
+    "@typescript-eslint/ban-ts-comment": 0,
+    "@typescript-eslint/no-explicit-any": 0
+  }
+}

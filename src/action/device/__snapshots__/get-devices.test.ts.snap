@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`removeDevice should get a list of devices 1`] = `
+Object {
+  "devices": Array [
+    Object {
+      "deviceId": "d7230fc6-322f-44d9-9ef6-b2abba9ad6a4",
+      "macAddress": "macAddress-1",
+      "name": "device-1",
+      "uniqueId": "uniqueId-1",
+    },
+    Object {
+      "deviceId": "b49724b8-94e7-4d84-aa10-682e18333098",
+      "macAddress": "macAddress-2",
+      "name": "device-2",
+      "uniqueId": "uniqueId-2",
+    },
+  ],
+}
+`;

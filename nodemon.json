@@ -1,0 +1,6 @@
+{
+  "ignore": ["*.integration.ts", "*.test.ts"],
+  "exec": "ts-node src/server/start",
+  "ext": "ts",
+  "watch": ["src"]
+}

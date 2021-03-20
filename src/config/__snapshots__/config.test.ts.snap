@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`config should provide configuration 1`] = `
+Object {
+  "BEARER_TOKEN_MW_OPTIONS": Object {
+    "audience": "access",
+    "issuer": "https://test.lindorm.io/",
+  },
+  "CRYPTO_PASSWORD_OPTIONS": Object {
+    "aesSecret": "secret",
+    "shaSecret": "secret",
+  },
+  "MONGO_CONNECTION_OPTIONS": Object {
+    "auth": Object {
+      "password": "password",
+      "user": "root",
+    },
+    "databaseName": "identity",
+    "type": "STORAGE",
+    "url": Object {
+      "host": "localhost",
+      "port": 27017,
+    },
+  },
+  "NODE_ENVIRONMENT": "test",
+  "SERVER_PORT": 3001,
+  "TOKEN_ISSUER_MW_OPTIONS": Object {
+    "issuer": "https://test.lindorm.io/",
+  },
+  "WEB_KEY_MW_OPTIONS": Object {
+    "host": "https://test.lindorm.io",
+    "path": "/.well-known/jwks",
+  },
+}
+`;

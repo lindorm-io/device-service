@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`removeDevice should remove a device 1`] = `
+Object {
+  "identity": Object {
+    "device": Object {
+      "data": Array [],
+      "indices": Array [
+        Object {
+          "index": Object {
+            "id": 1,
+          },
+          "options": Object {
+            "unique": true,
+          },
+        },
+      ],
+    },
+  },
+}
+`;
