@@ -1,14 +1,19 @@
+import dotenv from "dotenv";
 import { IConfigurationData } from "../ConfigHandler";
+
+dotenv.config();
 
 export const environmentConfig: IConfigurationData = {
   NODE_ENVIRONMENT: process.env.NODE_ENV,
   SERVER_PORT: process.env.SERVER_PORT ? parseInt(process.env.SERVER_PORT, 10) : null,
   HOST: process.env.HOST,
 
+  BASIC_AUTH_USERNAME: process.env.BASIC_AUTH_USERNAME,
+  BASIC_AUTH_PASSWORD: process.env.BASIC_AUTH_PASSWORD,
+
   JWT_ISSUER: process.env.JWT_ISSUER,
 
   WEB_KEY_HOST: process.env.JWKS_HOST,
-  WEB_KEY_PATH: process.env.JWKS_PATH,
 
   CRYPTO_AES_SECRET: process.env.CRYPTO_AES_SECRET,
   CRYPTO_SHA_SECRET: process.env.CRYPTO_SHA_SECRET,

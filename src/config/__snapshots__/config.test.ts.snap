@@ -2,20 +2,26 @@
 
 exports[`config should provide configuration 1`] = `
 Object {
+  "BASIC_AUTH_MW_OPTIONS": Object {
+    "password": "secret",
+    "username": "secret",
+  },
   "BEARER_TOKEN_MW_OPTIONS": Object {
     "audience": "access",
-    "issuer": "https://test.lindorm.io/",
+    "issuer": "https://test.authentication.lindorm.io",
   },
   "CRYPTO_PASSWORD_OPTIONS": Object {
     "aesSecret": "secret",
     "shaSecret": "secret",
   },
+  "HOST": "https://test.device.lindorm.io",
+  "IS_TEST": true,
   "MONGO_CONNECTION_OPTIONS": Object {
     "auth": Object {
       "password": "password",
       "user": "root",
     },
-    "databaseName": "identity",
+    "databaseName": "device",
     "type": "STORAGE",
     "url": Object {
       "host": "localhost",
@@ -25,11 +31,10 @@ Object {
   "NODE_ENVIRONMENT": "test",
   "SERVER_PORT": 3001,
   "TOKEN_ISSUER_MW_OPTIONS": Object {
-    "issuer": "https://test.lindorm.io/",
+    "issuer": "https://test.authentication.lindorm.io",
   },
   "WEB_KEY_MW_OPTIONS": Object {
-    "host": "https://test.lindorm.io",
-    "path": "/.well-known/jwks",
+    "host": "https://test.authentication.lindorm.io",
   },
 }
 `;

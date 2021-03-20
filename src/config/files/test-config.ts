@@ -3,12 +3,14 @@ import { IConfigurationData } from "../ConfigHandler";
 export const testConfig: IConfigurationData = {
   NODE_ENVIRONMENT: process.env.NODE_ENV,
   SERVER_PORT: 3001,
-  HOST: "http://localhost/",
+  HOST: "https://test.device.lindorm.io",
 
-  JWT_ISSUER: "https://test.lindorm.io/",
+  BASIC_AUTH_USERNAME: "secret",
+  BASIC_AUTH_PASSWORD: "secret",
 
-  WEB_KEY_HOST: "https://test.lindorm.io",
-  WEB_KEY_PATH: "/.well-known/jwks",
+  JWT_ISSUER: "https://test.authentication.lindorm.io",
+
+  WEB_KEY_HOST: "https://test.authentication.lindorm.io",
 
   CRYPTO_AES_SECRET: "secret",
   CRYPTO_SHA_SECRET: "secret",
@@ -17,5 +19,5 @@ export const testConfig: IConfigurationData = {
   MONGO_INITDB_ROOT_PASSWORD: "password",
   MONGO_HOST: "localhost",
   MONGO_EXPOSE_PORT: 27017,
-  MONGO_DB_NAME: "identity",
+  MONGO_DB_NAME: "device",
 };

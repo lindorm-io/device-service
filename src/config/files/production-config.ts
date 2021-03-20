@@ -3,12 +3,14 @@ import { IConfigurationData } from "../ConfigHandler";
 export const productionConfig: IConfigurationData = {
   NODE_ENVIRONMENT: process.env.NODE_ENV,
   SERVER_PORT: 3000,
-  HOST: "http://localhost/",
+  HOST: "http://device.lindorm.io",
 
-  JWT_ISSUER: "https://lindorm.io/",
+  BASIC_AUTH_USERNAME: null,
+  BASIC_AUTH_PASSWORD: null,
 
-  WEB_KEY_HOST: null,
-  WEB_KEY_PATH: null,
+  JWT_ISSUER: "https://authentication.lindorm.io",
+
+  WEB_KEY_HOST: "https://authentication.lindorm.io",
 
   CRYPTO_AES_SECRET: null,
   CRYPTO_SHA_SECRET: null,

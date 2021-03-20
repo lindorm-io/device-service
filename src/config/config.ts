@@ -2,9 +2,10 @@ import dotenv from "dotenv";
 import { Audience } from "../enum";
 import { ConfigHandler } from "./ConfigHandler";
 import { MongoConnectionType } from "@lindorm-io/mongo";
+import { NodeEnvironment } from "@lindorm-io/core";
 import { developmentConfig, environmentConfig, productionConfig, stagingConfig, testConfig } from "./files";
 
-dotenv.config();
+if (!process.env.NODE_ENV) dotenv.config();
 
 const handler = new ConfigHandler({
   productionConfig,
@@ -14,10 +15,18 @@ const handler = new ConfigHandler({
   testConfig,
 });
 
+export const { NODE_ENVIRONMENT } = environmentConfig;
 const config = handler.get(process.env.NODE_ENV);
 
-export const NODE_ENVIRONMENT = config.NODE_ENVIRONMENT;
 export const SERVER_PORT = config.SERVER_PORT;
+export const HOST = config.HOST;
+
+export const IS_TEST = NODE_ENVIRONMENT === NodeEnvironment.TEST;
+
+export const BASIC_AUTH_MW_OPTIONS = {
+  username: config.BASIC_AUTH_USERNAME,
+  password: config.BASIC_AUTH_PASSWORD,
+};
 
 export const TOKEN_ISSUER_MW_OPTIONS = {
   issuer: config.JWT_ISSUER,
@@ -30,7 +39,6 @@ export const BEARER_TOKEN_MW_OPTIONS = {
 
 export const WEB_KEY_MW_OPTIONS = {
   host: config.WEB_KEY_HOST,
-  path: config.WEB_KEY_PATH,
 };
 
 export const CRYPTO_PASSWORD_OPTIONS = {

@@ -4,10 +4,12 @@ export interface IConfigurationData extends IConfigurationDataBase {
   SERVER_PORT: number;
   HOST: string;
 
+  BASIC_AUTH_USERNAME: string;
+  BASIC_AUTH_PASSWORD: string;
+
   JWT_ISSUER: string;
 
   WEB_KEY_HOST: string;
-  WEB_KEY_PATH: string;
 
   CRYPTO_AES_SECRET: string;
   CRYPTO_SHA_SECRET: string;
