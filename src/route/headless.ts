@@ -1,22 +1,22 @@
-import { BEARER_TOKEN_MW_OPTIONS } from "../config";
+import { BASIC_AUTH_MW_OPTIONS } from "../config";
 import { HttpStatus } from "@lindorm-io/core";
 import { IKoaDeviceContext } from "../typing";
 import { Router } from "@lindorm-io/koa";
-import { bearerTokenMiddleware } from "@lindorm-io/koa-jwt";
+import { basicAuthMiddleware } from "@lindorm-io/koa-basic-auth";
 import { deviceMiddleware } from "../middleware";
 import { verifyDeviceChallenge, verifyDevicePIN, verifyDeviceSecret } from "../action";
 
 export const router = new Router();
 
-router.use(bearerTokenMiddleware(BEARER_TOKEN_MW_OPTIONS));
+router.use(basicAuthMiddleware(BASIC_AUTH_MW_OPTIONS));
 router.use(deviceMiddleware);
 
 router.post(
-  "/challenge",
+  "/verify-challenge",
   async (ctx: IKoaDeviceContext): Promise<void> => {
-    const { challenge, verifier } = ctx.request.body;
+    const { deviceChallenge, deviceVerifier } = ctx.request.body;
 
-    await verifyDeviceChallenge(ctx)({ challenge, verifier });
+    await verifyDeviceChallenge(ctx)({ deviceChallenge, deviceVerifier });
 
     ctx.body = {};
     ctx.status = HttpStatus.Success.NO_CONTENT;
@@ -24,11 +24,11 @@ router.post(
 );
 
 router.post(
-  "/pin",
+  "/verify-pin",
   async (ctx: IKoaDeviceContext): Promise<void> => {
-    const { challenge, pin, verifier } = ctx.request.body;
+    const { deviceChallenge, deviceVerifier, pin } = ctx.request.body;
 
-    await verifyDevicePIN(ctx)({ challenge, pin, verifier });
+    await verifyDevicePIN(ctx)({ deviceChallenge, deviceVerifier, pin });
 
     ctx.body = {};
     ctx.status = HttpStatus.Success.NO_CONTENT;
@@ -36,11 +36,11 @@ router.post(
 );
 
 router.post(
-  "/secret",
+  "/verify-secret",
   async (ctx: IKoaDeviceContext): Promise<void> => {
-    const { challenge, secret, verifier } = ctx.request.body;
+    const { deviceChallenge, deviceVerifier, secret } = ctx.request.body;
 
-    await verifyDeviceSecret(ctx)({ challenge, secret, verifier });
+    await verifyDeviceSecret(ctx)({ deviceChallenge, deviceVerifier, secret });
 
     ctx.body = {};
     ctx.status = HttpStatus.Success.NO_CONTENT;

@@ -1,11 +1,10 @@
 import MockDate from "mockdate";
 import { Device } from "../../entity";
-import { assertAccountPermission, assertDeviceChallenge } from "../../support";
+import { assertDeviceChallenge } from "../../support";
 import { verifyDeviceChallenge } from "./verify-device-challenge";
 import { winston } from "../../logger";
 
 jest.mock("../../support", () => ({
-  assertAccountPermission: jest.fn(() => () => {}),
   assertDeviceChallenge: jest.fn(() => () => {}),
 }));
 
@@ -28,12 +27,11 @@ describe("verifyDeviceChallenge", () => {
   test("should verify device challenge", async () => {
     await expect(
       verifyDeviceChallenge(ctx)({
-        challenge: "challenge",
-        verifier: "verifier",
+        deviceChallenge: "challenge",
+        deviceVerifier: "verifier",
       }),
     ).resolves.toBe(undefined);
 
-    expect(assertAccountPermission).toHaveBeenCalled();
     expect(assertDeviceChallenge).toHaveBeenCalled();
   });
 });

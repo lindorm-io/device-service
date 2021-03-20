@@ -1,15 +1,15 @@
 import Joi from "@hapi/joi";
 import { IKoaDeviceContext } from "../../typing";
-import { assertAccountPermission, assertDeviceChallenge } from "../../support";
+import { assertDeviceChallenge } from "../../support";
 
 export interface IVerifyDeviceChallengeOptions {
-  challenge: string;
-  verifier: string;
+  deviceChallenge: string;
+  deviceVerifier: string;
 }
 
 const schema = Joi.object({
-  challenge: Joi.string().required(),
-  verifier: Joi.string().required(),
+  deviceChallenge: Joi.string().required(),
+  deviceVerifier: Joi.string().required(),
 });
 
 export const verifyDeviceChallenge = (ctx: IKoaDeviceContext) => async (
@@ -18,10 +18,9 @@ export const verifyDeviceChallenge = (ctx: IKoaDeviceContext) => async (
   await schema.validateAsync(options);
 
   const { device, logger } = ctx;
-  const { challenge, verifier } = options;
+  const { deviceChallenge, deviceVerifier } = options;
 
-  await assertAccountPermission(ctx)(device.accountId);
-  await assertDeviceChallenge(ctx)(challenge, verifier);
+  await assertDeviceChallenge(ctx)(deviceChallenge, deviceVerifier);
 
   logger.debug("device challenge verified", {
     accountId: device.accountId,
