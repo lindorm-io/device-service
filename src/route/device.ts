@@ -52,15 +52,12 @@ router.delete(
 router.patch(
   "/:id/name",
   async (ctx: IKoaDeviceContext): Promise<void> => {
-    console.log("1");
     const { name } = ctx.request.body;
-    console.log("2");
 
     await updateDeviceName(ctx)({
       deviceId: ctx.params.id,
       name,
     });
-    console.log("3");
 
     ctx.body = {};
     ctx.status = HttpStatus.Success.NO_CONTENT;

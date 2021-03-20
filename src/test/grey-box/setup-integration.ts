@@ -1,9 +1,9 @@
-import { Algorithm, KeyPair, KeyPairHandler, Keystore, KeyType } from "@lindorm-io/key-pair";
 import { BEARER_TOKEN_MW_OPTIONS } from "../../config";
 import { DeviceRepository } from "../../infrastructure";
+import { KeyPairHandler, Keystore } from "@lindorm-io/key-pair";
+import { TEST_KEY_PAIR_EC, TEST_KEY_PAIR_RSA } from "./key-pair";
 import { TokenIssuer } from "@lindorm-io/jwt";
 import { getGreyBoxRepository } from "./mongo";
-import { TEST_KEY_PAIR_EC, TEST_KEY_PAIR_RSA } from "./key-pair";
 import { inMemoryKeys } from "./in-memory";
 import { winston } from "../../logger";
 
@@ -21,14 +21,7 @@ export const setupIntegration = async (): Promise<void> => {
 
   TEST_ACCOUNT_ID = "51cc7c03-3f86-44ae-8be2-5fcf5536c08b";
 
-  inMemoryKeys.push(
-    new KeyPair({
-      algorithm: Algorithm.ES512,
-      privateKey: TEST_KEY_PAIR_EC.privateKey,
-      publicKey: TEST_KEY_PAIR_EC.publicKey,
-      type: KeyType.EC,
-    }),
-  );
+  inMemoryKeys.push(TEST_KEY_PAIR_EC);
 
   TEST_ISSUER = new TokenIssuer({
     issuer: BEARER_TOKEN_MW_OPTIONS.issuer,

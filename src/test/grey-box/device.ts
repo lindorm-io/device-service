@@ -1,7 +1,7 @@
 import { Device } from "../../entity";
-import { encryptDevicePIN, encryptDeviceSecret } from "../../support";
-import { TEST_KEY_PAIR_RSA } from "./key-pair";
 import { TEST_ACCOUNT_ID } from "./setup-integration";
+import { TEST_KEY_PAIR_RSA } from "./key-pair";
+import { encryptDevicePIN, encryptDeviceSecret } from "../../support";
 
 export const getGreyBoxDevice = async () =>
   new Device({
