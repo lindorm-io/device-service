@@ -1,19 +1,10 @@
-import { IWebKeyMiddlewareOptions, webKeyMiddleware } from "@lindorm-io/koa-jwt";
 import { Middleware } from "koa";
-import { NodeEnvironment } from "@lindorm-io/core";
-import { WEB_KEY_MW_OPTIONS, NODE_ENVIRONMENT } from "../config";
+import { WEB_KEY_MW_OPTIONS, IS_TEST } from "../config";
 import { inMemoryKeys } from "../test";
-import { winston } from "../logger";
+import { webKeyMiddleware } from "@lindorm-io/koa-jwt";
 
-export const getWebKeyMiddleware = (): Middleware => {
-  const isTest = NODE_ENVIRONMENT === NodeEnvironment.TEST;
-  const options: IWebKeyMiddlewareOptions = {
+export const getWebKeyMiddleware = (): Middleware =>
+  webKeyMiddleware({
     ...WEB_KEY_MW_OPTIONS,
-    logger: winston,
-  };
-
-  return webKeyMiddleware({
-    ...options,
-    inMemoryKeys: isTest ? inMemoryKeys : [],
+    inMemoryKeys: IS_TEST ? inMemoryKeys : undefined,
   });
-};

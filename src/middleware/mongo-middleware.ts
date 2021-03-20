@@ -1,17 +1,12 @@
-import { IMongoConnectionOptions, MongoConnectionType } from "@lindorm-io/mongo";
-import { MONGO_CONNECTION_OPTIONS, NODE_ENVIRONMENT } from "../config";
+import { IS_TEST, MONGO_CONNECTION_OPTIONS } from "../config";
 import { Middleware } from "koa";
-import { NodeEnvironment } from "@lindorm-io/core";
+import { MongoConnectionType } from "@lindorm-io/mongo";
 import { inMemoryStore } from "../test";
 import { mongoMiddleware } from "@lindorm-io/koa-mongo";
 
-export const getMongoMiddleware = (): Middleware => {
-  const isTest = NODE_ENVIRONMENT === NodeEnvironment.TEST;
-  const options: IMongoConnectionOptions = MONGO_CONNECTION_OPTIONS;
-
-  return mongoMiddleware({
-    ...options,
-    type: isTest ? MongoConnectionType.MEMORY : options.type,
-    inMemoryStore: isTest ? inMemoryStore : undefined,
+export const getMongoMiddleware = (): Middleware =>
+  mongoMiddleware({
+    ...MONGO_CONNECTION_OPTIONS,
+    type: IS_TEST ? MongoConnectionType.MEMORY : MONGO_CONNECTION_OPTIONS.type,
+    inMemoryStore: IS_TEST ? inMemoryStore : undefined,
   });
-};
