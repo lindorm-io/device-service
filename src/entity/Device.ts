@@ -1,5 +1,5 @@
 import { DeviceEvent } from "../enum";
-import { EntityBase, EntityCreationError, IEntity, IEntityBaseOptions } from "@lindorm-io/core";
+import { EntityBase, EntityCreationError, IEntity, IEntityBaseOptions } from "@lindorm-io/entity";
 
 export interface IEncryptedData {
   signature: string;

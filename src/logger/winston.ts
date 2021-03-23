@@ -1,6 +1,6 @@
 import { Logger, LogLevel } from "@lindorm-io/winston";
 import { NODE_ENVIRONMENT } from "../config";
-import { NodeEnvironment } from "@lindorm-io/core";
+import { NodeEnvironment } from "@lindorm-io/koa-config";
 import { join } from "path";
 import { readFileSync } from "fs";
 import { sanitiseToken } from "@lindorm-io/jwt";

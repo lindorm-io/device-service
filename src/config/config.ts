@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import { Audience } from "../enum";
 import { ConfigHandler } from "./ConfigHandler";
 import { MongoConnectionType } from "@lindorm-io/mongo";
-import { NodeEnvironment } from "@lindorm-io/core";
+import { NodeEnvironment } from "@lindorm-io/koa-config";
 import { developmentConfig, environmentConfig, productionConfig, stagingConfig, testConfig } from "./files";
 
 if (!process.env.NODE_ENV) dotenv.config();
@@ -24,8 +24,7 @@ export const HOST = config.HOST;
 export const IS_TEST = NODE_ENVIRONMENT === NodeEnvironment.TEST;
 
 export const BASIC_AUTH_MW_OPTIONS = {
-  username: config.BASIC_AUTH_USERNAME,
-  password: config.BASIC_AUTH_PASSWORD,
+  clients: [{ username: config.BASIC_AUTH_USERNAME, password: config.BASIC_AUTH_PASSWORD }],
 };
 
 export const BEARER_AUTH_MW_OPTIONS = {

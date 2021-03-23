@@ -30,7 +30,7 @@ export const getDevices = (ctx: IKoaDeviceContext) => async (options: IGetDevice
   await assertAccountPermission(ctx)(accountId);
 
   const array = await repository.device.findMany({ accountId });
-  let devices: Array<IDeviceData> = [];
+  const devices: Array<IDeviceData> = [];
 
   for (const device of array) {
     devices.push({

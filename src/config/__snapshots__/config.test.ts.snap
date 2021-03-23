@@ -3,8 +3,12 @@
 exports[`config should provide configuration 1`] = `
 Object {
   "BASIC_AUTH_MW_OPTIONS": Object {
-    "password": "secret",
-    "username": "secret",
+    "clients": Array [
+      Object {
+        "password": "secret",
+        "username": "secret",
+      },
+    ],
   },
   "BEARER_AUTH_MW_OPTIONS": Object {
     "audience": "access",

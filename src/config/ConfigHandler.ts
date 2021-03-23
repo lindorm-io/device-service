@@ -1,4 +1,4 @@
-import { ConfigurationBase, IConfigurationDataBase, IConfigurationOptions } from "@lindorm-io/core";
+import { ConfigurationBase, IConfigurationDataBase, IConfigurationOptions } from "@lindorm-io/koa-config";
 
 export interface IConfigurationData extends IConfigurationDataBase {
   SERVER_PORT: number;
