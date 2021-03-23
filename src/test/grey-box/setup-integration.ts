@@ -1,4 +1,4 @@
-import { BEARER_TOKEN_MW_OPTIONS } from "../../config";
+import { BEARER_AUTH_MW_OPTIONS } from "../../config";
 import { DeviceRepository } from "../../infrastructure";
 import { KeyPairHandler, Keystore } from "@lindorm-io/key-pair";
 import { TEST_KEY_PAIR_EC, TEST_KEY_PAIR_RSA } from "./key-pair";
@@ -24,7 +24,7 @@ export const setupIntegration = async (): Promise<void> => {
   inMemoryKeys.push(TEST_KEY_PAIR_EC);
 
   TEST_ISSUER = new TokenIssuer({
-    issuer: BEARER_TOKEN_MW_OPTIONS.issuer,
+    issuer: BEARER_AUTH_MW_OPTIONS.issuer,
     keystore: new Keystore({
       keys: inMemoryKeys,
     }),

@@ -1,10 +1,10 @@
 import { Middleware } from "koa";
 import { WEB_KEY_MW_OPTIONS, IS_TEST } from "../config";
 import { inMemoryKeys } from "../test";
-import { webKeyMiddleware } from "@lindorm-io/koa-jwt";
+import { jsonWebKeySetMiddleware } from "@lindorm-io/koa-jwks";
 
 export const getWebKeyMiddleware = (): Middleware =>
-  webKeyMiddleware({
+  jsonWebKeySetMiddleware({
     ...WEB_KEY_MW_OPTIONS,
     inMemoryKeys: IS_TEST ? inMemoryKeys : undefined,
   });

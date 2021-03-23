@@ -2,7 +2,7 @@
 
 exports[`updateDevicePIN should update device pin 1`] = `
 Object {
-  "identity": Object {
+  "device": Object {
     "device": Object {
       "data": Array [
         Object {

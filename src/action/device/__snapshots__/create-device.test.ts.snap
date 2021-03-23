@@ -2,7 +2,7 @@
 
 exports[`createDevice should create a device 1`] = `
 Object {
-  "identity": Object {
+  "device": Object {
     "device": Object {
       "data": Array [
         Object {

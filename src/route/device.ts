@@ -1,14 +1,14 @@
-import { BEARER_TOKEN_MW_OPTIONS } from "../config";
+import { BEARER_AUTH_MW_OPTIONS } from "../config";
 import { HttpStatus } from "@lindorm-io/core";
 import { IKoaDeviceContext } from "../typing";
 import { Router } from "@lindorm-io/koa";
-import { bearerTokenMiddleware } from "@lindorm-io/koa-jwt";
+import { bearerAuthMiddleware } from "@lindorm-io/koa-bearer-auth";
 import { createDevice, removeDevice, updateDeviceName, updateDevicePIN, updateDeviceSecret } from "../action";
 import { getDevices } from "../action/device/get-devices";
 
 export const router = new Router();
 
-router.use(bearerTokenMiddleware(BEARER_TOKEN_MW_OPTIONS));
+router.use(bearerAuthMiddleware(BEARER_AUTH_MW_OPTIONS));
 
 router.get(
   "/:id",

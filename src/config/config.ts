@@ -28,12 +28,12 @@ export const BASIC_AUTH_MW_OPTIONS = {
   password: config.BASIC_AUTH_PASSWORD,
 };
 
-export const TOKEN_ISSUER_MW_OPTIONS = {
+export const BEARER_AUTH_MW_OPTIONS = {
+  audience: Audience.ACCESS,
   issuer: config.JWT_ISSUER,
 };
 
-export const BEARER_TOKEN_MW_OPTIONS = {
-  audience: Audience.ACCESS,
+export const TOKEN_ISSUER_MW_OPTIONS = {
   issuer: config.JWT_ISSUER,
 };
 

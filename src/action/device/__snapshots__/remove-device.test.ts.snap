@@ -2,7 +2,7 @@
 
 exports[`removeDevice should remove a device 1`] = `
 Object {
-  "identity": Object {
+  "device": Object {
     "device": Object {
       "data": Array [],
       "indices": Array [

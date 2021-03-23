@@ -6,7 +6,7 @@ Object {
     "password": "secret",
     "username": "secret",
   },
-  "BEARER_TOKEN_MW_OPTIONS": Object {
+  "BEARER_AUTH_MW_OPTIONS": Object {
     "audience": "access",
     "issuer": "https://test.authentication.lindorm.io",
   },
@@ -18,7 +18,7 @@ Object {
   "IS_TEST": true,
   "MONGO_CONNECTION_OPTIONS": Object {
     "auth": Object {
-      "password": "password",
+      "password": "example",
       "user": "root",
     },
     "databaseName": "device",
