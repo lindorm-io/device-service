@@ -1,14 +1,14 @@
 import Joi from "@hapi/joi";
-import { IKoaDeviceContext } from "../typing";
+import { IKoaDeviceContext, TNext } from "../typing";
 import { InvalidDeviceError, InvalidPermissionError } from "../error";
-import { stringComparison, TPromise } from "@lindorm-io/core";
+import { stringComparison } from "@lindorm-io/core";
 
 const schema = Joi.object({
   accountId: Joi.string().guid().required(),
   deviceId: Joi.string().guid().required(),
 });
 
-export const deviceMiddleware = async (ctx: IKoaDeviceContext, next: TPromise<void>): Promise<void> => {
+export const deviceMiddleware = async (ctx: IKoaDeviceContext, next: TNext): Promise<void> => {
   const start = Date.now();
 
   const { logger, repository } = ctx;
