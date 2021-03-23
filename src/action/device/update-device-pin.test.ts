@@ -1,6 +1,6 @@
 import MockDate from "mockdate";
 import { Device } from "../../entity";
-import { getGreyBoxRepository, inMemoryStore, resetStore } from "../../test";
+import { getTestRepository, inMemoryStore, resetStore } from "../../test";
 import { updateDevicePIN } from "./update-device-pin";
 import { winston } from "../../logger";
 import { baseHash } from "@lindorm-io/core";
@@ -20,7 +20,7 @@ describe("updateDevicePIN", () => {
   beforeEach(async () => {
     ctx = {
       logger: winston,
-      repository: await getGreyBoxRepository(),
+      repository: await getTestRepository(),
       token: {
         bearer: {
           subject: "e2829fb8-8fa5-4286-892f-228a9e9d2f5b",

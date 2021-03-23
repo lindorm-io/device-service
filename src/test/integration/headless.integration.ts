@@ -1,9 +1,15 @@
 import MockDate from "mockdate";
 import request from "supertest";
 import { Device } from "../../entity";
-import { TEST_DEVICE_REPOSITORY, TEST_KEY_PAIR_HANDLER, getGreyBoxDevice, setupIntegration } from "../grey-box";
 import { baseHash, getRandomValue } from "@lindorm-io/core";
 import { koa } from "../../server/koa";
+import {
+  TEST_DEVICE_REPOSITORY,
+  TEST_KEY_PAIR_HANDLER,
+  getTestDevice,
+  setupIntegration,
+  resetStore,
+} from "../grey-box";
 
 MockDate.set("2020-01-01 08:00:00.000");
 
@@ -20,12 +26,12 @@ describe("/device", () => {
   });
 
   beforeEach(async () => {
-    device = await getGreyBoxDevice();
-    await TEST_DEVICE_REPOSITORY.create(device);
-
+    device = await TEST_DEVICE_REPOSITORY.create(await getTestDevice());
     challenge = getRandomValue(32);
     verifier = TEST_KEY_PAIR_HANDLER.sign(challenge);
   });
+
+  afterEach(resetStore);
 
   test("POST /headless/verify-challenge - should successfully verify device challenge", async () => {
     await request(koa.callback())

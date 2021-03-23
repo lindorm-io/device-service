@@ -1,6 +1,6 @@
 import MockDate from "mockdate";
 import { Device } from "../../entity";
-import { getGreyBoxRepository, inMemoryStore, resetStore } from "../../test";
+import { getTestRepository, inMemoryStore, resetStore } from "../../test";
 import { removeDevice } from "./remove-device";
 import { winston } from "../../logger";
 
@@ -17,7 +17,7 @@ describe("removeDevice", () => {
   beforeEach(async () => {
     ctx = {
       logger: winston,
-      repository: await getGreyBoxRepository(),
+      repository: await getTestRepository(),
       token: {
         bearer: {
           subject: "e2829fb8-8fa5-4286-892f-228a9e9d2f5b",

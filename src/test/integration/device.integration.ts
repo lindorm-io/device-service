@@ -1,12 +1,17 @@
 import MockDate from "mockdate";
 import request from "supertest";
-import { Audience } from "../../enum";
 import { Device } from "../../entity";
-import { Permission, Scope } from "@lindorm-io/jwt";
 import { RepositoryEntityNotFoundError } from "@lindorm-io/mongo";
-import { TEST_ACCOUNT_ID, TEST_DEVICE_REPOSITORY, TEST_ISSUER, setupIntegration, getGreyBoxDevice } from "../grey-box";
-import { TEST_KEY_PAIR_RSA } from "../grey-box/key-pair";
 import { koa } from "../../server/koa";
+import {
+  TEST_ACCOUNT_ID,
+  TEST_DEVICE_REPOSITORY,
+  setupIntegration,
+  getTestDevice,
+  getTestKeyPairRSA,
+  resetStore,
+  generateAccessToken,
+} from "../grey-box";
 
 MockDate.set("2020-01-01 08:00:00.000");
 
@@ -17,20 +22,14 @@ describe("/device", () => {
   beforeAll(async () => {
     await setupIntegration();
     koa.load();
-
-    ({ token: accessToken } = TEST_ISSUER.sign({
-      audience: Audience.ACCESS,
-      expiry: "2 minutes",
-      permission: Permission.USER,
-      scope: [Scope.DEFAULT, Scope.EDIT].join(" "),
-      subject: TEST_ACCOUNT_ID,
-    }));
   });
 
   beforeEach(async () => {
-    device = await getGreyBoxDevice();
-    await TEST_DEVICE_REPOSITORY.create(device);
+    device = await TEST_DEVICE_REPOSITORY.create(await getTestDevice());
+    accessToken = generateAccessToken();
   });
+
+  afterEach(resetStore);
 
   test("GET /:id", async () => {
     const response = await request(koa.callback())
@@ -58,7 +57,7 @@ describe("/device", () => {
       .send({
         name: "new-device-name",
         pin: "654321",
-        public_key: TEST_KEY_PAIR_RSA.publicKey,
+        public_key: getTestKeyPairRSA().publicKey,
         secret: "test_device_secret",
       })
       .expect(201);

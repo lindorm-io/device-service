@@ -1,7 +1,7 @@
 import MockDate from "mockdate";
 import { Device } from "../../entity";
 import { getDevices } from "./get-devices";
-import { getGreyBoxRepository, resetStore } from "../../test";
+import { getTestRepository, resetStore } from "../../test";
 import { winston } from "../../logger";
 
 jest.mock("../../support", () => ({
@@ -16,7 +16,7 @@ describe("removeDevice", () => {
   beforeEach(async () => {
     ctx = {
       logger: winston,
-      repository: await getGreyBoxRepository(),
+      repository: await getTestRepository(),
     };
 
     await ctx.repository.device.create(
