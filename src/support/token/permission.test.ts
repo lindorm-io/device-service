@@ -10,7 +10,7 @@ describe("assertAccountPermission", () => {
       token: {
         bearer: {
           permission: Permission.USER,
-          scope: [Scope.DEFAULT].join(" "),
+          scope: [Scope.DEFAULT],
           subject: "74319107-1246-4424-961d-0895c13ad248",
         },
       },

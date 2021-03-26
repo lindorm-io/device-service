@@ -7,7 +7,7 @@ export const generateAccessToken = (): string => {
     audience: Audience.ACCESS,
     expiry: "2 minutes",
     permission: Permission.USER,
-    scope: [Scope.DEFAULT, Scope.EDIT].join(" "),
+    scope: [Scope.DEFAULT, Scope.EDIT],
     subject: TEST_ACCOUNT_ID,
   });
   return token;
