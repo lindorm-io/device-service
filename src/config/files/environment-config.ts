@@ -18,6 +18,11 @@ export const environmentConfig: IConfigurationData = {
   CRYPTO_AES_SECRET: process.env.CRYPTO_AES_SECRET,
   CRYPTO_SHA_SECRET: process.env.CRYPTO_SHA_SECRET,
 
+  ENROLMENT_EXPIRY: process.env.ENROLMENT_EXPIRY,
+  CHALLENGE_EXPIRY: process.env.CHALLENGE_EXPIRY,
+
+  REDIS_PORT: process.env.REDIS_PORT ? parseInt(process.env.REDIS_PORT, 10) : null,
+
   MONGO_INITDB_ROOT_USERNAME: process.env.MONGO_INITDB_ROOT_USERNAME,
   MONGO_INITDB_ROOT_PASSWORD: process.env.MONGO_INITDB_ROOT_PASSWORD,
   MONGO_HOST: process.env.MONGO_HOST,

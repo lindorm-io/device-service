@@ -6,11 +6,11 @@ import { koa } from "../../server/koa";
 import {
   TEST_ACCOUNT_ID,
   TEST_DEVICE_REPOSITORY,
-  setupIntegration,
+  generateAccessToken,
   getTestDevice,
   getTestKeyPairRSA,
   resetStore,
-  generateAccessToken,
+  setupIntegration,
 } from "../grey-box";
 
 MockDate.set("2020-01-01 08:00:00.000");
@@ -25,7 +25,11 @@ describe("/device", () => {
   });
 
   beforeEach(async () => {
-    device = await TEST_DEVICE_REPOSITORY.create(await getTestDevice());
+    device = await TEST_DEVICE_REPOSITORY.create(
+      await getTestDevice({
+        id: null,
+      }),
+    );
     accessToken = generateAccessToken();
   });
 
@@ -117,7 +121,7 @@ describe("/device", () => {
   });
 
   test("PATCH /:id/secret", async () => {
-    const oldSignature = device.secret;
+    const oldSignature = device.secret.signature;
 
     await request(koa.callback())
       .patch(`/device/${device.id}/secret`)
@@ -126,11 +130,11 @@ describe("/device", () => {
       .set("X-Correlation-ID", "5c63ca22-6617-45eb-9005-7c897a25d375")
       .send({
         pin: "123456",
-        updatedSecret: "test_device_secret",
+        updatedSecret: "new_test_device_secret",
       })
       .expect(204);
 
     const result = await TEST_DEVICE_REPOSITORY.find({ id: device.id });
-    expect(result.secret).not.toBe(oldSignature);
+    expect(result.secret.signature).not.toBe(oldSignature);
   });
 });

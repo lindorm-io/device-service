@@ -1,4 +1,5 @@
 import Joi from "@hapi/joi";
+import { ChallengeStrategy } from "../enum";
 
 export const JOI_EVENTS = Joi.array()
   .items(
@@ -8,4 +9,8 @@ export const JOI_EVENTS = Joi.array()
       payload: Joi.object().required(),
     }),
   )
+  .required();
+
+export const JOI_STRATEGY = Joi.string()
+  .valid(ChallengeStrategy.IMPLICIT, ChallengeStrategy.PIN, ChallengeStrategy.SECRET)
   .required();

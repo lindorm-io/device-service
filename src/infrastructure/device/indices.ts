@@ -6,7 +6,7 @@ export const indices: Array<IIndex> = [
     options: { unique: true },
   },
   {
-    index: { personaId: 1 },
+    index: { accountId: 1 },
     options: { unique: false },
   },
 ];

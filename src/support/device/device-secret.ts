@@ -6,7 +6,7 @@ import { InvalidDeviceSecretError } from "../../error/InvalidDeviceSecretError";
 const crypto = new CryptoPassword(CRYPTO_PASSWORD_OPTIONS);
 
 export const encryptDeviceSecret = async (secret: string): Promise<string> => {
-  return crypto.encrypt(secret);
+  return await crypto.encrypt(secret);
 };
 
 export const assertDeviceSecret = async (device: Device, secret: string): Promise<void> => {

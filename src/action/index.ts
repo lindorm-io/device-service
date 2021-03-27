@@ -1,2 +1,2 @@
 export * from "./device";
-export * from "./verify";
+export * from "./headless";

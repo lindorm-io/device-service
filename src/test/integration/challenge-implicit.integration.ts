@@ -1,0 +1,79 @@
+import MockDate from "mockdate";
+import request from "supertest";
+import { Device } from "../../entity";
+import { baseHash } from "@lindorm-io/core";
+import { koa } from "../../server/koa";
+import {
+  TEST_DEVICE_REPOSITORY,
+  TEST_KEY_PAIR_HANDLER,
+  getTestDevice,
+  resetStore,
+  setupIntegration,
+  resetCache,
+} from "../grey-box";
+import { ChallengeStrategy } from "../../enum";
+
+MockDate.set("2020-01-01 08:00:00.000");
+
+const basicAuth = baseHash("secret:secret");
+
+describe("/device", () => {
+  let device: Device;
+
+  beforeAll(async () => {
+    await setupIntegration();
+    koa.load();
+  });
+
+  beforeEach(async () => {
+    device = await TEST_DEVICE_REPOSITORY.create(await getTestDevice({}));
+  });
+
+  afterEach(() => {
+    resetCache();
+    resetStore();
+  });
+
+  test("POST /headless/challenge - should successfully verify device challenge", async () => {
+    const initialiseResponse = await request(koa.callback())
+      .post("/headless/challenge/initialise")
+      .set("Authorization", `Basic ${basicAuth}`)
+      .set("X-Client-ID", "5c63ca22-6617-45eb-9005-7c897a25d375")
+      .set("X-Device-ID", device.id)
+      .set("X-Correlation-ID", "5c63ca22-6617-45eb-9005-7c897a25d375")
+      .send({
+        account_id: device.accountId,
+        device_id: device.id,
+        strategy: ChallengeStrategy.IMPLICIT,
+      })
+      .expect(201);
+
+    expect(initialiseResponse.body).toStrictEqual({
+      certificate_challenge: expect.any(String),
+      challenge_id: expect.any(String),
+      expires: expect.any(String),
+    });
+
+    const {
+      body: { certificate_challenge: certificateChallenge, challenge_id: challengeId },
+    } = initialiseResponse;
+
+    const certificateVerifier = TEST_KEY_PAIR_HANDLER.sign(certificateChallenge);
+
+    await request(koa.callback())
+      .post("/headless/challenge/verify")
+      .set("Authorization", `Basic ${basicAuth}`)
+      .set("X-Client-ID", "5c63ca22-6617-45eb-9005-7c897a25d375")
+      .set("X-Device-ID", device.id)
+      .set("X-Correlation-ID", "5c63ca22-6617-45eb-9005-7c897a25d375")
+      .send({
+        account_id: device.accountId,
+        device_id: device.id,
+
+        certificate_verifier: certificateVerifier,
+        challenge_id: challengeId,
+        strategy: ChallengeStrategy.IMPLICIT,
+      })
+      .expect(204);
+  });
+});

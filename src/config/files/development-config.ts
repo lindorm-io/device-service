@@ -15,6 +15,11 @@ export const developmentConfig: IConfigurationData = {
   CRYPTO_AES_SECRET: "secret",
   CRYPTO_SHA_SECRET: "secret",
 
+  ENROLMENT_EXPIRY: "5 minutes",
+  CHALLENGE_EXPIRY: "15 minutes",
+
+  REDIS_PORT: 6379,
+
   MONGO_INITDB_ROOT_USERNAME: "root",
   MONGO_INITDB_ROOT_PASSWORD: "example",
   MONGO_HOST: "localhost",

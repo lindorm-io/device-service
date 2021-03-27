@@ -3,6 +3,7 @@ import { Audience } from "../enum";
 import { ConfigHandler } from "./ConfigHandler";
 import { MongoConnectionType } from "@lindorm-io/mongo";
 import { NodeEnvironment } from "@lindorm-io/koa-config";
+import { RedisConnectionType } from "@lindorm-io/redis";
 import { developmentConfig, environmentConfig, productionConfig, stagingConfig, testConfig } from "./files";
 
 if (!process.env.NODE_ENV) dotenv.config();
@@ -43,6 +44,14 @@ export const WEB_KEY_MW_OPTIONS = {
 export const CRYPTO_PASSWORD_OPTIONS = {
   aesSecret: config.CRYPTO_AES_SECRET,
   shaSecret: config.CRYPTO_SHA_SECRET,
+};
+
+export const ENROLMENT_EXPIRY = config.ENROLMENT_EXPIRY;
+export const CHALLENGE_EXPIRY = config.CHALLENGE_EXPIRY;
+
+export const REDIS_CONNECTION_OPTIONS = {
+  type: RedisConnectionType.CACHE,
+  port: config.REDIS_PORT,
 };
 
 export const MONGO_CONNECTION_OPTIONS = {

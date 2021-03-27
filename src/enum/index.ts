@@ -1,3 +1,4 @@
-export * from "./audience"
-export * from "./device-event"
-export * from "./mongo-collection"
+export * from "./audience";
+export * from "./challenge-strategy";
+export * from "./device-event";
+export * from "./mongo-collection";

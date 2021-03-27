@@ -15,6 +15,11 @@ export const stagingConfig: IConfigurationData = {
   CRYPTO_AES_SECRET: null,
   CRYPTO_SHA_SECRET: null,
 
+  ENROLMENT_EXPIRY: "5 minutes",
+  CHALLENGE_EXPIRY: "15 minutes",
+
+  REDIS_PORT: null,
+
   MONGO_INITDB_ROOT_USERNAME: null,
   MONGO_INITDB_ROOT_PASSWORD: null,
   MONGO_HOST: null,

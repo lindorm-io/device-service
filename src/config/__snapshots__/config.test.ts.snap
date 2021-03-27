@@ -14,10 +14,12 @@ Object {
     "audience": "access",
     "issuer": "https://test.authentication.lindorm.io",
   },
+  "CHALLENGE_EXPIRY": "15 minutes",
   "CRYPTO_PASSWORD_OPTIONS": Object {
     "aesSecret": "secret",
     "shaSecret": "secret",
   },
+  "ENROLMENT_EXPIRY": "5 minutes",
   "HOST": "https://test.device.lindorm.io",
   "IS_TEST": true,
   "MONGO_CONNECTION_OPTIONS": Object {
@@ -33,6 +35,10 @@ Object {
     },
   },
   "NODE_ENVIRONMENT": "test",
+  "REDIS_CONNECTION_OPTIONS": Object {
+    "port": 6379,
+    "type": "CACHE",
+  },
   "SERVER_PORT": 3001,
   "TOKEN_ISSUER_MW_OPTIONS": Object {
     "issuer": "https://test.authentication.lindorm.io",

@@ -6,7 +6,7 @@ import { InvalidDevicePINError } from "../../error/InvalidDevicePINError";
 const crypto = new CryptoPassword(CRYPTO_PASSWORD_OPTIONS);
 
 export const encryptDevicePIN = async (pin: string): Promise<string> => {
-  return crypto.encrypt(pin);
+  return await crypto.encrypt(pin);
 };
 
 export const assertDevicePIN = async (device: Device, pin: string): Promise<void> => {

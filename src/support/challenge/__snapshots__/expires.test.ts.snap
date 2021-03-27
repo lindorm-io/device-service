@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`assertAuthorizationIsNotExpired should succeed when date is before 1`] = `undefined`;

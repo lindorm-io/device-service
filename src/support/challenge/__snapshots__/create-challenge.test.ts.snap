@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createChallenge should create a challenge 1`] = `
+Challenge {
+  "_created": 2020-01-01T07:00:00.000Z,
+  "_events": Array [],
+  "_id": "bc54a8e9-3246-4cad-8244-0a1a42c914cd",
+  "_updated": 2020-01-01T07:00:00.000Z,
+  "_version": 0,
+  "certificateChallenge": "ESJh38hYfJ7481UFTQgq63wxxiOub1Xt7YKGJIukrBlIA5RNR6rDriiQ977psN1u",
+  "deviceId": "c12b0d8e-956e-4556-927c-c8588a71a4e1",
+  "expires": 2020-01-01T07:00:00.000Z,
+  "strategy": "implicit",
+}
+`;
+
+exports[`createChallenge should create a challenge 2`] = `
+Object {
+  "Challenge::bc54a8e9-3246-4cad-8244-0a1a42c914cd": Object {
+    "blob": "{\\"json\\":{\\"id\\":\\"bc54a8e9-3246-4cad-8244-0a1a42c914cd\\",\\"version\\":\\"0\\",\\"created\\":\\"2020-01-01T07:00:00.000Z\\",\\"updated\\":\\"2020-01-01T07:00:00.000Z\\",\\"events\\":[],\\"certificateChallenge\\":\\"ESJh38hYfJ7481UFTQgq63wxxiOub1Xt7YKGJIukrBlIA5RNR6rDriiQ977psN1u\\",\\"deviceId\\":\\"c12b0d8e-956e-4556-927c-c8588a71a4e1\\",\\"expires\\":\\"2020-01-01T07:00:00.000Z\\",\\"strategy\\":\\"implicit\\"},\\"meta\\":{\\"id\\":\\"string\\",\\"version\\":\\"number\\",\\"created\\":\\"date\\",\\"updated\\":\\"date\\",\\"events\\":[],\\"certificateChallenge\\":\\"string\\",\\"deviceId\\":\\"string\\",\\"expires\\":\\"date\\",\\"strategy\\":\\"string\\"}}",
+    "expiresInSeconds": null,
+  },
+}
+`;
