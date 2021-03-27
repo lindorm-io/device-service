@@ -1,5 +1,5 @@
 import Joi from "@hapi/joi";
-import { JOI_EVENTS } from "../../constant";
+import { JOI_CERTIFICATE_CHALLENGE, JOI_EVENTS } from "../../constant";
 
 export const schema = Joi.object({
   id: Joi.string().guid().required(),
@@ -8,7 +8,11 @@ export const schema = Joi.object({
   updated: Joi.date().required(),
   events: JOI_EVENTS,
 
-  certificateChallenge: Joi.string().base64().length(64).required(),
-  deviceId: Joi.string().guid().required(),
+  accountId: Joi.string().guid().required(),
+  certificateChallenge: JOI_CERTIFICATE_CHALLENGE,
   expires: Joi.date().required(),
+  macAddress: Joi.string().required(),
+  name: Joi.string().required(),
+  publicKey: Joi.string().required(),
+  uniqueId: Joi.string().required(),
 });

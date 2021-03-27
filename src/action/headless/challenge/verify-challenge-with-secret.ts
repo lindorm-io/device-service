@@ -4,7 +4,7 @@ import { IKoaDeviceContext } from "../../../typing";
 import { JOI_STRATEGY } from "../../../constant";
 import { assertChallenge, assertDeviceSecret } from "../../../support";
 
-export interface IVerifyChallengeWithSecretOptions {
+interface IVerifyChallengeWithSecretOptions {
   certificateVerifier: string;
   challengeId: string;
   secret: string;

@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`initialiseEnrolment should initialise device challenge 1`] = `
+Object {
+  "certificateChallenge": "certificateChallenge",
+  "enrolmentId": "a89b62b8-9956-4b0e-986c-e83b4e66c2ec",
+  "expires": "expires",
+}
+`;

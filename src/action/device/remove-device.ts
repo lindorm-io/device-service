@@ -3,7 +3,7 @@ import { IKoaDeviceContext } from "../../typing";
 import { Scope } from "@lindorm-io/jwt";
 import { assertAccountPermission, assertScope } from "../../support";
 
-export interface IRemoveDeviceOptions {
+interface IRemoveDeviceOptions {
   deviceId: string;
 }
 

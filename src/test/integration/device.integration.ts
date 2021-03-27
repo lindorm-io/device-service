@@ -8,7 +8,6 @@ import {
   TEST_DEVICE_REPOSITORY,
   generateAccessToken,
   getTestDevice,
-  getTestKeyPairRSA,
   resetStore,
   setupIntegration,
 } from "../grey-box";
@@ -50,28 +49,6 @@ describe("/device", () => {
         }),
       ],
     });
-  });
-
-  test("POST /", async () => {
-    const response = await request(koa.callback())
-      .post("/device")
-      .set("Authorization", `Bearer ${accessToken}`)
-      .set("X-Client-ID", "5c63ca22-6617-45eb-9005-7c897a25d375")
-      .set("X-Correlation-ID", "5c63ca22-6617-45eb-9005-7c897a25d375")
-      .send({
-        name: "new-device-name",
-        pin: "654321",
-        public_key: getTestKeyPairRSA().publicKey,
-        secret: "test_device_secret",
-      })
-      .expect(201);
-
-    expect(response.body).toStrictEqual({
-      device_id: expect.any(String),
-    });
-
-    const result = await TEST_DEVICE_REPOSITORY.find({ id: response.body.device_id });
-    expect(result.name).toBe("new-device-name");
   });
 
   test("DELETE /:id", async () => {

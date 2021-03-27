@@ -7,19 +7,18 @@ import { getTestCache, getTestChallenge, getTestDevice, getTestKeyPairRSA } from
 
 MockDate.set("2020-01-01 08:00:00.000");
 
-describe("verifyWithSecret", () => {
+describe("assertChallenge", () => {
   let ctx: any;
   let challenge: Challenge;
   let handler: KeyPairHandler;
 
   beforeEach(async () => {
-    const keyPair = getTestKeyPairRSA();
     ctx = {
       cache: await getTestCache(),
       device: await getTestDevice({
         pin: null,
         secret: null,
-        publicKey: keyPair.publicKey,
+        publicKey: getTestKeyPairRSA().publicKey,
       }),
     };
     challenge = await ctx.cache.challenge.create(
@@ -30,8 +29,8 @@ describe("verifyWithSecret", () => {
     handler = new KeyPairHandler({
       algorithm: "RS512",
       passphrase: "",
-      privateKey: keyPair.privateKey,
-      publicKey: keyPair.publicKey,
+      privateKey: getTestKeyPairRSA().privateKey,
+      publicKey: getTestKeyPairRSA().publicKey,
     });
   });
 

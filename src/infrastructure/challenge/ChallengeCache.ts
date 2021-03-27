@@ -2,7 +2,7 @@ import { CacheBase, ICache, ICacheOptions } from "@lindorm-io/redis";
 import { IChallenge, Challenge } from "../../entity";
 import { schema } from "./schema";
 
-export interface IChallengeCache extends ICache<Challenge> {
+interface IChallengeCache extends ICache<Challenge> {
   create(entity: Challenge): Promise<Challenge>;
   find(id: string): Promise<Challenge>;
   findAll(): Promise<Array<Challenge>>;

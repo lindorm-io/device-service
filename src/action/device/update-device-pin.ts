@@ -3,7 +3,7 @@ import { IKoaDeviceContext } from "../../typing";
 import { Scope } from "@lindorm-io/jwt";
 import { assertAccountPermission, assertDevicePIN, assertScope, encryptDevicePIN } from "../../support";
 
-export interface IUpdateDevicePinOptions {
+interface IUpdateDevicePinOptions {
   deviceId: string;
   pin: string;
   updatedPin: string;

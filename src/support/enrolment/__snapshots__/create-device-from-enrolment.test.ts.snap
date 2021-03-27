@@ -1,0 +1,159 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createDeviceFromEnrolment should verify enrolment 1`] = `
+Device {
+  "_accountId": "57f93111-0d54-4626-8ed3-70cd0812389f",
+  "_created": 2020-01-01T07:00:00.000Z,
+  "_events": Array [
+    Object {
+      "date": 2020-01-01T07:00:00.000Z,
+      "name": "device_created",
+      "payload": Object {
+        "accountId": "57f93111-0d54-4626-8ed3-70cd0812389f",
+        "created": 2020-01-01T07:00:00.000Z,
+        "macAddress": "6905a710-fbe0-4f4e-83e7-2b6e6545a7be",
+        "name": "6905a710-fbe0-4f4e-83e7-2b6e6545a7be",
+        "pin": Object {
+          "signature": "MTIzNDU2",
+          "updated": 2020-01-01T07:00:00.000Z,
+        },
+        "publicKey": "-----BEGIN RSA PUBLIC KEY-----
+MIICCgKCAgEAuzcW4WhUbxjchE+neKMjBXlzdg463PrqP5LfqtUMC6IDs1T2zj5P
+FgdwPCU8xg4CTL/8nKa+Z7SXTqL0elZVcEJ8WsS7XegO+MES138udS873P/YszvZ
+5CY5Ql+/p39vATSMVJhtKqmglu47p4uzU6gl5P10hzBR1v7zQx70x4QA8TQxpg3O
+NHwX6mxbk4v9yY10mxUQ3PdktuQ4lL+toYgXjwMztdDEp9WuLi+kqurinwIbFf3t
+jJTRKxQf9oFfVupMQwgHng2r6SLOvR/k6Rt5/mTJ9ocH1KVfNKadNeIohQs4tm26
+dxR1t7EVXz8m8NS+ivlGWhd8cRVrFgZt2mKQfPLYFd4kxzli9Me6+NQp4JqCH4Kz
+lOHPvTxPtbalhKPOp9XIU97UuVvqqWK29vNgi8Gm4ecjUBsPp6re3qWQGld/22Gu
+GXboaEoKVF8jMoUOj93GmMKANecEmAlTpAssmrznlV1xSas6jzFrPwJllOUbzFxK
+OYW9qerNEjwKQBta7cN1AKKq42t5xCTwXqeQYHRjHBNq9SOaOvo9eCG95w0yZEzq
+hzAq4PPe2gqCUWR1tPnxRi+tGqbVPIcVwhRAF6Oks2C4Ab+402d71EhwdQcmYyT/
+qqiSMKV99/R2sUmKOZjjW5Xv/OzIkepa5yjfYp5trsU6Pctbtnh0IZ8CAwEAAQ==
+-----END RSA PUBLIC KEY-----
+",
+        "secret": Object {
+          "signature": "NmRiOTJmYmItNTM4NC00OTk0LTgzMTYtNjY3OTVkNTJhMDc4",
+          "updated": 2020-01-01T07:00:00.000Z,
+        },
+        "updated": 2020-01-01T07:00:00.000Z,
+      },
+    },
+  ],
+  "_id": "bc54a8e9-3246-4cad-8244-0a1a42c914cd",
+  "_macAddress": "6905a710-fbe0-4f4e-83e7-2b6e6545a7be",
+  "_name": "6905a710-fbe0-4f4e-83e7-2b6e6545a7be",
+  "_pin": Object {
+    "signature": "MTIzNDU2",
+    "updated": 2020-01-01T07:00:00.000Z,
+  },
+  "_publicKey": "-----BEGIN RSA PUBLIC KEY-----
+MIICCgKCAgEAuzcW4WhUbxjchE+neKMjBXlzdg463PrqP5LfqtUMC6IDs1T2zj5P
+FgdwPCU8xg4CTL/8nKa+Z7SXTqL0elZVcEJ8WsS7XegO+MES138udS873P/YszvZ
+5CY5Ql+/p39vATSMVJhtKqmglu47p4uzU6gl5P10hzBR1v7zQx70x4QA8TQxpg3O
+NHwX6mxbk4v9yY10mxUQ3PdktuQ4lL+toYgXjwMztdDEp9WuLi+kqurinwIbFf3t
+jJTRKxQf9oFfVupMQwgHng2r6SLOvR/k6Rt5/mTJ9ocH1KVfNKadNeIohQs4tm26
+dxR1t7EVXz8m8NS+ivlGWhd8cRVrFgZt2mKQfPLYFd4kxzli9Me6+NQp4JqCH4Kz
+lOHPvTxPtbalhKPOp9XIU97UuVvqqWK29vNgi8Gm4ecjUBsPp6re3qWQGld/22Gu
+GXboaEoKVF8jMoUOj93GmMKANecEmAlTpAssmrznlV1xSas6jzFrPwJllOUbzFxK
+OYW9qerNEjwKQBta7cN1AKKq42t5xCTwXqeQYHRjHBNq9SOaOvo9eCG95w0yZEzq
+hzAq4PPe2gqCUWR1tPnxRi+tGqbVPIcVwhRAF6Oks2C4Ab+402d71EhwdQcmYyT/
+qqiSMKV99/R2sUmKOZjjW5Xv/OzIkepa5yjfYp5trsU6Pctbtnh0IZ8CAwEAAQ==
+-----END RSA PUBLIC KEY-----
+",
+  "_secret": Object {
+    "signature": "NmRiOTJmYmItNTM4NC00OTk0LTgzMTYtNjY3OTVkNTJhMDc4",
+    "updated": 2020-01-01T07:00:00.000Z,
+  },
+  "_uniqueId": "a097a56f506a4091b4c93a8bfb8cec0f",
+  "_updated": 2020-01-01T07:00:00.000Z,
+  "_version": 0,
+}
+`;
+
+exports[`createDeviceFromEnrolment should verify enrolment 2`] = `
+Object {
+  "device": Object {
+    "device": Object {
+      "data": Array [
+        Object {
+          "accountId": "57f93111-0d54-4626-8ed3-70cd0812389f",
+          "created": 2020-01-01T07:00:00.000Z,
+          "events": Array [
+            Object {
+              "date": 2020-01-01T07:00:00.000Z,
+              "name": "device_created",
+              "payload": Object {
+                "accountId": "57f93111-0d54-4626-8ed3-70cd0812389f",
+                "created": 2020-01-01T07:00:00.000Z,
+                "macAddress": "6905a710-fbe0-4f4e-83e7-2b6e6545a7be",
+                "name": "6905a710-fbe0-4f4e-83e7-2b6e6545a7be",
+                "pin": Object {
+                  "signature": "MTIzNDU2",
+                  "updated": 2020-01-01T07:00:00.000Z,
+                },
+                "publicKey": "-----BEGIN RSA PUBLIC KEY-----
+MIICCgKCAgEAuzcW4WhUbxjchE+neKMjBXlzdg463PrqP5LfqtUMC6IDs1T2zj5P
+FgdwPCU8xg4CTL/8nKa+Z7SXTqL0elZVcEJ8WsS7XegO+MES138udS873P/YszvZ
+5CY5Ql+/p39vATSMVJhtKqmglu47p4uzU6gl5P10hzBR1v7zQx70x4QA8TQxpg3O
+NHwX6mxbk4v9yY10mxUQ3PdktuQ4lL+toYgXjwMztdDEp9WuLi+kqurinwIbFf3t
+jJTRKxQf9oFfVupMQwgHng2r6SLOvR/k6Rt5/mTJ9ocH1KVfNKadNeIohQs4tm26
+dxR1t7EVXz8m8NS+ivlGWhd8cRVrFgZt2mKQfPLYFd4kxzli9Me6+NQp4JqCH4Kz
+lOHPvTxPtbalhKPOp9XIU97UuVvqqWK29vNgi8Gm4ecjUBsPp6re3qWQGld/22Gu
+GXboaEoKVF8jMoUOj93GmMKANecEmAlTpAssmrznlV1xSas6jzFrPwJllOUbzFxK
+OYW9qerNEjwKQBta7cN1AKKq42t5xCTwXqeQYHRjHBNq9SOaOvo9eCG95w0yZEzq
+hzAq4PPe2gqCUWR1tPnxRi+tGqbVPIcVwhRAF6Oks2C4Ab+402d71EhwdQcmYyT/
+qqiSMKV99/R2sUmKOZjjW5Xv/OzIkepa5yjfYp5trsU6Pctbtnh0IZ8CAwEAAQ==
+-----END RSA PUBLIC KEY-----
+",
+                "secret": Object {
+                  "signature": "NmRiOTJmYmItNTM4NC00OTk0LTgzMTYtNjY3OTVkNTJhMDc4",
+                  "updated": 2020-01-01T07:00:00.000Z,
+                },
+                "updated": 2020-01-01T07:00:00.000Z,
+              },
+            },
+          ],
+          "id": "bc54a8e9-3246-4cad-8244-0a1a42c914cd",
+          "macAddress": "6905a710-fbe0-4f4e-83e7-2b6e6545a7be",
+          "name": "6905a710-fbe0-4f4e-83e7-2b6e6545a7be",
+          "pin": Object {
+            "signature": "MTIzNDU2",
+            "updated": 2020-01-01T07:00:00.000Z,
+          },
+          "publicKey": "-----BEGIN RSA PUBLIC KEY-----
+MIICCgKCAgEAuzcW4WhUbxjchE+neKMjBXlzdg463PrqP5LfqtUMC6IDs1T2zj5P
+FgdwPCU8xg4CTL/8nKa+Z7SXTqL0elZVcEJ8WsS7XegO+MES138udS873P/YszvZ
+5CY5Ql+/p39vATSMVJhtKqmglu47p4uzU6gl5P10hzBR1v7zQx70x4QA8TQxpg3O
+NHwX6mxbk4v9yY10mxUQ3PdktuQ4lL+toYgXjwMztdDEp9WuLi+kqurinwIbFf3t
+jJTRKxQf9oFfVupMQwgHng2r6SLOvR/k6Rt5/mTJ9ocH1KVfNKadNeIohQs4tm26
+dxR1t7EVXz8m8NS+ivlGWhd8cRVrFgZt2mKQfPLYFd4kxzli9Me6+NQp4JqCH4Kz
+lOHPvTxPtbalhKPOp9XIU97UuVvqqWK29vNgi8Gm4ecjUBsPp6re3qWQGld/22Gu
+GXboaEoKVF8jMoUOj93GmMKANecEmAlTpAssmrznlV1xSas6jzFrPwJllOUbzFxK
+OYW9qerNEjwKQBta7cN1AKKq42t5xCTwXqeQYHRjHBNq9SOaOvo9eCG95w0yZEzq
+hzAq4PPe2gqCUWR1tPnxRi+tGqbVPIcVwhRAF6Oks2C4Ab+402d71EhwdQcmYyT/
+qqiSMKV99/R2sUmKOZjjW5Xv/OzIkepa5yjfYp5trsU6Pctbtnh0IZ8CAwEAAQ==
+-----END RSA PUBLIC KEY-----
+",
+          "secret": Object {
+            "signature": "NmRiOTJmYmItNTM4NC00OTk0LTgzMTYtNjY3OTVkNTJhMDc4",
+            "updated": 2020-01-01T07:00:00.000Z,
+          },
+          "uniqueId": "a097a56f506a4091b4c93a8bfb8cec0f",
+          "updated": 2020-01-01T07:00:00.000Z,
+          "version": 0,
+        },
+      ],
+      "indices": Array [
+        Object {
+          "index": Object {
+            "id": 1,
+          },
+          "options": Object {
+            "unique": true,
+          },
+        },
+      ],
+    },
+  },
+}
+`;

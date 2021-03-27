@@ -14,3 +14,5 @@ export const JOI_EVENTS = Joi.array()
 export const JOI_STRATEGY = Joi.string()
   .valid(ChallengeStrategy.IMPLICIT, ChallengeStrategy.PIN, ChallengeStrategy.SECRET)
   .required();
+
+export const JOI_CERTIFICATE_CHALLENGE = Joi.string().base64().length(64).required();

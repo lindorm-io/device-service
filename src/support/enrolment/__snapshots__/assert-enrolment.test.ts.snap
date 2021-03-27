@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`assertEnrolment should verify enrolment 1`] = `
+Enrolment {
+  "_created": 2020-01-01T07:00:00.000Z,
+  "_events": Array [],
+  "_id": "d43e9912-b565-47c6-acd3-9ecd477d46bc",
+  "_updated": 2020-01-01T07:00:00.000Z,
+  "_version": 0,
+  "accountId": "57f93111-0d54-4626-8ed3-70cd0812389f",
+  "certificateChallenge": "ESJh38hYfJ7481UFTQgq63wxxiOub1Xt7YKGJIukrBlIA5RNR6rDriiQ977psN1u",
+  "expires": 2099-01-01T00:00:00.000Z,
+  "macAddress": "6905a710-fbe0-4f4e-83e7-2b6e6545a7be",
+  "name": "6905a710-fbe0-4f4e-83e7-2b6e6545a7be",
+  "publicKey": "-----BEGIN RSA PUBLIC KEY-----
+MIICCgKCAgEAuzcW4WhUbxjchE+neKMjBXlzdg463PrqP5LfqtUMC6IDs1T2zj5P
+FgdwPCU8xg4CTL/8nKa+Z7SXTqL0elZVcEJ8WsS7XegO+MES138udS873P/YszvZ
+5CY5Ql+/p39vATSMVJhtKqmglu47p4uzU6gl5P10hzBR1v7zQx70x4QA8TQxpg3O
+NHwX6mxbk4v9yY10mxUQ3PdktuQ4lL+toYgXjwMztdDEp9WuLi+kqurinwIbFf3t
+jJTRKxQf9oFfVupMQwgHng2r6SLOvR/k6Rt5/mTJ9ocH1KVfNKadNeIohQs4tm26
+dxR1t7EVXz8m8NS+ivlGWhd8cRVrFgZt2mKQfPLYFd4kxzli9Me6+NQp4JqCH4Kz
+lOHPvTxPtbalhKPOp9XIU97UuVvqqWK29vNgi8Gm4ecjUBsPp6re3qWQGld/22Gu
+GXboaEoKVF8jMoUOj93GmMKANecEmAlTpAssmrznlV1xSas6jzFrPwJllOUbzFxK
+OYW9qerNEjwKQBta7cN1AKKq42t5xCTwXqeQYHRjHBNq9SOaOvo9eCG95w0yZEzq
+hzAq4PPe2gqCUWR1tPnxRi+tGqbVPIcVwhRAF6Oks2C4Ab+402d71EhwdQcmYyT/
+qqiSMKV99/R2sUmKOZjjW5Xv/OzIkepa5yjfYp5trsU6Pctbtnh0IZ8CAwEAAQ==
+-----END RSA PUBLIC KEY-----
+",
+  "uniqueId": "a097a56f506a4091b4c93a8bfb8cec0f",
+}
+`;
+
+exports[`assertEnrolment should verify enrolment 2`] = `
+Object {
+  "Enrolment::d43e9912-b565-47c6-acd3-9ecd477d46bc": Object {
+    "blob": "{\\"json\\":{\\"id\\":\\"d43e9912-b565-47c6-acd3-9ecd477d46bc\\",\\"version\\":\\"0\\",\\"created\\":\\"2020-01-01T07:00:00.000Z\\",\\"updated\\":\\"2020-01-01T07:00:00.000Z\\",\\"events\\":[],\\"accountId\\":\\"57f93111-0d54-4626-8ed3-70cd0812389f\\",\\"certificateChallenge\\":\\"ESJh38hYfJ7481UFTQgq63wxxiOub1Xt7YKGJIukrBlIA5RNR6rDriiQ977psN1u\\",\\"expires\\":\\"2099-01-01T00:00:00.000Z\\",\\"macAddress\\":\\"6905a710-fbe0-4f4e-83e7-2b6e6545a7be\\",\\"name\\":\\"6905a710-fbe0-4f4e-83e7-2b6e6545a7be\\",\\"publicKey\\":\\"-----BEGIN RSA PUBLIC KEY-----\\\\nMIICCgKCAgEAuzcW4WhUbxjchE+neKMjBXlzdg463PrqP5LfqtUMC6IDs1T2zj5P\\\\nFgdwPCU8xg4CTL/8nKa+Z7SXTqL0elZVcEJ8WsS7XegO+MES138udS873P/YszvZ\\\\n5CY5Ql+/p39vATSMVJhtKqmglu47p4uzU6gl5P10hzBR1v7zQx70x4QA8TQxpg3O\\\\nNHwX6mxbk4v9yY10mxUQ3PdktuQ4lL+toYgXjwMztdDEp9WuLi+kqurinwIbFf3t\\\\njJTRKxQf9oFfVupMQwgHng2r6SLOvR/k6Rt5/mTJ9ocH1KVfNKadNeIohQs4tm26\\\\ndxR1t7EVXz8m8NS+ivlGWhd8cRVrFgZt2mKQfPLYFd4kxzli9Me6+NQp4JqCH4Kz\\\\nlOHPvTxPtbalhKPOp9XIU97UuVvqqWK29vNgi8Gm4ecjUBsPp6re3qWQGld/22Gu\\\\nGXboaEoKVF8jMoUOj93GmMKANecEmAlTpAssmrznlV1xSas6jzFrPwJllOUbzFxK\\\\nOYW9qerNEjwKQBta7cN1AKKq42t5xCTwXqeQYHRjHBNq9SOaOvo9eCG95w0yZEzq\\\\nhzAq4PPe2gqCUWR1tPnxRi+tGqbVPIcVwhRAF6Oks2C4Ab+402d71EhwdQcmYyT/\\\\nqqiSMKV99/R2sUmKOZjjW5Xv/OzIkepa5yjfYp5trsU6Pctbtnh0IZ8CAwEAAQ==\\\\n-----END RSA PUBLIC KEY-----\\\\n\\",\\"uniqueId\\":\\"a097a56f506a4091b4c93a8bfb8cec0f\\"},\\"meta\\":{\\"id\\":\\"string\\",\\"version\\":\\"number\\",\\"created\\":\\"date\\",\\"updated\\":\\"date\\",\\"events\\":[],\\"accountId\\":\\"string\\",\\"certificateChallenge\\":\\"string\\",\\"expires\\":\\"date\\",\\"macAddress\\":\\"string\\",\\"name\\":\\"string\\",\\"publicKey\\":\\"string\\",\\"uniqueId\\":\\"string\\"}}",
+    "expiresInSeconds": null,
+  },
+}
+`;

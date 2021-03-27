@@ -5,6 +5,7 @@ export interface IEnrolment extends IEntity {
   certificateChallenge: string;
   expires: Date;
   macAddress: string;
+  name: string;
   publicKey: string;
   uniqueId: string;
 }
@@ -13,7 +14,8 @@ export interface IEnrolmentOptions extends IEntityBaseOptions {
   accountId: string;
   certificateChallenge: string;
   expires: Date;
-  macAddress?: string;
+  macAddress: string;
+  name: string;
   publicKey: string;
   uniqueId: string;
 }
@@ -23,6 +25,7 @@ export class Enrolment extends EntityBase implements IEnrolment {
   readonly certificateChallenge: string;
   readonly expires: Date;
   readonly macAddress: string;
+  readonly name: string;
   readonly publicKey: string;
   readonly uniqueId: string;
 
@@ -33,6 +36,7 @@ export class Enrolment extends EntityBase implements IEnrolment {
     this.certificateChallenge = options.certificateChallenge;
     this.expires = options.expires;
     this.macAddress = options.macAddress;
+    this.name = options.macAddress;
     this.publicKey = options.publicKey;
     this.uniqueId = options.uniqueId;
   }

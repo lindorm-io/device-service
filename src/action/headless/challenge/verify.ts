@@ -4,7 +4,7 @@ import { IKoaDeviceContext } from "../../../typing";
 import { JOI_STRATEGY } from "../../../constant";
 import { assertChallenge } from "../../../support";
 
-export interface IVerifyChallengeOptions {
+interface IVerifyChallengeOptions {
   certificateVerifier: string;
   challengeId: string;
   strategy: ChallengeStrategy;

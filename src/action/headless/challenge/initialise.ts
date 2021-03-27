@@ -4,11 +4,11 @@ import { IKoaDeviceContext } from "../../../typing";
 import { JOI_STRATEGY } from "../../../constant";
 import { createChallenge } from "../../../support";
 
-export interface IInitialiseChallengeOptions {
+interface IInitialiseChallengeOptions {
   strategy: ChallengeStrategy;
 }
 
-export interface IInitialiseChallengeData {
+interface IInitialiseChallengeData {
   challengeId: string;
   certificateChallenge: string;
   expires: Date;

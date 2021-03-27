@@ -5,7 +5,7 @@ import { getExpiryDate } from "../../util";
 import { getRandomValue } from "@lindorm-io/core";
 import { ChallengeStrategy } from "../../enum";
 
-export interface ICreateChallengeOptions {
+interface ICreateChallengeOptions {
   strategy: ChallengeStrategy;
 }
 

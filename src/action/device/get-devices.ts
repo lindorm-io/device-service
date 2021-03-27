@@ -2,18 +2,18 @@ import Joi from "@hapi/joi";
 import { IKoaDeviceContext } from "../../typing";
 import { assertAccountPermission } from "../../support";
 
-export interface IGetDevicesOptions {
+interface IGetDevicesOptions {
   accountId: string;
 }
 
-export interface IDeviceData {
+interface IDeviceData {
   deviceId: string;
   macAddress: string;
   name: string;
   uniqueId: string;
 }
 
-export interface IGetDevicesData {
+interface IGetDevicesData {
   devices: Array<IDeviceData>;
 }
 

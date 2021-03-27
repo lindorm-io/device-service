@@ -2,7 +2,7 @@ import { CacheBase, ICache, ICacheOptions } from "@lindorm-io/redis";
 import { IEnrolment, Enrolment } from "../../entity";
 import { schema } from "./schema";
 
-export interface IEnrolmentCache extends ICache<Enrolment> {
+interface IEnrolmentCache extends ICache<Enrolment> {
   create(entity: Enrolment): Promise<Enrolment>;
   find(id: string): Promise<Enrolment>;
   findAll(): Promise<Array<Enrolment>>;
@@ -36,6 +36,7 @@ export class EnrolmentCache extends CacheBase<Enrolment> implements IEnrolmentCa
       certificateChallenge: entity.certificateChallenge,
       expires: entity.expires,
       macAddress: entity.macAddress,
+      name: entity.name,
       publicKey: entity.publicKey,
       uniqueId: entity.uniqueId,
     };

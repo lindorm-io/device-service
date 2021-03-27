@@ -1,17 +1,15 @@
-import { KeyPairHandler } from "@lindorm-io/key-pair";
-import { AssertDeviceChallengeError, InvalidStrategyError } from "../../error";
+import { Algorithm, KeyPairHandler } from "@lindorm-io/key-pair";
+import { InvalidCertificateVerifierError, InvalidStrategyError } from "../../error";
 import { IKoaDeviceContext } from "../../typing";
 import { ChallengeStrategy } from "../../enum";
 
-export interface IAssertCertificateChallengeOptions {
+interface IAssertChallengeOptions {
   challengeId: string;
   certificateVerifier: string;
   strategy: ChallengeStrategy;
 }
 
-export const assertChallenge = (ctx: IKoaDeviceContext) => async (
-  options: IAssertCertificateChallengeOptions,
-): Promise<void> => {
+export const assertChallenge = (ctx: IKoaDeviceContext) => async (options: IAssertChallengeOptions): Promise<void> => {
   const { cache, device } = ctx;
   const { challengeId, certificateVerifier, strategy } = options;
 
@@ -22,7 +20,7 @@ export const assertChallenge = (ctx: IKoaDeviceContext) => async (
   }
 
   const handler = new KeyPairHandler({
-    algorithm: "RS512",
+    algorithm: Algorithm.RS512,
     passphrase: "",
     privateKey: null,
     publicKey: device.publicKey,
@@ -31,6 +29,6 @@ export const assertChallenge = (ctx: IKoaDeviceContext) => async (
   try {
     handler.assert(challenge.certificateChallenge, certificateVerifier);
   } catch (err) {
-    throw new AssertDeviceChallengeError(challenge.certificateChallenge, certificateVerifier);
+    throw new InvalidCertificateVerifierError(challenge.certificateChallenge, certificateVerifier);
   }
 };

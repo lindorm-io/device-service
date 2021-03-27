@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createEnrolment should create an enrolment 1`] = `
+Enrolment {
+  "_created": 2020-01-01T07:00:00.000Z,
+  "_events": Array [],
+  "_id": "bc54a8e9-3246-4cad-8244-0a1a42c914cd",
+  "_updated": 2020-01-01T07:00:00.000Z,
+  "_version": 0,
+  "accountId": "543afa16-ba6f-4f40-8882-30b4450cd59b",
+  "certificateChallenge": "ESJh38hYfJ7481UFTQgq63wxxiOub1Xt7YKGJIukrBlIA5RNR6rDriiQ977psN1u",
+  "expires": 2020-01-01T07:00:00.000Z,
+  "macAddress": "00:00:0A:BB:28:FC",
+  "name": "00:00:0A:BB:28:FC",
+  "publicKey": "publicKey",
+  "uniqueId": "472704d28e5c4187b841",
+}
+`;
+
+exports[`createEnrolment should create an enrolment 2`] = `
+Object {
+  "Enrolment::bc54a8e9-3246-4cad-8244-0a1a42c914cd": Object {
+    "blob": "{\\"json\\":{\\"id\\":\\"bc54a8e9-3246-4cad-8244-0a1a42c914cd\\",\\"version\\":\\"0\\",\\"created\\":\\"2020-01-01T07:00:00.000Z\\",\\"updated\\":\\"2020-01-01T07:00:00.000Z\\",\\"events\\":[],\\"accountId\\":\\"543afa16-ba6f-4f40-8882-30b4450cd59b\\",\\"certificateChallenge\\":\\"ESJh38hYfJ7481UFTQgq63wxxiOub1Xt7YKGJIukrBlIA5RNR6rDriiQ977psN1u\\",\\"expires\\":\\"2020-01-01T07:00:00.000Z\\",\\"macAddress\\":\\"00:00:0A:BB:28:FC\\",\\"name\\":\\"00:00:0A:BB:28:FC\\",\\"publicKey\\":\\"publicKey\\",\\"uniqueId\\":\\"472704d28e5c4187b841\\"},\\"meta\\":{\\"id\\":\\"string\\",\\"version\\":\\"number\\",\\"created\\":\\"date\\",\\"updated\\":\\"date\\",\\"events\\":[],\\"accountId\\":\\"string\\",\\"certificateChallenge\\":\\"string\\",\\"expires\\":\\"date\\",\\"macAddress\\":\\"string\\",\\"name\\":\\"string\\",\\"publicKey\\":\\"string\\",\\"uniqueId\\":\\"string\\"}}",
+    "expiresInSeconds": null,
+  },
+}
+`;

@@ -3,7 +3,7 @@ import { HttpStatus } from "@lindorm-io/core";
 import { IKoaDeviceContext } from "../typing";
 import { Router } from "@lindorm-io/koa";
 import { bearerAuthMiddleware } from "@lindorm-io/koa-bearer-auth";
-import { createDevice, removeDevice, updateDeviceName, updateDevicePIN, updateDeviceSecret } from "../action";
+import { removeDevice, updateDeviceName, updateDevicePIN, updateDeviceSecret } from "../action";
 import { getDevices } from "../action/device/get-devices";
 
 export const router = new Router();
@@ -17,23 +17,6 @@ router.get(
 
     ctx.body = await getDevices(ctx)({ accountId });
     ctx.status = HttpStatus.Success.OK;
-  },
-);
-
-router.post(
-  "/",
-  async (ctx: IKoaDeviceContext): Promise<void> => {
-    const { macAddress, name, pin, publicKey, secret, uniqueId } = ctx.request.body;
-
-    ctx.body = await createDevice(ctx)({
-      macAddress,
-      name,
-      pin,
-      publicKey,
-      secret,
-      uniqueId,
-    });
-    ctx.status = HttpStatus.Success.CREATED;
   },
 );
 

@@ -4,13 +4,13 @@ import { MongoCollection } from "../../enum";
 import { indices } from "./indices";
 import { schema } from "./schema";
 
-export interface IDeviceFilter {
+interface IDeviceFilter {
   id?: string;
   accountId?: string;
   name?: string;
 }
 
-export interface IDeviceRepository extends IRepository<Device> {
+interface IDeviceRepository extends IRepository<Device> {
   create(entity: Device): Promise<Device>;
   update(entity: Device): Promise<Device>;
   find(filter: IDeviceFilter): Promise<Device>;

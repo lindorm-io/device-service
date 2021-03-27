@@ -4,7 +4,7 @@ import { IKoaDeviceContext } from "../../../typing";
 import { JOI_STRATEGY } from "../../../constant";
 import { assertChallenge, assertDevicePIN } from "../../../support";
 
-export interface IVerifyChallengeWithPinOptions {
+interface IVerifyChallengeWithPinOptions {
   certificateVerifier: string;
   challengeId: string;
   pin: string;

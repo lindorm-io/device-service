@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`initialiseEnrolment should initialise device challenge 1`] = `
+Object {
+  "deviceId": "d9b9adec-81fa-4ea0-8cf3-44ccd4fe5162",
+}
+`;
