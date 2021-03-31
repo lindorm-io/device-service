@@ -1,7 +1,7 @@
 import { HttpStatus } from "@lindorm-io/core";
 import { IKoaDeviceContext } from "../typing";
 import { Router } from "@lindorm-io/koa";
-import { concludeEnrolment, initialiseEnrolment } from "../action";
+import { verifyEnrolment, initialiseEnrolment } from "../action";
 import { bearerAuthMiddleware } from "../middleware";
 
 export const router = new Router();
@@ -28,7 +28,7 @@ router.post(
   async (ctx: IKoaDeviceContext): Promise<void> => {
     const { certificateVerifier, enrolmentId, pin, secret } = ctx.request.body;
 
-    ctx.body = await concludeEnrolment(ctx)({
+    ctx.body = await verifyEnrolment(ctx)({
       certificateVerifier,
       enrolmentId,
       pin,

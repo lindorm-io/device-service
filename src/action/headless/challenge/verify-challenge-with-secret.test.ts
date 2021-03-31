@@ -18,6 +18,7 @@ describe("verifyWithSecret", () => {
     ctx = {
       device: getTestDevice({
         pin: null,
+        recoveryKey: null,
         secret: null,
       }),
       logger,

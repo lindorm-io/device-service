@@ -31,6 +31,7 @@ lBUcoS4sBIR3urpvx1EKM1xaUHfchhIKnY5KGTEM+5rJVwlDq+3lLcrJI3AErTAX
 gSR6fcZmKuI4nCfTKl3ykozcPwpEmfRgSBDHKwDJe6ZbK0sL4ScVookCAwEAAQ==
 -----END RSA PUBLIC KEY-----
 ",
+        "recoveryKeys": Array [],
         "secret": Object {
           "signature": "NmRiOTJmYmItNTM4NC00OTk0LTgzMTYtNjY3OTVkNTJhMDc4",
           "updated": 2020-01-01T07:00:00.000Z,
@@ -60,6 +61,7 @@ lBUcoS4sBIR3urpvx1EKM1xaUHfchhIKnY5KGTEM+5rJVwlDq+3lLcrJI3AErTAX
 gSR6fcZmKuI4nCfTKl3ykozcPwpEmfRgSBDHKwDJe6ZbK0sL4ScVookCAwEAAQ==
 -----END RSA PUBLIC KEY-----
 ",
+  "_recoveryKeys": Array [],
   "_secret": Object {
     "signature": "NmRiOTJmYmItNTM4NC00OTk0LTgzMTYtNjY3OTVkNTJhMDc4",
     "updated": 2020-01-01T07:00:00.000Z,
@@ -105,6 +107,7 @@ lBUcoS4sBIR3urpvx1EKM1xaUHfchhIKnY5KGTEM+5rJVwlDq+3lLcrJI3AErTAX
 gSR6fcZmKuI4nCfTKl3ykozcPwpEmfRgSBDHKwDJe6ZbK0sL4ScVookCAwEAAQ==
 -----END RSA PUBLIC KEY-----
 ",
+                "recoveryKeys": Array [],
                 "secret": Object {
                   "signature": "NmRiOTJmYmItNTM4NC00OTk0LTgzMTYtNjY3OTVkNTJhMDc4",
                   "updated": 2020-01-01T07:00:00.000Z,
@@ -134,6 +137,7 @@ lBUcoS4sBIR3urpvx1EKM1xaUHfchhIKnY5KGTEM+5rJVwlDq+3lLcrJI3AErTAX
 gSR6fcZmKuI4nCfTKl3ykozcPwpEmfRgSBDHKwDJe6ZbK0sL4ScVookCAwEAAQ==
 -----END RSA PUBLIC KEY-----
 ",
+          "recoveryKeys": Array [],
           "secret": Object {
             "signature": "NmRiOTJmYmItNTM4NC00OTk0LTgzMTYtNjY3OTVkNTJhMDc4",
             "updated": 2020-01-01T07:00:00.000Z,

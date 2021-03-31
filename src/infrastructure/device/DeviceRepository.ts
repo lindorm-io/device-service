@@ -47,6 +47,7 @@ export class DeviceRepository extends RepositoryBase<Device> implements IDeviceR
       name: entity.name,
       pin: entity.pin,
       publicKey: entity.publicKey,
+      recoveryKeys: entity.recoveryKeys,
       secret: entity.secret,
       uniqueId: entity.uniqueId,
     };

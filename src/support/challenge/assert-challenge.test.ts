@@ -17,8 +17,9 @@ describe("assertChallenge", () => {
       cache: await getTestCache(),
       device: await getTestDevice({
         pin: null,
-        secret: null,
         publicKey: getTestKeyPairRSA().publicKey,
+        recoveryKey: null,
+        secret: null,
       }),
     };
     challenge = await ctx.cache.challenge.create(

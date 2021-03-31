@@ -1,3 +1,3 @@
-export * from "../challenge/assert-challenge";
 export * from "./device-pin";
+export * from "./device-recovery-key";
 export * from "./device-secret";

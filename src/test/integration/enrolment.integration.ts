@@ -71,9 +71,10 @@ describe("/enrolment", () => {
       .expect(201);
 
     const {
-      body: { device_id: deviceId },
+      body: { device_id: deviceId, recovery_keys: recoveryKeys },
     } = concludeResponse;
 
     await expect(TEST_DEVICE_REPOSITORY.find({ id: deviceId })).resolves.toStrictEqual(expect.any(Device));
+    expect(recoveryKeys).toStrictEqual(expect.any(Array));
   });
 });

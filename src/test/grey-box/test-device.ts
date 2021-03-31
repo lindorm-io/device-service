@@ -1,5 +1,5 @@
 import { Device } from "../../entity";
-import { encryptDevicePIN, encryptDeviceSecret } from "../../support";
+import { encryptDevicePIN, encryptDeviceRecoveryKey, encryptDeviceSecret } from "../../support";
 import { getTestKeyPairRSA } from "./test-key-pair";
 
 export const getTestDevice = async ({
@@ -9,6 +9,7 @@ export const getTestDevice = async ({
   name = "My iPhone 12",
   pin = "123456",
   publicKey = getTestKeyPairRSA().publicKey,
+  recoveryKey = "test_device_recovery_key",
   secret = "test_device_secret",
   uniqueId = "7e5bfe57-bc9a-4523-adc7-c9ed728d866d",
 }: {
@@ -18,6 +19,7 @@ export const getTestDevice = async ({
   name?: string;
   pin?: string;
   publicKey?: string;
+  recoveryKey?: string;
   secret?: string;
   uniqueId?: string;
 }): Promise<Device> =>
@@ -28,6 +30,7 @@ export const getTestDevice = async ({
     name,
     pin: pin ? { signature: await encryptDevicePIN(pin), updated: new Date() } : null,
     publicKey,
+    recoveryKeys: recoveryKey ? [await encryptDeviceRecoveryKey(recoveryKey)] : [],
     secret: secret ? { signature: await encryptDeviceSecret(secret), updated: new Date() } : null,
     uniqueId,
   });

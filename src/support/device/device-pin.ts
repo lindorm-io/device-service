@@ -1,7 +1,7 @@
 import { config } from "../../config";
 import { CryptoPassword } from "@lindorm-io/crypto";
 import { Device } from "../../entity";
-import { InvalidDevicePINError } from "../../error/InvalidDevicePINError";
+import { InvalidDevicePINError } from "../../error";
 
 const crypto = new CryptoPassword({
   aesSecret: config.CRYPTO_AES_SECRET,

@@ -1,6 +1,6 @@
 import Joi from "@hapi/joi";
 import { IKoaDeviceContext } from "../../typing";
-import { assertEnrolment, createDeviceFromEnrolment } from "../../support";
+import { assertEnrolment, createDeviceFromEnrolment, createDeviceRecoveryKeys } from "../../support";
 
 interface IConcludeEnrolmentOptions {
   certificateVerifier: string;
@@ -11,6 +11,7 @@ interface IConcludeEnrolmentOptions {
 
 interface IConcludeEnrolmentData {
   deviceId: string;
+  recoveryKeys: Array<string>;
 }
 
 const schema = Joi.object({
@@ -20,7 +21,7 @@ const schema = Joi.object({
   secret: Joi.string(),
 });
 
-export const concludeEnrolment = (ctx: IKoaDeviceContext) => async (
+export const verifyEnrolment = (ctx: IKoaDeviceContext) => async (
   options: IConcludeEnrolmentOptions,
 ): Promise<IConcludeEnrolmentData> => {
   await schema.validateAsync(options);
@@ -32,17 +33,21 @@ export const concludeEnrolment = (ctx: IKoaDeviceContext) => async (
     certificateVerifier,
     enrolmentId,
   });
+
+  const { recoveryKeys, signatures } = await createDeviceRecoveryKeys(3);
+
   const device = await createDeviceFromEnrolment(ctx)({
     enrolment,
     pin,
+    recoveryKeys: signatures,
     secret,
   });
 
-  logger.debug("enrolment concluded", {
+  logger.debug("enrolment verified", {
     deviceId: device.id,
   });
 
   await cache.enrolment.remove(enrolment);
 
-  return { deviceId: device.id };
+  return { deviceId: device.id, recoveryKeys };
 };

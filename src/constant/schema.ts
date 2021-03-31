@@ -15,4 +15,9 @@ export const JOI_STRATEGY = Joi.string()
   .valid(ChallengeStrategy.IMPLICIT, ChallengeStrategy.PIN, ChallengeStrategy.SECRET)
   .required();
 
+export const JOI_ENCRYPTED_DATA = Joi.object({
+  signature: Joi.string().base64().allow(null).required(),
+  updated: Joi.date().allow(null).required(),
+});
+
 export const JOI_CERTIFICATE_CHALLENGE = Joi.string().base64().length(64).required();

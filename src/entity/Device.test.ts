@@ -17,6 +17,7 @@ describe("Device.ts", () => {
       name: "name",
       pin: { signature: "pin", updated: date },
       publicKey: "publicKey",
+      recoveryKeys: ["key1", "key2"],
       secret: { signature: "secret", updated: date },
     });
   });
@@ -36,41 +37,46 @@ describe("Device.ts", () => {
 
   test("should create", () => {
     device.create();
-    expect(device.events).toMatchSnapshot();
+    expect(device).toMatchSnapshot();
   });
 
   test("should get accountId", () => {
-    expect(device.accountId).toBe("accountId");
+    expect(device.accountId).toMatchSnapshot();
   });
 
   test("should get/set name", () => {
-    expect(device.name).toBe("name");
+    expect(device.name).toMatchSnapshot();
 
     device.name = "new-name";
 
-    expect(device.name).toBe("new-name");
-    expect(device.events).toMatchSnapshot();
+    expect(device).toMatchSnapshot();
   });
 
   test("should get/set pin", () => {
-    expect(device.pin).toStrictEqual({ signature: "pin", updated: date });
+    expect(device.pin).toMatchSnapshot();
 
     device.pin = { signature: "new-pin", updated: date };
 
-    expect(device.pin).toStrictEqual({ signature: "new-pin", updated: date });
-    expect(device.events).toMatchSnapshot();
+    expect(device).toMatchSnapshot();
   });
 
   test("should get publicKey", () => {
     expect(device.publicKey).toBe("publicKey");
   });
 
+  test("should get/set recovery keys", () => {
+    expect(device.recoveryKeys).toMatchSnapshot();
+
+    device.recoveryKeys = ["key1", "key2", "key3"];
+
+    expect(device).toMatchSnapshot();
+  });
+
   test("should get/set secret", () => {
-    expect(device.secret).toStrictEqual({ signature: "secret", updated: date });
+    expect(device.secret).toMatchSnapshot();
 
     device.secret = { signature: "new-secret", updated: date };
 
-    expect(device.secret).toStrictEqual({ signature: "new-secret", updated: date });
-    expect(device.events).toMatchSnapshot();
+    expect(device).toMatchSnapshot();
   });
 });

@@ -1,21 +1,27 @@
 import MockDate from "mockdate";
-import { concludeEnrolment } from "./conclude";
-import { getTestCache, getTestDevice, getTestEnrolment, logger } from "../../test";
-import { Enrolment } from "../../entity";
+import { verifyEnrolment } from "./verify";
+import { getTestCache, getTestEnrolment, logger } from "../../test";
+import { Device, Enrolment } from "../../entity";
+import { baseHash } from "@lindorm-io/core";
 
 jest.mock("../../support", () => ({
   assertEnrolment: jest.fn(() => () => getTestEnrolment({})),
   createDeviceFromEnrolment: jest.fn(() => () =>
-    getTestDevice({
-      pin: null,
-      secret: null,
+    new Device({
+      id: "d256c6ec-b7b5-4cbf-8673-da2b21f5c703",
+      accountId: "accountId",
+      publicKey: "publicKey",
     }),
   ),
+  createDeviceRecoveryKeys: jest.fn(() => ({
+    recoveryKeys: ["key1"],
+    signatures: [baseHash("key1")],
+  })),
 }));
 
 MockDate.set("2020-01-01 08:00:00.000");
 
-describe("initialiseEnrolment", () => {
+describe("verifyEnrolment", () => {
   let ctx: any;
   let enrolment: Enrolment;
 
@@ -27,9 +33,9 @@ describe("initialiseEnrolment", () => {
     enrolment = await ctx.cache.enrolment.create(getTestEnrolment({}));
   });
 
-  test("should initialise device challenge", async () => {
+  test("should verify device enrolment", async () => {
     await expect(
-      concludeEnrolment(ctx)({
+      verifyEnrolment(ctx)({
         certificateVerifier: "verifier",
         enrolmentId: enrolment.id,
         pin: "123456",
