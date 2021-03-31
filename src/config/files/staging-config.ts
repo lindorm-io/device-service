@@ -24,6 +24,6 @@ export const stagingConfig: IConfigurationData = {
   MONGO_INITDB_ROOT_USERNAME: null,
   MONGO_INITDB_ROOT_PASSWORD: null,
   MONGO_HOST: null,
-  MONGO_EXPOSE_PORT: 27017,
+  MONGO_EXPOSE_PORT: null,
   MONGO_DB_NAME: "device",
 };
