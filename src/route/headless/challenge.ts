@@ -3,7 +3,12 @@ import { HttpStatus } from "@lindorm-io/core";
 import { IKoaDeviceContext } from "../../typing";
 import { Router } from "@lindorm-io/koa";
 import { deviceMiddleware } from "../../middleware";
-import { initialiseChallenge, verifyChallenge, verifyChallengeWithPin, verifyChallengeWithSecret } from "../../action";
+import {
+  initialiseChallenge,
+  verifyChallengeImplicit,
+  verifyChallengeWithPin,
+  verifyChallengeWithSecret,
+} from "../../action";
 
 export const router = new Router();
 
@@ -26,7 +31,7 @@ router.post(
 
     switch (strategy) {
       case ChallengeStrategy.IMPLICIT:
-        ctx.body = await verifyChallenge(ctx)({
+        ctx.body = await verifyChallengeImplicit(ctx)({
           certificateVerifier,
           challengeId,
           strategy,
@@ -55,6 +60,6 @@ router.post(
         throw new Error("unsupported strategy");
     }
 
-    ctx.status = HttpStatus.Success.NO_CONTENT;
+    ctx.status = HttpStatus.Success.OK;
   },
 );

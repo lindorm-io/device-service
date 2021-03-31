@@ -1,19 +1,7 @@
 import Joi from "@hapi/joi";
-import { ChallengeScope, ChallengeStrategy } from "../../../enum";
-import { IKoaDeviceContext } from "../../../typing";
+import { IInitialiseChallengeData, IInitialiseChallengeOptions, IKoaDeviceContext } from "../../../typing";
 import { JOI_STRATEGY } from "../../../constant";
 import { createChallenge } from "../../../support";
-
-interface IInitialiseChallengeOptions {
-  scope: ChallengeScope;
-  strategy: ChallengeStrategy;
-}
-
-interface IInitialiseChallengeData {
-  challengeId: string;
-  certificateChallenge: string;
-  expires: Date;
-}
 
 const schema = Joi.object({
   scope: Joi.string().required(),

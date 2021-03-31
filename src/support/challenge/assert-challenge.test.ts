@@ -42,6 +42,6 @@ describe("assertChallenge", () => {
         challengeId: challenge.id,
         strategy: ChallengeStrategy.SECRET,
       }),
-    ).resolves.toBe(undefined);
+    ).resolves.toMatchSnapshot();
   });
 });

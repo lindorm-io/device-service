@@ -61,7 +61,7 @@ describe("/device", () => {
 
     const certificateVerifier = TEST_KEY_PAIR_HANDLER.sign(certificateChallenge);
 
-    await request(koa.callback())
+    const verifyResponse = await request(koa.callback())
       .post("/headless/challenge/verify")
       .set("Authorization", `Basic ${basicAuth}`)
       .set("X-Client-ID", "5c63ca22-6617-45eb-9005-7c897a25d375")
@@ -75,6 +75,15 @@ describe("/device", () => {
         challenge_id: challengeId,
         strategy: ChallengeStrategy.IMPLICIT,
       })
-      .expect(204);
+      .expect(200);
+
+    expect(verifyResponse.body).toStrictEqual({
+      challenge_confirmation: {
+        expires: 1577862600,
+        expires_in: 600,
+        id: expect.any(String),
+        token: expect.any(String),
+      },
+    });
   });
 });

@@ -1,15 +1,7 @@
 import Joi from "@hapi/joi";
-import { ChallengeStrategy } from "../../../enum";
-import { IKoaDeviceContext } from "../../../typing";
+import { IKoaDeviceContext, IVerifyChallengeData, IVerifyChallengeWithSecretOptions } from "../../../typing";
 import { JOI_STRATEGY } from "../../../constant";
-import { assertChallenge, assertDeviceSecret } from "../../../support";
-
-interface IVerifyChallengeWithSecretOptions {
-  certificateVerifier: string;
-  challengeId: string;
-  secret: string;
-  strategy: ChallengeStrategy;
-}
+import { assertChallenge, assertDeviceSecret, getChallengeConfirmationToken } from "../../../support";
 
 const schema = Joi.object({
   certificateVerifier: Joi.string().required(),
@@ -20,17 +12,22 @@ const schema = Joi.object({
 
 export const verifyChallengeWithSecret = (ctx: IKoaDeviceContext) => async (
   options: IVerifyChallengeWithSecretOptions,
-): Promise<void> => {
+): Promise<IVerifyChallengeData> => {
   await schema.validateAsync(options);
 
   const { device, logger } = ctx;
   const { certificateVerifier, challengeId, secret, strategy } = options;
 
-  await assertChallenge(ctx)({ challengeId, certificateVerifier, strategy });
+  const challenge = await assertChallenge(ctx)({ challengeId, certificateVerifier, strategy });
+
   await assertDeviceSecret(device, secret);
 
   logger.debug("certificate challenge with secret verified", {
     accountId: device.accountId,
     deviceId: device.id,
   });
+
+  return {
+    challengeConfirmation: getChallengeConfirmationToken(ctx)({ challenge, device }),
+  };
 };

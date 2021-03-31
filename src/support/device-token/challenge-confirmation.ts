@@ -1,4 +1,4 @@
-import { Audience, ChallengeScope } from "../../enum";
+import { Audience } from "../../enum";
 import { Challenge, Device } from "../../entity";
 import { IKoaDeviceContext } from "../../typing";
 import { config } from "../../config";
@@ -6,18 +6,17 @@ import { config } from "../../config";
 export interface IGetChallengeTokenOptions {
   challenge: Challenge;
   device: Device;
-  scope: ChallengeScope;
 }
 
 export const getChallengeConfirmationToken = (ctx: IKoaDeviceContext) => (options: IGetChallengeTokenOptions) => {
   const { issuer, logger, metadata } = ctx;
-  const { challenge, device, scope } = options;
+  const { challenge, device } = options;
 
   logger.debug("creating challenge confirmation token", {
     client: metadata.clientId,
     device: device.id,
     account: device.accountId,
-    scope,
+    scope: challenge.scope,
   });
 
   return issuer.device.sign({
@@ -26,7 +25,7 @@ export const getChallengeConfirmationToken = (ctx: IKoaDeviceContext) => (option
     clientId: metadata.clientId,
     deviceId: device.id,
     expiry: config.CHALLENGE_CONFIRMATION_EXPIRY,
-    scope: [scope],
+    scope: [challenge.scope],
     subject: device.accountId,
   });
 };
