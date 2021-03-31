@@ -8,6 +8,7 @@ export const repositoryMiddleware = async (ctx: IKoaDeviceContext, next: TNext):
   const db = await mongo.getDatabase();
 
   ctx.repository = {
+    ...ctx.repository,
     device: new DeviceRepository({ db, logger }),
   };
 

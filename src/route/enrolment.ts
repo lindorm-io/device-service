@@ -1,13 +1,12 @@
-import { BEARER_AUTH_MW_OPTIONS } from "../config";
 import { HttpStatus } from "@lindorm-io/core";
 import { IKoaDeviceContext } from "../typing";
 import { Router } from "@lindorm-io/koa";
-import { bearerAuthMiddleware } from "@lindorm-io/koa-bearer-auth";
 import { concludeEnrolment, initialiseEnrolment } from "../action";
+import { bearerAuthMiddleware } from "../middleware";
 
 export const router = new Router();
 
-router.use(bearerAuthMiddleware(BEARER_AUTH_MW_OPTIONS));
+router.use(bearerAuthMiddleware);
 
 router.post(
   "/initialise",

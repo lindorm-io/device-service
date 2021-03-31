@@ -8,9 +8,10 @@ export const developmentConfig: IConfigurationData = {
   BASIC_AUTH_USERNAME: "secret",
   BASIC_AUTH_PASSWORD: "secret",
 
-  JWT_ISSUER: "https://dev.authentication.lindorm.io",
+  AUTH_JWT_ISSUER: "https://dev.authentication.lindorm.io",
+  AUTH_WEB_KEY_HOST: "http://localhost:3001",
 
-  WEB_KEY_HOST: "http://localhost:3001",
+  DEVICE_JWT_ISSUER: "https://dev.device.lindorm.io",
 
   CRYPTO_AES_SECRET: "secret",
   CRYPTO_SHA_SECRET: "secret",

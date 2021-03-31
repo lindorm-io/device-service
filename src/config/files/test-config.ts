@@ -8,9 +8,10 @@ export const testConfig: IConfigurationData = {
   BASIC_AUTH_USERNAME: "secret",
   BASIC_AUTH_PASSWORD: "secret",
 
-  JWT_ISSUER: "https://test.authentication.lindorm.io",
+  AUTH_JWT_ISSUER: "https://test.authentication.lindorm.io",
+  AUTH_WEB_KEY_HOST: "https://test.authentication.lindorm.io",
 
-  WEB_KEY_HOST: "https://test.authentication.lindorm.io",
+  DEVICE_JWT_ISSUER: "https://test.device.lindorm.io",
 
   CRYPTO_AES_SECRET: "secret",
   CRYPTO_SHA_SECRET: "secret",

@@ -1,5 +1,4 @@
 import dotenv from "dotenv";
-import { Audience } from "../enum";
 import { ConfigHandler } from "./ConfigHandler";
 import { MongoConnectionType } from "@lindorm-io/mongo";
 import { NodeEnvironment } from "@lindorm-io/koa-config";
@@ -17,37 +16,12 @@ const handler = new ConfigHandler({
 });
 
 export const { NODE_ENVIRONMENT } = environmentConfig;
-const config = handler.get(process.env.NODE_ENV);
-
-export const SERVER_PORT = config.SERVER_PORT;
-export const HOST = config.HOST;
-
 export const IS_TEST = NODE_ENVIRONMENT === NodeEnvironment.TEST;
+export const config = handler.get(process.env.NODE_ENV);
 
-export const BASIC_AUTH_MW_OPTIONS = {
+export const BASIC_AUTH_CLIENTS = {
   clients: [{ username: config.BASIC_AUTH_USERNAME, password: config.BASIC_AUTH_PASSWORD }],
 };
-
-export const BEARER_AUTH_MW_OPTIONS = {
-  audience: Audience.ACCESS,
-  issuer: config.JWT_ISSUER,
-};
-
-export const TOKEN_ISSUER_MW_OPTIONS = {
-  issuer: config.JWT_ISSUER,
-};
-
-export const WEB_KEY_MW_OPTIONS = {
-  host: config.WEB_KEY_HOST,
-};
-
-export const CRYPTO_PASSWORD_OPTIONS = {
-  aesSecret: config.CRYPTO_AES_SECRET,
-  shaSecret: config.CRYPTO_SHA_SECRET,
-};
-
-export const ENROLMENT_EXPIRY = config.ENROLMENT_EXPIRY;
-export const CHALLENGE_EXPIRY = config.CHALLENGE_EXPIRY;
 
 export const REDIS_CONNECTION_OPTIONS = {
   type: RedisConnectionType.CACHE,

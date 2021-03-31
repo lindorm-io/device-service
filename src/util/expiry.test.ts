@@ -1,5 +1,5 @@
 import MockDate from "mockdate";
-import { CHALLENGE_EXPIRY, ENROLMENT_EXPIRY } from "../config";
+import { config } from "../config";
 import { getExpiryDate } from "./expiry";
 
 jest.mock("uuid", () => ({
@@ -10,10 +10,10 @@ MockDate.set("2020-01-01 08:00:00.000");
 
 describe("getExpiryDate", () => {
   test("should return a modified date for authorization token", () => {
-    expect(getExpiryDate(CHALLENGE_EXPIRY)).toMatchSnapshot();
+    expect(getExpiryDate(config.CHALLENGE_EXPIRY)).toMatchSnapshot();
   });
 
   test("should return a modified date for refresh token", () => {
-    expect(getExpiryDate(ENROLMENT_EXPIRY)).toMatchSnapshot();
+    expect(getExpiryDate(config.ENROLMENT_EXPIRY)).toMatchSnapshot();
   });
 });

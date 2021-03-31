@@ -11,9 +11,10 @@ export const environmentConfig: IConfigurationData = {
   BASIC_AUTH_USERNAME: process.env.BASIC_AUTH_USERNAME,
   BASIC_AUTH_PASSWORD: process.env.BASIC_AUTH_PASSWORD,
 
-  JWT_ISSUER: process.env.JWT_ISSUER,
+  AUTH_JWT_ISSUER: process.env.AUTH_JWT_ISSUER,
+  AUTH_WEB_KEY_HOST: process.env.AUTH_WEB_KEY_HOST,
 
-  WEB_KEY_HOST: process.env.JWKS_HOST,
+  DEVICE_JWT_ISSUER: process.env.DEVICE_JWT_ISSUER,
 
   CRYPTO_AES_SECRET: process.env.CRYPTO_AES_SECRET,
   CRYPTO_SHA_SECRET: process.env.CRYPTO_SHA_SECRET,

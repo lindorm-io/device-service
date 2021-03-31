@@ -1,3 +1,4 @@
+export * from "./get-devices";
 export * from "./remove-device";
 export * from "./update-device-name";
 export * from "./update-device-pin";

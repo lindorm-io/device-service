@@ -1,9 +1,12 @@
-import { CRYPTO_PASSWORD_OPTIONS } from "../../config";
+import { config } from "../../config";
 import { CryptoPassword } from "@lindorm-io/crypto";
 import { Device } from "../../entity";
 import { InvalidDevicePINError } from "../../error/InvalidDevicePINError";
 
-const crypto = new CryptoPassword(CRYPTO_PASSWORD_OPTIONS);
+const crypto = new CryptoPassword({
+  aesSecret: config.CRYPTO_AES_SECRET,
+  shaSecret: config.CRYPTO_SHA_SECRET,
+});
 
 export const encryptDevicePIN = async (pin: string): Promise<string> => {
   return await crypto.encrypt(pin);

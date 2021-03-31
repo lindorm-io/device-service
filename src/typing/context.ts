@@ -5,21 +5,31 @@ import { ITokenIssuerVerifyData, TokenIssuer } from "@lindorm-io/jwt";
 import { Keystore } from "@lindorm-io/key-pair";
 import { MongoConnection } from "@lindorm-io/mongo";
 import { RedisConnection } from "@lindorm-io/redis";
+import { KeyPairCache, KeyPairRepository } from "@lindorm-io/koa-keystore";
 
 export interface IKoaDeviceContext extends IKoaAppContext {
   cache: {
     challenge: ChallengeCache;
     enrolment: EnrolmentCache;
+    keyPair: {
+      auth: KeyPairCache;
+      device: KeyPairCache;
+    };
   };
   device: Device;
   issuer: {
-    tokenIssuer: TokenIssuer;
+    auth: TokenIssuer;
+    device: TokenIssuer;
   };
-  keystore: Keystore;
+  keystore: {
+    auth: Keystore;
+    device: Keystore;
+  };
   mongo: MongoConnection;
   redis: RedisConnection;
   repository: {
     device: DeviceRepository;
+    keyPair: KeyPairRepository;
   };
   token: {
     bearer?: ITokenIssuerVerifyData;

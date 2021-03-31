@@ -1,8 +1,8 @@
-import { IKoaDeviceContext } from "../../typing";
 import { Enrolment } from "../../entity";
-import { getRandomValue } from "@lindorm-io/core";
+import { IKoaDeviceContext } from "../../typing";
+import { config } from "../../config";
 import { getExpiryDate } from "../../util";
-import { ENROLMENT_EXPIRY } from "../../config";
+import { getRandomValue } from "@lindorm-io/core";
 
 interface ICreateEnrolmentOptions {
   accountId: string;
@@ -22,7 +22,7 @@ export const createEnrolment = (ctx: IKoaDeviceContext) => async (
     new Enrolment({
       accountId,
       certificateChallenge: getRandomValue(64),
-      expires: getExpiryDate(ENROLMENT_EXPIRY),
+      expires: getExpiryDate(config.ENROLMENT_EXPIRY),
       macAddress,
       name,
       publicKey,

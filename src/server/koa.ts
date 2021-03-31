@@ -1,26 +1,53 @@
 import { KoaApp } from "@lindorm-io/koa";
-import { SERVER_PORT, TOKEN_ISSUER_MW_OPTIONS } from "../config";
-import { appRoute, deviceRoute, enrolmentRoute, headlessRoute } from "../route";
-import { getMongoMiddleware, getWebKeyMiddleware, repositoryMiddleware } from "../middleware";
-import { tokenIssuerMiddleware } from "@lindorm-io/koa-jwt";
+import { config, IS_TEST } from "../config";
+import { deviceRoute, enrolmentRoute, headlessRoute } from "../route";
+import { authJwksCacheWorker, keyPairCacheWorker } from "../worker";
+import { keyPairRepositoryMiddleware } from "@lindorm-io/koa-keystore";
 import { winston } from "../logger";
-import { getRedisMiddleware } from "../middleware/redis-middleware";
-import { cacheMiddleware } from "../middleware/cache-middleware";
+import {
+  cacheMiddleware,
+  redisMiddleware,
+  authKeyPairCacheMiddleware,
+  authKeystoreMiddleware,
+  authTokenIssuerMiddleware,
+  deviceKeyPairCacheMiddleware,
+  deviceKeystoreMiddleware,
+  deviceTokenIssuerMiddleware,
+  mongoMiddleware,
+  repositoryMiddleware,
+} from "../middleware";
 
 export const koa = new KoaApp({
   logger: winston,
-  port: SERVER_PORT,
+  port: config.SERVER_PORT,
 });
 
-koa.addMiddleware(getMongoMiddleware());
+// mongo
+koa.addMiddleware(mongoMiddleware);
+koa.addMiddleware(keyPairRepositoryMiddleware);
 koa.addMiddleware(repositoryMiddleware);
 
-koa.addMiddleware(getRedisMiddleware());
+// redis
+koa.addMiddleware(redisMiddleware);
+koa.addMiddleware(authKeyPairCacheMiddleware);
+koa.addMiddleware(deviceKeyPairCacheMiddleware);
 koa.addMiddleware(cacheMiddleware);
-koa.addMiddleware(getWebKeyMiddleware());
-koa.addMiddleware(tokenIssuerMiddleware(TOKEN_ISSUER_MW_OPTIONS));
 
-koa.addRoute("/", appRoute);
+// auth tokens
+koa.addMiddleware(authKeystoreMiddleware);
+koa.addMiddleware(authTokenIssuerMiddleware);
+
+// device tokens
+koa.addMiddleware(deviceKeystoreMiddleware);
+koa.addMiddleware(deviceTokenIssuerMiddleware);
+
+// routes
 koa.addRoute("/device", deviceRoute);
 koa.addRoute("/enrolment", enrolmentRoute);
 koa.addRoute("/headless", headlessRoute);
+
+// workers
+if (!IS_TEST) {
+  koa.addWorker(authJwksCacheWorker);
+  koa.addWorker(keyPairCacheWorker);
+}

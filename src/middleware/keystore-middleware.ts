@@ -1,10 +1,10 @@
-import { Middleware } from "koa";
-import { WEB_KEY_MW_OPTIONS, IS_TEST } from "../config";
-import { inMemoryKeys } from "../test";
-import { jsonWebKeySetMiddleware } from "@lindorm-io/koa-jwks";
+import { cacheKeystoreMiddleware } from "@lindorm-io/koa-keystore";
+import { AUTH_KEYSTORE_NAME, DEVICE_KEYSTORE_NAME } from "../constant";
 
-export const getWebKeyMiddleware = (): Middleware =>
-  jsonWebKeySetMiddleware({
-    ...WEB_KEY_MW_OPTIONS,
-    inMemoryKeys: IS_TEST ? inMemoryKeys : undefined,
-  });
+export const authKeystoreMiddleware = cacheKeystoreMiddleware({
+  keystoreName: AUTH_KEYSTORE_NAME,
+});
+
+export const deviceKeystoreMiddleware = cacheKeystoreMiddleware({
+  keystoreName: DEVICE_KEYSTORE_NAME,
+});

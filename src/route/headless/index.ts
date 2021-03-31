@@ -1,4 +1,4 @@
-import { BASIC_AUTH_MW_OPTIONS } from "../../config";
+import { BASIC_AUTH_CLIENTS } from "../../config";
 import { HttpStatus } from "@lindorm-io/core";
 import { IKoaDeviceContext } from "../../typing";
 import { Router } from "@lindorm-io/koa";
@@ -7,7 +7,7 @@ import { router as challengeRoute } from "./challenge";
 
 export const router = new Router();
 
-router.use(basicAuthMiddleware(BASIC_AUTH_MW_OPTIONS));
+router.use(basicAuthMiddleware(BASIC_AUTH_CLIENTS));
 
 router.use("/challenge", challengeRoute.routes(), challengeRoute.allowedMethods());
 

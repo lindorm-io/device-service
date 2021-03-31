@@ -34,7 +34,7 @@ describe("/device", () => {
     resetStore();
   });
 
-  test("POST /headless/challenge - should successfully verify device challenge", async () => {
+  test.only("POST /headless/challenge - should successfully verify device challenge", async () => {
     const initialiseResponse = await request(koa.callback())
       .post("/headless/challenge/initialise")
       .set("Authorization", `Basic ${basicAuth}`)

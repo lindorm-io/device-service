@@ -12,9 +12,12 @@ export interface IConfigurationData extends IConfigurationDataBase {
   CRYPTO_AES_SECRET: string;
   CRYPTO_SHA_SECRET: string;
 
-  // Tokens
-  JWT_ISSUER: string;
-  WEB_KEY_HOST: string;
+  // Auth Tokens
+  AUTH_JWT_ISSUER: string;
+  AUTH_WEB_KEY_HOST: string;
+
+  // Device Tokens
+  DEVICE_JWT_ISSUER: string;
 
   // Expiry
   ENROLMENT_EXPIRY: string;

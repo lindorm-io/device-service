@@ -1,5 +1,5 @@
 import { Logger, LogLevel } from "@lindorm-io/winston";
-import { NODE_ENVIRONMENT } from "../config";
+import { IS_TEST, NODE_ENVIRONMENT } from "../config";
 import { NodeEnvironment } from "@lindorm-io/koa-config";
 import { join } from "path";
 import { readFileSync } from "fs";
@@ -11,7 +11,7 @@ const { name, version } = JSON.parse(pkg);
 export const winston = new Logger({
   packageName: name,
   packageVersion: version,
-  test: NODE_ENVIRONMENT === NodeEnvironment.TEST,
+  test: IS_TEST,
 });
 
 if (NODE_ENVIRONMENT === NodeEnvironment.PRODUCTION) {

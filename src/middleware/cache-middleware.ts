@@ -1,6 +1,6 @@
 import { IKoaDeviceContext, TNext } from "../typing";
 import { ChallengeCache, EnrolmentCache } from "../infrastructure";
-import { CHALLENGE_EXPIRY, ENROLMENT_EXPIRY } from "../config";
+import { config } from "../config";
 import { stringToSeconds } from "@lindorm-io/core";
 
 export const cacheMiddleware = async (ctx: IKoaDeviceContext, next: TNext): Promise<void> => {
@@ -13,12 +13,12 @@ export const cacheMiddleware = async (ctx: IKoaDeviceContext, next: TNext): Prom
     ...ctx.cache,
     challenge: new ChallengeCache({
       client,
-      expiresInSeconds: stringToSeconds(CHALLENGE_EXPIRY) + 60,
+      expiresInSeconds: stringToSeconds(config.CHALLENGE_EXPIRY) + 60,
       logger,
     }),
     enrolment: new EnrolmentCache({
       client,
-      expiresInSeconds: stringToSeconds(ENROLMENT_EXPIRY) + 60,
+      expiresInSeconds: stringToSeconds(config.ENROLMENT_EXPIRY) + 60,
       logger,
     }),
   };

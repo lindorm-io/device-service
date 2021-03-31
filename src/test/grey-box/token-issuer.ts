@@ -1,9 +1,9 @@
 import { Audience } from "../../enum";
 import { Permission, Scope } from "@lindorm-io/jwt";
-import { TEST_ACCOUNT_ID, TEST_TOKEN_ISSUER } from "./setup-integration";
+import { TEST_ACCOUNT_ID, TEST_AUTH_TOKEN_ISSUER } from "./setup-integration";
 
 export const generateAccessToken = (): string => {
-  const { token } = TEST_TOKEN_ISSUER.sign({
+  const { token } = TEST_AUTH_TOKEN_ISSUER.sign({
     audience: Audience.ACCESS,
     expiry: "2 minutes",
     permission: Permission.USER,

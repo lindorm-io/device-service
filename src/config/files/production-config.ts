@@ -8,9 +8,10 @@ export const productionConfig: IConfigurationData = {
   BASIC_AUTH_USERNAME: null,
   BASIC_AUTH_PASSWORD: null,
 
-  JWT_ISSUER: "https://authentication.lindorm.io",
+  AUTH_JWT_ISSUER: "https://authentication.lindorm.io",
+  AUTH_WEB_KEY_HOST: "https://authentication.lindorm.io",
 
-  WEB_KEY_HOST: "https://authentication.lindorm.io",
+  DEVICE_JWT_ISSUER: "https://device.lindorm.io",
 
   CRYPTO_AES_SECRET: null,
   CRYPTO_SHA_SECRET: null,

@@ -5,7 +5,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "noImplicitAny": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "outDir": "dist",
     "preserveConstEnums": true,
     "removeComments": true,
