@@ -11,7 +11,7 @@ import {
   setupIntegration,
   resetCache,
 } from "../grey-box";
-import { ChallengeStrategy } from "../../enum";
+import { ChallengeScope, ChallengeStrategy } from "../../enum";
 
 MockDate.set("2020-01-01 08:00:00.000");
 
@@ -44,6 +44,7 @@ describe("/device", () => {
       .send({
         account_id: device.accountId,
         device_id: device.id,
+        scope: ChallengeScope.SIGN_IN,
         strategy: ChallengeStrategy.PIN,
       })
       .expect(201);

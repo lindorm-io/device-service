@@ -11,5 +11,6 @@ export const schema = Joi.object({
   certificateChallenge: JOI_CERTIFICATE_CHALLENGE,
   deviceId: Joi.string().guid().required(),
   expires: Joi.date().required(),
+  scope: Joi.string().required(),
   strategy: JOI_STRATEGY,
 });

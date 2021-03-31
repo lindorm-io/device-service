@@ -1,7 +1,7 @@
 import MockDate from "mockdate";
 import { getTestDevice, logger } from "../../../test";
 import { initialiseChallenge } from "./initialise";
-import { ChallengeStrategy } from "../../../enum";
+import { ChallengeScope, ChallengeStrategy } from "../../../enum";
 
 jest.mock("../../../support", () => ({
   createChallenge: jest.fn(() => () => ({
@@ -30,6 +30,7 @@ describe("initialiseCertificateChallenge", () => {
   test("should initialise device challenge", async () => {
     await expect(
       initialiseChallenge(ctx)({
+        scope: ChallengeScope.SIGN_IN,
         strategy: ChallengeStrategy.IMPLICIT,
       }),
     ).resolves.toMatchSnapshot();

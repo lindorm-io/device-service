@@ -12,9 +12,9 @@ router.use(deviceMiddleware);
 router.post(
   "/initialise",
   async (ctx: IKoaDeviceContext): Promise<void> => {
-    const { strategy } = ctx.request.body;
+    const { scope, strategy } = ctx.request.body;
 
-    ctx.body = await initialiseChallenge(ctx)({ strategy });
+    ctx.body = await initialiseChallenge(ctx)({ scope, strategy });
     ctx.status = HttpStatus.Success.CREATED;
   },
 );

@@ -35,6 +35,7 @@ export class ChallengeCache extends CacheBase<Challenge> implements IChallengeCa
       certificateChallenge: entity.certificateChallenge,
       deviceId: entity.deviceId,
       expires: entity.expires,
+      scope: entity.scope,
       strategy: entity.strategy,
     };
   }

@@ -1,8 +1,8 @@
 import MockDate from "mockdate";
-import { getTestCache, inMemoryCache } from "../../test";
-import { createChallenge } from "./create-challenge";
-import { ChallengeStrategy } from "../../enum";
+import { ChallengeScope, ChallengeStrategy } from "../../enum";
 import { Device } from "../../entity";
+import { createChallenge } from "./create-challenge";
+import { getTestCache, inMemoryCache } from "../../test";
 
 jest.mock("uuid", () => ({
   v4: () => "bc54a8e9-3246-4cad-8244-0a1a42c914cd",
@@ -32,7 +32,12 @@ describe("createChallenge", () => {
   });
 
   test("should create a challenge", async () => {
-    await expect(createChallenge(ctx)({ strategy: ChallengeStrategy.IMPLICIT })).resolves.toMatchSnapshot();
+    await expect(
+      createChallenge(ctx)({
+        scope: ChallengeScope.SIGN_IN,
+        strategy: ChallengeStrategy.IMPLICIT,
+      }),
+    ).resolves.toMatchSnapshot();
     expect(inMemoryCache).toMatchSnapshot();
   });
 });

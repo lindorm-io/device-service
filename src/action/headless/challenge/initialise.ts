@@ -1,10 +1,11 @@
 import Joi from "@hapi/joi";
-import { ChallengeStrategy } from "../../../enum";
+import { ChallengeScope, ChallengeStrategy } from "../../../enum";
 import { IKoaDeviceContext } from "../../../typing";
 import { JOI_STRATEGY } from "../../../constant";
 import { createChallenge } from "../../../support";
 
 interface IInitialiseChallengeOptions {
+  scope: ChallengeScope;
   strategy: ChallengeStrategy;
 }
 
@@ -15,6 +16,7 @@ interface IInitialiseChallengeData {
 }
 
 const schema = Joi.object({
+  scope: Joi.string().required(),
   strategy: JOI_STRATEGY,
 });
 
@@ -24,9 +26,9 @@ export const initialiseChallenge = (ctx: IKoaDeviceContext) => async (
   await schema.validateAsync(options);
 
   const { device, logger } = ctx;
-  const { strategy } = options;
+  const { scope, strategy } = options;
 
-  const challenge = await createChallenge(ctx)({ strategy });
+  const challenge = await createChallenge(ctx)({ scope, strategy });
 
   logger.debug("certificate challenge initialised", {
     deviceId: device.id,
