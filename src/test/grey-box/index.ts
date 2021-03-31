@@ -4,6 +4,7 @@ export * from "./test-cache";
 export * from "./test-challenge";
 export * from "./test-device";
 export * from "./test-enrolment";
+export * from "./test-issuer";
 export * from "./test-key-pair";
 export * from "./test-logger";
 export * from "./test-mongo";

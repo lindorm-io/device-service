@@ -33,6 +33,7 @@ Object {
     "AUTH_WEB_KEY_HOST": "https://test.authentication.lindorm.io",
     "BASIC_AUTH_PASSWORD": "secret",
     "BASIC_AUTH_USERNAME": "secret",
+    "CHALLENGE_CONFIRMATION_EXPIRY": "10 minutes",
     "CHALLENGE_EXPIRY": "15 minutes",
     "CRYPTO_AES_SECRET": "secret",
     "CRYPTO_SHA_SECRET": "secret",

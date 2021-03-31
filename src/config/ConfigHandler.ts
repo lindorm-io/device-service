@@ -22,6 +22,7 @@ export interface IConfigurationData extends IConfigurationDataBase {
   // Expiry
   ENROLMENT_EXPIRY: string;
   CHALLENGE_EXPIRY: string;
+  CHALLENGE_CONFIRMATION_EXPIRY: string;
 
   // Infrastructure
   REDIS_PORT: number;

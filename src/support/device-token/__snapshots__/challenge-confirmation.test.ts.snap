@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getChallengeConfirmationToken should return a challenge confirmation token 1`] = `
+Object {
+  "expires": 1577862600,
+  "expiresIn": 600,
+  "id": "eb14da97-6c96-4833-8046-54d1697d7a49",
+  "token": Object {
+    "aud": "challenge_confirmation",
+    "cid": "clientId",
+    "did": "d9b9adec-81fa-4ea0-8cf3-44ccd4fe5162",
+    "exp": 1577862600,
+    "iat": 1577862000,
+    "iss": "https://test.device.lindorm.io",
+    "jti": "eb14da97-6c96-4833-8046-54d1697d7a49",
+    "nbf": 1577862000,
+    "sco": "sign_in",
+    "sub": "51cc7c03-3f86-44ae-8be2-5fcf5536c08b",
+  },
+}
+`;

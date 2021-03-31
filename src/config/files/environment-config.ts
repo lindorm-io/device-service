@@ -21,6 +21,7 @@ export const environmentConfig: IConfigurationData = {
 
   ENROLMENT_EXPIRY: process.env.ENROLMENT_EXPIRY,
   CHALLENGE_EXPIRY: process.env.CHALLENGE_EXPIRY,
+  CHALLENGE_CONFIRMATION_EXPIRY: process.env.CHALLENGE_CONFIRMATION_EXPIRY,
 
   REDIS_PORT: process.env.REDIS_PORT ? parseInt(process.env.REDIS_PORT, 10) : null,
 

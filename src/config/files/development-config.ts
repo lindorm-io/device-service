@@ -18,6 +18,7 @@ export const developmentConfig: IConfigurationData = {
 
   ENROLMENT_EXPIRY: "5 minutes",
   CHALLENGE_EXPIRY: "15 minutes",
+  CHALLENGE_CONFIRMATION_EXPIRY: "10 minutes",
 
   REDIS_PORT: 6379,
 
