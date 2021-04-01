@@ -29,7 +29,6 @@ describe("verifyChallengeImplicit", () => {
     await expect(
       verifyChallengeImplicit(ctx)({
         certificateVerifier: "certificateVerifier",
-        challengeId: "eb14da97-6c96-4833-8046-54d1697d7a49",
         strategy: ChallengeStrategy.IMPLICIT,
       }),
     ).resolves.toMatchSnapshot();

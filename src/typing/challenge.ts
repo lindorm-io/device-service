@@ -14,7 +14,6 @@ export interface IInitialiseChallengeData {
 
 export interface IVerifyChallengeOptions {
   certificateVerifier: string;
-  challengeId: string;
   strategy: ChallengeStrategy;
 }
 

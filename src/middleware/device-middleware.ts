@@ -1,6 +1,7 @@
 import Joi from "@hapi/joi";
-import { IKoaDeviceContext, TNext } from "../typing";
+import { IKoaDeviceContext } from "../typing";
 import { InvalidDeviceError, InvalidPermissionError } from "../error";
+import { TNext } from "@lindorm-io/koa";
 import { stringComparison } from "@lindorm-io/core";
 
 const schema = Joi.object({
@@ -17,13 +18,11 @@ export const deviceMiddleware = async (ctx: IKoaDeviceContext, next: TNext): Pro
   await schema.validateAsync({ accountId, deviceId });
 
   try {
-    const device = await repository.device.find({ id: deviceId });
+    ctx.device = await repository.device.find({ id: deviceId });
 
-    if (!stringComparison(device.accountId, accountId)) {
+    if (!stringComparison(ctx.device.accountId, accountId)) {
       throw new InvalidPermissionError();
     }
-
-    ctx.device = device;
 
     logger.debug("device found", { deviceId });
   } catch (err) {

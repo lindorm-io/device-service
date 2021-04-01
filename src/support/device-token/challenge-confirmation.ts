@@ -1,16 +1,9 @@
 import { Audience } from "../../enum";
-import { Challenge, Device } from "../../entity";
 import { IKoaDeviceContext } from "../../typing";
 import { config } from "../../config";
 
-export interface IGetChallengeTokenOptions {
-  challenge: Challenge;
-  device: Device;
-}
-
-export const getChallengeConfirmationToken = (ctx: IKoaDeviceContext) => (options: IGetChallengeTokenOptions) => {
-  const { issuer, logger, metadata } = ctx;
-  const { challenge, device } = options;
+export const getChallengeConfirmationToken = (ctx: IKoaDeviceContext) => () => {
+  const { challenge, device, issuer, logger, metadata } = ctx;
 
   logger.debug("creating challenge confirmation token", {
     client: metadata.clientId,

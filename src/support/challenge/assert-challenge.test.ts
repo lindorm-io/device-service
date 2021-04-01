@@ -15,6 +15,9 @@ describe("assertChallenge", () => {
   beforeEach(async () => {
     ctx = {
       cache: await getTestCache(),
+      challenge: getTestChallenge({
+        strategy: ChallengeStrategy.SECRET,
+      }),
       device: await getTestDevice({
         pin: null,
         publicKey: getTestKeyPairRSA().publicKey,
@@ -22,11 +25,8 @@ describe("assertChallenge", () => {
         secret: null,
       }),
     };
-    challenge = await ctx.cache.challenge.create(
-      getTestChallenge({
-        strategy: ChallengeStrategy.SECRET,
-      }),
-    );
+
+    challenge = await ctx.cache.challenge.create(ctx.challenge);
     handler = new KeyPairHandler({
       algorithm: "RS512",
       passphrase: "",
@@ -39,9 +39,8 @@ describe("assertChallenge", () => {
     await expect(
       assertChallenge(ctx)({
         certificateVerifier: handler.sign(challenge.certificateChallenge),
-        challengeId: challenge.id,
         strategy: ChallengeStrategy.SECRET,
       }),
-    ).resolves.toMatchSnapshot();
+    ).resolves.toBe(undefined);
   });
 });

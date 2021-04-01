@@ -1,5 +1,6 @@
 export * from "./bearer-auth-middleware";
 export * from "./cache-middleware";
+export * from "./challenge-middleware";
 export * from "./device-middleware";
 export * from "./key-pair-cache-middleware";
 export * from "./keystore-middleware";

@@ -30,7 +30,6 @@ describe("verifyChallengeWithPin", () => {
     await expect(
       verifyChallengeWithPin(ctx)({
         certificateVerifier: "certificateVerifier",
-        challengeId: "eb14da97-6c96-4833-8046-54d1697d7a49",
         pin: "123456",
         strategy: ChallengeStrategy.PIN,
       }),

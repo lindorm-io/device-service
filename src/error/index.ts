@@ -1,5 +1,6 @@
 export * from "./InvalidCertificateVerifierError";
 export * from "./ExpiredChallengeError";
+export * from "./InvalidChallengeError";
 export * from "./InvalidDeviceError";
 export * from "./InvalidDevicePINError";
 export * from "./InvalidDeviceSecretError";

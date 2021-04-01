@@ -37,7 +37,6 @@ describe("verifyChallengeWithRecoveryKey", () => {
     await expect(
       verifyChallengeWithRecoveryKey(ctx)({
         certificateVerifier: "certificateVerifier",
-        challengeId: "eb14da97-6c96-4833-8046-54d1697d7a49",
         recoveryKey: "123456-123456-123456",
         strategy: ChallengeStrategy.RECOVERY,
       }),

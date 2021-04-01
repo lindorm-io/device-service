@@ -5,7 +5,6 @@ import { assertChallenge, assertDevicePIN, getChallengeConfirmationToken } from 
 
 const schema = Joi.object({
   certificateVerifier: Joi.string().required(),
-  challengeId: Joi.string().guid().required(),
   pin: Joi.string().length(6).required(),
   strategy: JOI_STRATEGY,
 });
@@ -16,10 +15,9 @@ export const verifyChallengeWithPin = (ctx: IKoaDeviceContext) => async (
   await schema.validateAsync(options);
 
   const { device, logger } = ctx;
-  const { certificateVerifier, challengeId, pin, strategy } = options;
+  const { certificateVerifier, pin, strategy } = options;
 
-  const challenge = await assertChallenge(ctx)({ challengeId, certificateVerifier, strategy });
-
+  await assertChallenge(ctx)({ certificateVerifier, strategy });
   await assertDevicePIN(device, pin);
 
   logger.debug("certificate challenge with pin verified", {
@@ -28,6 +26,6 @@ export const verifyChallengeWithPin = (ctx: IKoaDeviceContext) => async (
   });
 
   return {
-    challengeConfirmation: getChallengeConfirmationToken(ctx)({ challenge, device }),
+    challengeConfirmation: getChallengeConfirmationToken(ctx)(),
   };
 };

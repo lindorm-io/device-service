@@ -5,7 +5,6 @@ import { assertChallenge, getChallengeConfirmationToken } from "../../support";
 
 const schema = Joi.object({
   certificateVerifier: Joi.string().required(),
-  challengeId: Joi.string().guid().required(),
   strategy: JOI_STRATEGY,
 });
 
@@ -15,9 +14,9 @@ export const verifyChallengeImplicit = (ctx: IKoaDeviceContext) => async (
   await schema.validateAsync(options);
 
   const { device, logger } = ctx;
-  const { challengeId, certificateVerifier, strategy } = options;
+  const { certificateVerifier, strategy } = options;
 
-  const challenge = await assertChallenge(ctx)({ challengeId, certificateVerifier, strategy });
+  await assertChallenge(ctx)({ certificateVerifier, strategy });
 
   logger.debug("certificate challenge verified", {
     accountId: device.accountId,
@@ -25,6 +24,6 @@ export const verifyChallengeImplicit = (ctx: IKoaDeviceContext) => async (
   });
 
   return {
-    challengeConfirmation: getChallengeConfirmationToken(ctx)({ challenge, device }),
+    challengeConfirmation: getChallengeConfirmationToken(ctx)(),
   };
 };

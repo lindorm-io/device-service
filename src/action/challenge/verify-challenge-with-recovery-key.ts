@@ -14,7 +14,6 @@ import {
 
 const schema = Joi.object({
   certificateVerifier: Joi.string().required(),
-  challengeId: Joi.string().guid().required(),
   recoveryKey: Joi.string().required(),
   strategy: JOI_STRATEGY,
 });
@@ -25,10 +24,9 @@ export const verifyChallengeWithRecoveryKey = (ctx: IKoaDeviceContext) => async 
   await schema.validateAsync(options);
 
   const { device, logger, repository } = ctx;
-  const { certificateVerifier, challengeId, recoveryKey, strategy } = options;
+  const { certificateVerifier, recoveryKey, strategy } = options;
 
-  const challenge = await assertChallenge(ctx)({ challengeId, certificateVerifier, strategy });
-
+  await assertChallenge(ctx)({ certificateVerifier, strategy });
   await assertDeviceRecoveryKey(device, recoveryKey);
 
   logger.debug("certificate challenge with recovery key verified", {
@@ -43,7 +41,7 @@ export const verifyChallengeWithRecoveryKey = (ctx: IKoaDeviceContext) => async 
   await repository.device.update(device);
 
   return {
-    challengeConfirmation: getChallengeConfirmationToken(ctx)({ challenge, device }),
+    challengeConfirmation: getChallengeConfirmationToken(ctx)(),
     recoveryKeys,
   };
 };

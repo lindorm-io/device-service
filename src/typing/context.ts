@@ -1,4 +1,4 @@
-import { Device } from "../entity";
+import { Challenge, Device } from "../entity";
 import { DeviceRepository, ChallengeCache, EnrolmentCache } from "../infrastructure";
 import { IKoaAppContext } from "@lindorm-io/koa";
 import { ITokenIssuerVerifyData, TokenIssuer } from "@lindorm-io/jwt";
@@ -16,6 +16,7 @@ export interface IKoaDeviceContext extends IKoaAppContext {
       device: KeyPairCache;
     };
   };
+  challenge: Challenge;
   device: Device;
   issuer: {
     auth: TokenIssuer;

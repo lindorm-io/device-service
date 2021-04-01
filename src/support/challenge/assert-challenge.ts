@@ -1,22 +1,16 @@
 import { Algorithm, KeyPairHandler } from "@lindorm-io/key-pair";
-import { Challenge } from "../../entity";
 import { ChallengeStrategy } from "../../enum";
 import { IKoaDeviceContext } from "../../typing";
 import { InvalidCertificateVerifierError, InvalidStrategyError } from "../../error";
 
 interface IAssertChallengeOptions {
-  challengeId: string;
   certificateVerifier: string;
   strategy: ChallengeStrategy;
 }
 
-export const assertChallenge = (ctx: IKoaDeviceContext) => async (
-  options: IAssertChallengeOptions,
-): Promise<Challenge> => {
-  const { cache, device } = ctx;
-  const { challengeId, certificateVerifier, strategy } = options;
-
-  const challenge = await cache.challenge.find(challengeId);
+export const assertChallenge = (ctx: IKoaDeviceContext) => async (options: IAssertChallengeOptions): Promise<void> => {
+  const { challenge, device } = ctx;
+  const { certificateVerifier, strategy } = options;
 
   if (strategy !== challenge.strategy) {
     throw new InvalidStrategyError(strategy, challenge.strategy);
@@ -34,6 +28,4 @@ export const assertChallenge = (ctx: IKoaDeviceContext) => async (
   } catch (err) {
     throw new InvalidCertificateVerifierError(challenge.certificateChallenge, certificateVerifier);
   }
-
-  return challenge;
 };

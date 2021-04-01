@@ -30,7 +30,6 @@ describe("verifyChallengeWithSecret", () => {
     await expect(
       verifyChallengeWithSecret(ctx)({
         certificateVerifier: "certificateVerifier",
-        challengeId: "eb14da97-6c96-4833-8046-54d1697d7a49",
         secret: "secret",
         strategy: ChallengeStrategy.SECRET,
       }),
