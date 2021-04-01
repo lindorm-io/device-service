@@ -15,17 +15,7 @@ export const router = new Router();
 router.use(deviceMiddleware);
 
 router.post(
-  "/initialise",
-  async (ctx: IKoaDeviceContext): Promise<void> => {
-    const { scope, strategy } = ctx.request.body;
-
-    ctx.body = await initialiseChallenge(ctx)({ scope, strategy });
-    ctx.status = HttpStatus.Success.CREATED;
-  },
-);
-
-router.post(
-  "/verify",
+  "/",
   async (ctx: IKoaDeviceContext): Promise<void> => {
     const { certificateVerifier, challengeId, pin, secret, strategy } = ctx.request.body;
 

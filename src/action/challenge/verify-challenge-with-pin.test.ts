@@ -1,10 +1,10 @@
 import MockDate from "mockdate";
-import { ChallengeStrategy } from "../../../enum";
-import { assertChallenge, assertDevicePIN, getChallengeConfirmationToken } from "../../../support";
-import { getTestDevice, logger } from "../../../test";
+import { ChallengeStrategy } from "../../enum";
+import { assertChallenge, assertDevicePIN, getChallengeConfirmationToken } from "../../support";
+import { getTestDevice, logger } from "../../test";
 import { verifyChallengeWithPin } from "./verify-challenge-with-pin";
 
-jest.mock("../../../support", () => ({
+jest.mock("../../support", () => ({
   assertChallenge: jest.fn(() => () => {}),
   assertDevicePIN: jest.fn(),
   getChallengeConfirmationToken: jest.fn(() => () => "getChallengeConfirmationToken"),

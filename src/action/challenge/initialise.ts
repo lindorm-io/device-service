@@ -1,7 +1,7 @@
 import Joi from "@hapi/joi";
-import { IInitialiseChallengeData, IInitialiseChallengeOptions, IKoaDeviceContext } from "../../../typing";
-import { JOI_STRATEGY } from "../../../constant";
-import { createChallenge } from "../../../support";
+import { IInitialiseChallengeData, IInitialiseChallengeOptions, IKoaDeviceContext } from "../../typing";
+import { JOI_STRATEGY } from "../../constant";
+import { createChallenge } from "../../support";
 
 const schema = Joi.object({
   scope: Joi.string().required(),

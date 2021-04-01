@@ -24,7 +24,7 @@ router.post(
 );
 
 router.post(
-  "/conclude",
+  "/verify",
   async (ctx: IKoaDeviceContext): Promise<void> => {
     const { certificateVerifier, enrolmentId, pin, secret } = ctx.request.body;
 

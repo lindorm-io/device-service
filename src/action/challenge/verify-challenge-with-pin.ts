@@ -1,7 +1,7 @@
 import Joi from "@hapi/joi";
-import { IKoaDeviceContext, IVerifyChallengeData, IVerifyChallengeWithPinOptions } from "../../../typing";
-import { JOI_STRATEGY } from "../../../constant";
-import { assertChallenge, assertDevicePIN, getChallengeConfirmationToken } from "../../../support";
+import { IKoaDeviceContext, IVerifyChallengeData, IVerifyChallengeWithPinOptions } from "../../typing";
+import { JOI_STRATEGY } from "../../constant";
+import { assertChallenge, assertDevicePIN, getChallengeConfirmationToken } from "../../support";
 
 const schema = Joi.object({
   certificateVerifier: Joi.string().required(),

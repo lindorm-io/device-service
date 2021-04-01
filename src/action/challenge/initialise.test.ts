@@ -1,9 +1,9 @@
 import MockDate from "mockdate";
-import { getTestDevice, logger } from "../../../test";
+import { getTestDevice, logger } from "../../test";
 import { initialiseChallenge } from "./initialise";
-import { ChallengeScope, ChallengeStrategy } from "../../../enum";
+import { ChallengeScope, ChallengeStrategy } from "../../enum";
 
-jest.mock("../../../support", () => ({
+jest.mock("../../support", () => ({
   createChallenge: jest.fn(() => () => ({
     challengeId: "challengeId",
     certificateChallenge: "certificateChallenge",

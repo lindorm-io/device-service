@@ -58,7 +58,7 @@ describe("/enrolment", () => {
     const certificateVerifier = TEST_KEY_PAIR_HANDLER.sign(certificateChallenge);
 
     const concludeResponse = await request(koa.callback())
-      .post("/enrolment/conclude")
+      .post("/enrolment/verify")
       .set("Authorization", `Bearer ${accessToken}`)
       .set("X-Client-ID", "5c63ca22-6617-45eb-9005-7c897a25d375")
       .set("X-Correlation-ID", "5c63ca22-6617-45eb-9005-7c897a25d375")

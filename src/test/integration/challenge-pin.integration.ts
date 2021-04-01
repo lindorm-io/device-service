@@ -34,9 +34,9 @@ describe("/device", () => {
     resetStore();
   });
 
-  test("POST /headless/challenge - should successfully verify device challenge", async () => {
+  test("POST /challenge - should successfully verify device challenge", async () => {
     const initialiseResponse = await request(koa.callback())
-      .post("/headless/challenge/initialise")
+      .post("/challenge/initialise")
       .set("Authorization", `Basic ${basicAuth}`)
       .set("X-Client-ID", "5c63ca22-6617-45eb-9005-7c897a25d375")
       .set("X-Device-ID", device.id)
@@ -62,7 +62,7 @@ describe("/device", () => {
     const certificateVerifier = TEST_KEY_PAIR_HANDLER.sign(certificateChallenge);
 
     const verifyResponse = await request(koa.callback())
-      .post("/headless/challenge/verify")
+      .post("/challenge/verify")
       .set("Authorization", `Basic ${basicAuth}`)
       .set("X-Client-ID", "5c63ca22-6617-45eb-9005-7c897a25d375")
       .set("X-Device-ID", device.id)
