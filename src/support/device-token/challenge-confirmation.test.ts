@@ -1,6 +1,5 @@
 import MockDate from "mockdate";
 import { Challenge, Device } from "../../entity";
-import { ChallengeScope } from "../../enum";
 import { getChallengeConfirmationToken } from "./challenge-confirmation";
 import { getTestChallenge, getTestDevice, getTestDeviceIssuer, logger } from "../../test";
 
@@ -35,7 +34,6 @@ describe("getChallengeConfirmationToken", () => {
       getChallengeConfirmationToken(ctx)({
         challenge,
         device,
-        scope: ChallengeScope.SIGN_IN,
       }),
     ).toMatchSnapshot();
   });

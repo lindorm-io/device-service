@@ -22,10 +22,19 @@ export interface IVerifyChallengeWithPinOptions extends IVerifyChallengeOptions 
   pin: string;
 }
 
+export interface IVerifyChallengeWithRecoveryKeyOptions extends IVerifyChallengeOptions {
+  recoveryKey: string;
+}
+
 export interface IVerifyChallengeWithSecretOptions extends IVerifyChallengeOptions {
   secret: string;
 }
 
 export interface IVerifyChallengeData {
   challengeConfirmation: ITokenIssuerSignData;
+}
+
+export interface IVerifyChallengeWithRecoveryKeyData {
+  challengeConfirmation: ITokenIssuerSignData;
+  recoveryKeys: Array<string>;
 }

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`verifyCertificateChallenge should verify device challenge 1`] = `
+exports[`verifyChallengeImplicit should verify device challenge 1`] = `
 Object {
   "challengeConfirmation": "getChallengeConfirmationToken",
 }

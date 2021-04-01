@@ -12,7 +12,7 @@ export const JOI_EVENTS = Joi.array()
   .required();
 
 export const JOI_STRATEGY = Joi.string()
-  .valid(ChallengeStrategy.IMPLICIT, ChallengeStrategy.PIN, ChallengeStrategy.SECRET)
+  .valid(ChallengeStrategy.IMPLICIT, ChallengeStrategy.PIN, ChallengeStrategy.RECOVERY, ChallengeStrategy.SECRET)
   .required();
 
 export const JOI_ENCRYPTED_DATA = Joi.object({

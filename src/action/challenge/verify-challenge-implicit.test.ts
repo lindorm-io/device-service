@@ -11,12 +11,12 @@ jest.mock("../../support", () => ({
 
 MockDate.set("2020-01-01 08:00:00.000");
 
-describe("verifyCertificateChallenge", () => {
+describe("verifyChallengeImplicit", () => {
   let ctx: any;
 
   beforeEach(async () => {
     ctx = {
-      device: getTestDevice({
+      device: await getTestDevice({
         pin: null,
         recoveryKey: null,
         secret: null,

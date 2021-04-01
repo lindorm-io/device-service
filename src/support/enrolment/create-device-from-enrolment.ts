@@ -1,4 +1,4 @@
-import { Device, Enrolment, IEncryptedData } from "../../entity";
+import { Device, Enrolment } from "../../entity";
 import { IKoaDeviceContext } from "../../typing";
 import { encryptDevicePIN, encryptDeviceSecret } from "../device";
 

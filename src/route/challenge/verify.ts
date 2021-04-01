@@ -4,9 +4,9 @@ import { IKoaDeviceContext } from "../../typing";
 import { Router } from "@lindorm-io/koa";
 import { deviceMiddleware } from "../../middleware";
 import {
-  initialiseChallenge,
   verifyChallengeImplicit,
   verifyChallengeWithPin,
+  verifyChallengeWithRecoveryKey,
   verifyChallengeWithSecret,
 } from "../../action";
 
@@ -17,7 +17,7 @@ router.use(deviceMiddleware);
 router.post(
   "/",
   async (ctx: IKoaDeviceContext): Promise<void> => {
-    const { certificateVerifier, challengeId, pin, secret, strategy } = ctx.request.body;
+    const { certificateVerifier, challengeId, pin, recoveryKey, secret, strategy } = ctx.request.body;
 
     switch (strategy) {
       case ChallengeStrategy.IMPLICIT:
@@ -33,6 +33,15 @@ router.post(
           certificateVerifier,
           challengeId,
           pin,
+          strategy,
+        });
+        break;
+
+      case ChallengeStrategy.RECOVERY:
+        ctx.body = await verifyChallengeWithRecoveryKey(ctx)({
+          certificateVerifier,
+          challengeId,
+          recoveryKey,
           strategy,
         });
         break;

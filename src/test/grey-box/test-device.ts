@@ -9,7 +9,7 @@ export const getTestDevice = async ({
   name = "My iPhone 12",
   pin = "123456",
   publicKey = getTestKeyPairRSA().publicKey,
-  recoveryKey = "test_device_recovery_key",
+  recoveryKey = "123456-123456-123456",
   secret = "test_device_secret",
   uniqueId = "7e5bfe57-bc9a-4523-adc7-c9ed728d866d",
 }: {

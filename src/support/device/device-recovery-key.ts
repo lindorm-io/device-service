@@ -23,9 +23,9 @@ export const encryptDeviceRecoveryKey = async (recoveryKey: string): Promise<str
   return await crypto.encrypt(recoveryKey);
 };
 
-export const assertDeviceRecoveryKey = async (device: Device, pin: string): Promise<void> => {
+export const assertDeviceRecoveryKey = async (device: Device, recoveryKey: string): Promise<void> => {
   for (const signature of device.recoveryKeys) {
-    const verified = await crypto.verify(pin, signature);
+    const verified = await crypto.verify(recoveryKey, signature);
     if (verified) return;
   }
   throw new InvalidDeviceRecoveryKeyError(device.id);

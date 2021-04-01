@@ -1,18 +1,22 @@
 import MockDate from "mockdate";
 import { ChallengeStrategy } from "../../enum";
-import { assertChallenge, assertDeviceSecret, getChallengeConfirmationToken } from "../../support";
-import { getTestDevice, logger } from "../../test";
-import { verifyChallengeWithSecret } from "./verify-challenge-with-secret";
+import { baseHash } from "@lindorm-io/core";
+import { getTestDevice, getTestRepository, inMemoryStore, logger } from "../../test";
+import { verifyChallengeWithRecoveryKey } from "./verify-challenge-with-recovery-key";
 
 jest.mock("../../support", () => ({
   assertChallenge: jest.fn(() => () => {}),
-  assertDeviceSecret: jest.fn(),
+  assertDeviceRecoveryKey: jest.fn(),
+  createDeviceRecoveryKeys: jest.fn(() => ({
+    recoveryKeys: ["key1"],
+    signatures: [baseHash("key1")],
+  })),
   getChallengeConfirmationToken: jest.fn(() => () => "getChallengeConfirmationToken"),
 }));
 
 MockDate.set("2020-01-01 08:00:00.000");
 
-describe("verifyChallengeWithSecret", () => {
+describe("verifyChallengeWithRecoveryKey", () => {
   let ctx: any;
 
   beforeEach(async () => {
@@ -23,21 +27,22 @@ describe("verifyChallengeWithSecret", () => {
         secret: null,
       }),
       logger,
+      repository: await getTestRepository(),
     };
+
+    await ctx.repository.device.create(ctx.device);
   });
 
   test("should verify device challenge", async () => {
     await expect(
-      verifyChallengeWithSecret(ctx)({
+      verifyChallengeWithRecoveryKey(ctx)({
         certificateVerifier: "certificateVerifier",
         challengeId: "eb14da97-6c96-4833-8046-54d1697d7a49",
-        secret: "secret",
-        strategy: ChallengeStrategy.SECRET,
+        recoveryKey: "123456-123456-123456",
+        strategy: ChallengeStrategy.RECOVERY,
       }),
     ).resolves.toMatchSnapshot();
 
-    expect(assertChallenge).toHaveBeenCalled();
-    expect(assertDeviceSecret).toHaveBeenCalled();
-    expect(getChallengeConfirmationToken).toHaveBeenCalled();
+    expect(inMemoryStore).toMatchSnapshot();
   });
 });
