@@ -1,6 +1,6 @@
 import { KoaApp } from "@lindorm-io/koa";
 import { config, IS_TEST } from "../config";
-import { accountRoute, challengeRoute, deviceRoute, enrolmentRoute } from "../route";
+import { accountRoute, challengeRoute, deviceRoute, enrolmentRoute, wellKnownRoute } from "../route";
 import { authJwksCacheWorker, keyPairCacheWorker } from "../worker";
 import { keyPairRepositoryMiddleware } from "@lindorm-io/koa-keystore";
 import { winston } from "../logger";
@@ -46,6 +46,7 @@ koa.addRoute("/account", accountRoute);
 koa.addRoute("/challenge", challengeRoute);
 koa.addRoute("/device", deviceRoute);
 koa.addRoute("/enrolment", enrolmentRoute);
+koa.addRoute("/.well-known", wellKnownRoute);
 
 // workers
 if (!IS_TEST) {
