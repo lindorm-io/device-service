@@ -8,3 +8,4 @@ export * from "./mongo-middleware";
 export * from "./redis-middleware";
 export * from "./repository-middleware";
 export * from "./token-issuer-middleware";
+export * from "./token-validation-middleware";

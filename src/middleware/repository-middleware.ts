@@ -1,5 +1,6 @@
 import { DeviceRepository } from "../infrastructure";
-import { IKoaDeviceContext, TNext } from "../typing";
+import { IKoaDeviceContext } from "../typing";
+import { TNext } from "@lindorm-io/koa";
 
 export const repositoryMiddleware = async (ctx: IKoaDeviceContext, next: TNext): Promise<void> => {
   const start = Date.now();

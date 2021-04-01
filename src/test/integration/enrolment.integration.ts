@@ -23,7 +23,7 @@ describe("/enrolment", () => {
   });
 
   beforeEach(async () => {
-    accessToken = generateAccessToken();
+    accessToken = generateAccessToken({ deviceId: null });
   });
 
   afterEach(() => {

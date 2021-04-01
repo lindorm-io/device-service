@@ -1,5 +1,6 @@
-import { IKoaDeviceContext, TNext } from "../typing";
 import { ChallengeCache, EnrolmentCache } from "../infrastructure";
+import { IKoaDeviceContext } from "../typing";
+import { TNext } from "@lindorm-io/koa";
 import { config } from "../config";
 import { stringToSeconds } from "@lindorm-io/core";
 

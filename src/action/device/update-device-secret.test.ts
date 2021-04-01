@@ -6,8 +6,6 @@ import { winston } from "../../logger";
 import { baseHash } from "@lindorm-io/core";
 
 jest.mock("../../support", () => ({
-  assertAccountPermission: jest.fn(() => () => {}),
-  assertDevicePIN: jest.fn(() => {}),
   assertScope: jest.fn(() => () => {}),
   encryptDeviceSecret: jest.fn((input) => baseHash(input)),
 }));
@@ -24,6 +22,9 @@ describe("updateDeviceSecret", () => {
       token: {
         bearer: {
           subject: "e2829fb8-8fa5-4286-892f-228a9e9d2f5b",
+        },
+        challengeConfirmation: {
+          deviceId: "d7230fc6-322f-44d9-9ef6-b2abba9ad6a4",
         },
       },
     };
@@ -44,9 +45,7 @@ describe("updateDeviceSecret", () => {
   test("should update device secret", async () => {
     await expect(
       updateDeviceSecret(ctx)({
-        deviceId: "d7230fc6-322f-44d9-9ef6-b2abba9ad6a4",
-        pin: "123456",
-        updatedSecret: "new_updated_secret",
+        secret: "new_updated_secret",
       }),
     ).resolves.toBe(undefined);
 

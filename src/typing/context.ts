@@ -16,8 +16,8 @@ export interface IKoaDeviceContext extends IKoaAppContext {
       device: KeyPairCache;
     };
   };
-  challenge: Challenge;
-  device: Device;
+  challenge?: Challenge;
+  device?: Device;
   issuer: {
     auth: TokenIssuer;
     device: TokenIssuer;
@@ -34,5 +34,6 @@ export interface IKoaDeviceContext extends IKoaAppContext {
   };
   token: {
     bearer?: ITokenIssuerVerifyData;
+    challengeConfirmation?: ITokenIssuerVerifyData;
   };
 }
