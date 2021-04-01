@@ -1,3 +1,4 @@
+export * from "./generate-new-recovery-keys";
 export * from "./get-devices";
 export * from "./remove-device";
 export * from "./update-device-name";

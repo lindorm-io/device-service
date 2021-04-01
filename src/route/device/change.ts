@@ -2,7 +2,7 @@ import { HttpStatus } from "@lindorm-io/core";
 import { IKoaDeviceContext } from "../../typing";
 import { Router } from "@lindorm-io/koa";
 import { tokenValidationMiddleware } from "../../middleware";
-import { updateDevicePIN, updateDeviceSecret } from "../../action";
+import { generateNewRecoveryKeys, updateDevicePIN, updateDeviceSecret } from "../../action";
 
 export const router = new Router();
 
@@ -15,8 +15,16 @@ router.patch(
 
     await updateDevicePIN(ctx)({ pin });
 
-    ctx.body = {};
     ctx.status = HttpStatus.Success.ACCEPTED;
+  },
+);
+
+router.patch(
+  "/recovery-keys",
+  async (ctx: IKoaDeviceContext): Promise<void> => {
+    ctx.body = await generateNewRecoveryKeys(ctx)();
+
+    ctx.status = HttpStatus.Success.OK;
   },
 );
 
@@ -27,7 +35,6 @@ router.patch(
 
     await updateDeviceSecret(ctx)({ secret });
 
-    ctx.body = {};
     ctx.status = HttpStatus.Success.ACCEPTED;
   },
 );

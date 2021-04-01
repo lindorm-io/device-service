@@ -55,6 +55,26 @@ describe("/device", () => {
     expect(result.pin.signature).toStrictEqual(expect.any(String));
   });
 
+  test("PATCH /device/change/recovery-keys", async () => {
+    const response = await request(koa.callback())
+      .patch(`/device/change/recovery-keys`)
+      .set("Authorization", `Bearer ${accessToken}`)
+      .set("X-Client-ID", "5c63ca22-6617-45eb-9005-7c897a25d375")
+      .set("X-Device-ID", device.id)
+      .set("X-Correlation-ID", "5c63ca22-6617-45eb-9005-7c897a25d375")
+      .send({
+        challenge_confirmation_token: challengeConfirmationToken,
+      })
+      .expect(200);
+
+    expect(response.body).toStrictEqual({
+      recovery_keys: expect.any(Array),
+    });
+
+    const result = await TEST_DEVICE_REPOSITORY.find({ id: device.id });
+    expect(result.recoveryKeys).toStrictEqual(expect.any(Array));
+  });
+
   test("PATCH /device/change/secret", async () => {
     await request(koa.callback())
       .patch(`/device/change/secret`)

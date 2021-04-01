@@ -21,7 +21,6 @@ router.patch(
       name,
     });
 
-    ctx.body = {};
     ctx.status = HttpStatus.Success.ACCEPTED;
   },
 );
@@ -33,7 +32,6 @@ router.delete(
       deviceId: ctx.params.id,
     });
 
-    ctx.body = {};
     ctx.status = HttpStatus.Success.ACCEPTED;
   },
 );
