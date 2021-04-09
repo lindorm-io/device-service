@@ -1,6 +1,11 @@
 import Joi from "@hapi/joi";
 import { IKoaDeviceContext } from "../../typing";
-import { assertEnrolment, createDeviceFromEnrolment, createDeviceRecoveryKeys } from "../../support";
+import {
+  assertEnrolment,
+  createDeviceFromEnrolment,
+  createDeviceRecoveryKeys,
+  removeEnrolledDevice,
+} from "../../support";
 
 interface IConcludeEnrolmentOptions {
   certificateVerifier: string;
@@ -36,6 +41,7 @@ export const verifyEnrolment = (ctx: IKoaDeviceContext) => async (
 
   const { recoveryKeys, signatures } = await createDeviceRecoveryKeys(3);
 
+  await removeEnrolledDevice(ctx)(enrolment);
   const device = await createDeviceFromEnrolment(ctx)({
     enrolment,
     pin,

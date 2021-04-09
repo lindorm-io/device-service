@@ -11,7 +11,7 @@ export const getTestDevice = async ({
   publicKey = getTestKeyPairRSA().publicKey,
   recoveryKey = "123456-123456-123456",
   secret = "test_device_secret",
-  uniqueId = "7e5bfe57-bc9a-4523-adc7-c9ed728d866d",
+  uniqueId = "a097a56f506a4091b4c93a8bfb8cec0f",
 }: {
   id?: string;
   accountId?: string;

@@ -7,7 +7,9 @@ import { schema } from "./schema";
 interface IDeviceFilter {
   id?: string;
   accountId?: string;
+  macAddress?: string;
   name?: string;
+  uniqueId?: string;
 }
 
 interface IDeviceRepository extends IRepository<Device> {

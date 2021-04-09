@@ -2,17 +2,17 @@
 
 exports[`createDeviceFromEnrolment should verify enrolment 1`] = `
 Device {
-  "_accountId": "57f93111-0d54-4626-8ed3-70cd0812389f",
+  "_accountId": "51cc7c03-3f86-44ae-8be2-5fcf5536c08b",
   "_created": 2020-01-01T07:00:00.000Z,
   "_events": Array [
     Object {
       "date": 2020-01-01T07:00:00.000Z,
       "name": "device_created",
       "payload": Object {
-        "accountId": "57f93111-0d54-4626-8ed3-70cd0812389f",
+        "accountId": "51cc7c03-3f86-44ae-8be2-5fcf5536c08b",
         "created": 2020-01-01T07:00:00.000Z,
-        "macAddress": "6905a710-fbe0-4f4e-83e7-2b6e6545a7be",
-        "name": "6905a710-fbe0-4f4e-83e7-2b6e6545a7be",
+        "macAddress": "0025:96FF:FE12:3456",
+        "name": "0025:96FF:FE12:3456",
         "pin": Object {
           "signature": "MTIzNDU2",
           "updated": 2020-01-01T07:00:00.000Z,
@@ -41,8 +41,8 @@ gSR6fcZmKuI4nCfTKl3ykozcPwpEmfRgSBDHKwDJe6ZbK0sL4ScVookCAwEAAQ==
     },
   ],
   "_id": "bc54a8e9-3246-4cad-8244-0a1a42c914cd",
-  "_macAddress": "6905a710-fbe0-4f4e-83e7-2b6e6545a7be",
-  "_name": "6905a710-fbe0-4f4e-83e7-2b6e6545a7be",
+  "_macAddress": "0025:96FF:FE12:3456",
+  "_name": "0025:96FF:FE12:3456",
   "_pin": Object {
     "signature": "MTIzNDU2",
     "updated": 2020-01-01T07:00:00.000Z,
@@ -78,17 +78,17 @@ Object {
     "device": Object {
       "data": Array [
         Object {
-          "accountId": "57f93111-0d54-4626-8ed3-70cd0812389f",
+          "accountId": "51cc7c03-3f86-44ae-8be2-5fcf5536c08b",
           "created": 2020-01-01T07:00:00.000Z,
           "events": Array [
             Object {
               "date": 2020-01-01T07:00:00.000Z,
               "name": "device_created",
               "payload": Object {
-                "accountId": "57f93111-0d54-4626-8ed3-70cd0812389f",
+                "accountId": "51cc7c03-3f86-44ae-8be2-5fcf5536c08b",
                 "created": 2020-01-01T07:00:00.000Z,
-                "macAddress": "6905a710-fbe0-4f4e-83e7-2b6e6545a7be",
-                "name": "6905a710-fbe0-4f4e-83e7-2b6e6545a7be",
+                "macAddress": "0025:96FF:FE12:3456",
+                "name": "0025:96FF:FE12:3456",
                 "pin": Object {
                   "signature": "MTIzNDU2",
                   "updated": 2020-01-01T07:00:00.000Z,
@@ -117,8 +117,8 @@ gSR6fcZmKuI4nCfTKl3ykozcPwpEmfRgSBDHKwDJe6ZbK0sL4ScVookCAwEAAQ==
             },
           ],
           "id": "bc54a8e9-3246-4cad-8244-0a1a42c914cd",
-          "macAddress": "6905a710-fbe0-4f4e-83e7-2b6e6545a7be",
-          "name": "6905a710-fbe0-4f4e-83e7-2b6e6545a7be",
+          "macAddress": "0025:96FF:FE12:3456",
+          "name": "0025:96FF:FE12:3456",
           "pin": Object {
             "signature": "MTIzNDU2",
             "updated": 2020-01-01T07:00:00.000Z,

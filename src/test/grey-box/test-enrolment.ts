@@ -3,11 +3,11 @@ import { getTestKeyPairRSA } from "./test-key-pair";
 
 export const getTestEnrolment = ({
   id = "d43e9912-b565-47c6-acd3-9ecd477d46bc",
-  accountId = "57f93111-0d54-4626-8ed3-70cd0812389f",
+  accountId = "51cc7c03-3f86-44ae-8be2-5fcf5536c08b",
   certificateChallenge = "ESJh38hYfJ7481UFTQgq63wxxiOub1Xt7YKGJIukrBlIA5RNR6rDriiQ977psN1u",
   expires = new Date("2099-01-01"),
-  macAddress = "6905a710-fbe0-4f4e-83e7-2b6e6545a7be",
-  name = "My iPhone X",
+  macAddress = "0025:96FF:FE12:3456",
+  name = "My iPhone 12",
   publicKey = getTestKeyPairRSA().publicKey,
   uniqueId = "a097a56f506a4091b4c93a8bfb8cec0f",
 }: {

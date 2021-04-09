@@ -17,6 +17,7 @@ jest.mock("../../support", () => ({
     recoveryKeys: ["key1"],
     signatures: [baseHash("key1")],
   })),
+  removeEnrolledDevice: jest.fn(() => () => undefined),
 }));
 
 MockDate.set("2020-01-01 08:00:00.000");
