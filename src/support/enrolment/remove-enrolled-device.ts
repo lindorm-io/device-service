@@ -8,7 +8,6 @@ export const removeEnrolledDevice = (ctx: IKoaDeviceContext) => async (enrolment
   try {
     const device = await repository.device.find({
       accountId: enrolment.accountId,
-      macAddress: enrolment.macAddress,
       uniqueId: enrolment.uniqueId,
     });
 

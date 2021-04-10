@@ -8,7 +8,6 @@ export const indices: Array<IIndex> = [
   {
     index: {
       accountId: 1,
-      macAddress: 1,
       uniqueId: 1,
     },
     options: {
