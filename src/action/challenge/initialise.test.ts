@@ -3,14 +3,6 @@ import { getTestDevice, logger } from "../../test";
 import { initialiseChallenge } from "./initialise";
 import { ChallengeScope, ChallengeStrategy } from "../../enum";
 
-jest.mock("../../support", () => ({
-  createChallenge: jest.fn(() => () => ({
-    challengeId: "challengeId",
-    certificateChallenge: "certificateChallenge",
-    expires: "expires",
-  })),
-}));
-
 MockDate.set("2020-01-01 08:00:00.000");
 
 describe("initialiseChallenge", () => {
@@ -18,11 +10,22 @@ describe("initialiseChallenge", () => {
 
   beforeEach(async () => {
     ctx = {
-      device: await getTestDevice({
-        pin: null,
-        recoveryKey: null,
-        secret: null,
-      }),
+      entity: {
+        device: await getTestDevice({
+          pin: null,
+          recoveryKey: null,
+          secret: null,
+        }),
+      },
+      handler: {
+        challengeHandler: {
+          createChallenge: () => ({
+            challengeId: "challengeId",
+            certificateChallenge: "certificateChallenge",
+            expires: "expires",
+          }),
+        },
+      },
       logger,
     };
   });

@@ -35,5 +35,5 @@ export interface IVerifyChallengeData {
 
 export interface IVerifyChallengeWithRecoveryKeyData {
   challengeConfirmation: ITokenIssuerSignData;
-  recoveryKeys: Array<string>;
+  recoveryKey: string;
 }

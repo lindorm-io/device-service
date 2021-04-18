@@ -1,7 +1,6 @@
 import Joi from "@hapi/joi";
 import { IKoaDeviceContext, IVerifyChallengeData, IVerifyChallengeWithPinOptions } from "../../typing";
 import { JOI_STRATEGY } from "../../constant";
-import { assertChallenge, assertDevicePIN, getChallengeConfirmationToken } from "../../support";
 
 const schema = Joi.object({
   certificateVerifier: Joi.string().required(),
@@ -14,11 +13,13 @@ export const verifyChallengeWithPin = (ctx: IKoaDeviceContext) => async (
 ): Promise<IVerifyChallengeData> => {
   await schema.validateAsync(options);
 
-  const { device, logger } = ctx;
+  const { logger } = ctx;
+  const { device } = ctx.entity;
+  const { challengeHandler, deviceHandler } = ctx.handler;
   const { certificateVerifier, pin, strategy } = options;
 
-  await assertChallenge(ctx)({ certificateVerifier, strategy });
-  await assertDevicePIN(device, pin);
+  await challengeHandler.assertChallenge(strategy, certificateVerifier);
+  await deviceHandler.assertDevicePIN(pin);
 
   logger.debug("certificate challenge with pin verified", {
     accountId: device.accountId,
@@ -26,6 +27,6 @@ export const verifyChallengeWithPin = (ctx: IKoaDeviceContext) => async (
   });
 
   return {
-    challengeConfirmation: getChallengeConfirmationToken(ctx)(),
+    challengeConfirmation: challengeHandler.getChallengeConfirmationToken(),
   };
 };

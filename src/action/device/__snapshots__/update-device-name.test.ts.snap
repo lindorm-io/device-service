@@ -22,7 +22,10 @@ Object {
                   "updated": null,
                 },
                 "publicKey": "publicKey",
-                "recoveryKeys": Array [],
+                "recoveryKey": Object {
+                  "signature": null,
+                  "updated": null,
+                },
                 "secret": Object {
                   "signature": null,
                   "updated": null,
@@ -46,7 +49,10 @@ Object {
             "updated": null,
           },
           "publicKey": "publicKey",
-          "recoveryKeys": Array [],
+          "recoveryKey": Object {
+            "signature": null,
+            "updated": null,
+          },
           "secret": Object {
             "signature": null,
             "updated": null,

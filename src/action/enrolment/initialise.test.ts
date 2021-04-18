@@ -2,14 +2,6 @@ import MockDate from "mockdate";
 import { initialiseEnrolment } from "./initialise";
 import { logger } from "../../test";
 
-jest.mock("../../support", () => ({
-  createEnrolment: jest.fn(() => () => ({
-    id: "a89b62b8-9956-4b0e-986c-e83b4e66c2ec",
-    certificateChallenge: "certificateChallenge",
-    expires: "expires",
-  })),
-}));
-
 MockDate.set("2020-01-01 08:00:00.000");
 
 describe("initialiseEnrolment", () => {
@@ -17,6 +9,15 @@ describe("initialiseEnrolment", () => {
 
   beforeEach(async () => {
     ctx = {
+      handler: {
+        enrolmentHandler: {
+          createEnrolment: () => ({
+            id: "a89b62b8-9956-4b0e-986c-e83b4e66c2ec",
+            certificateChallenge: "certificateChallenge",
+            expires: "expires",
+          }),
+        },
+      },
       logger,
       token: { bearer: { subject: "42667d2b-265b-4424-bad0-1be10960a28c" } },
     };

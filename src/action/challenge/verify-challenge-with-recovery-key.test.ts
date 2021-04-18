@@ -4,16 +4,6 @@ import { baseHash } from "@lindorm-io/core";
 import { getTestDevice, getTestRepository, inMemoryStore, logger } from "../../test";
 import { verifyChallengeWithRecoveryKey } from "./verify-challenge-with-recovery-key";
 
-jest.mock("../../support", () => ({
-  assertChallenge: jest.fn(() => () => {}),
-  assertDeviceRecoveryKey: jest.fn(),
-  createDeviceRecoveryKeys: jest.fn(() => ({
-    recoveryKeys: ["key1"],
-    signatures: [baseHash("key1")],
-  })),
-  getChallengeConfirmationToken: jest.fn(() => () => "getChallengeConfirmationToken"),
-}));
-
 MockDate.set("2020-01-01 08:00:00.000");
 
 describe("verifyChallengeWithRecoveryKey", () => {
@@ -21,23 +11,36 @@ describe("verifyChallengeWithRecoveryKey", () => {
 
   beforeEach(async () => {
     ctx = {
-      device: await getTestDevice({
-        pin: null,
-        recoveryKey: null,
-        secret: null,
-      }),
+      entity: {
+        device: await getTestDevice({
+          pin: null,
+          recoveryKey: null,
+          secret: null,
+        }),
+      },
+      handler: {
+        challengeHandler: {
+          assertChallenge: () => {},
+          getChallengeConfirmationToken: () => "getChallengeConfirmationToken",
+        },
+        deviceHandler: {
+          assertDeviceRecoveryKey: () => {},
+          createDeviceRecoveryKey: () => "recoveryKey",
+          encryptRecoveryKey: () => baseHash("recoveryKey"),
+        },
+      },
       logger,
       repository: await getTestRepository(),
     };
 
-    await ctx.repository.device.create(ctx.device);
+    await ctx.repository.deviceRepository.create(ctx.entity.device);
   });
 
   test("should verify device challenge", async () => {
     await expect(
       verifyChallengeWithRecoveryKey(ctx)({
         certificateVerifier: "certificateVerifier",
-        recoveryKey: "123456-123456-123456",
+        recoveryKey: "ABCD-123456-ABCD-123456-ABCD",
         strategy: ChallengeStrategy.RECOVERY,
       }),
     ).resolves.toMatchSnapshot();

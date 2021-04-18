@@ -85,7 +85,7 @@ describe("/device", () => {
         id: expect.any(String),
         token: expect.any(String),
       },
-      recovery_keys: expect.any(Array),
+      recovery_key: expect.any(String),
     });
   });
 });

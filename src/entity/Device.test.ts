@@ -17,7 +17,7 @@ describe("Device.ts", () => {
       name: "name",
       pin: { signature: "pin", updated: date },
       publicKey: "publicKey",
-      recoveryKeys: ["key1", "key2"],
+      recoveryKey: { signature: "key", updated: date },
       secret: { signature: "secret", updated: date },
     });
   });
@@ -64,10 +64,10 @@ describe("Device.ts", () => {
     expect(device.publicKey).toBe("publicKey");
   });
 
-  test("should get/set recovery keys", () => {
-    expect(device.recoveryKeys).toMatchSnapshot();
+  test("should get/set recoveryKey", () => {
+    expect(device.recoveryKey).toMatchSnapshot();
 
-    device.recoveryKeys = ["key1", "key2", "key3"];
+    device.recoveryKey = { signature: "new-key", updated: date };
 
     expect(device).toMatchSnapshot();
   });

@@ -18,10 +18,10 @@ Device {
           "updated": 2020-01-01T07:00:00.000Z,
         },
         "publicKey": "publicKey",
-        "recoveryKeys": Array [
-          "key1",
-          "key2",
-        ],
+        "recoveryKey": Object {
+          "signature": "key",
+          "updated": 2020-01-01T07:00:00.000Z,
+        },
         "secret": Object {
           "signature": "secret",
           "updated": 2020-01-01T07:00:00.000Z,
@@ -38,10 +38,10 @@ Device {
     "updated": 2020-01-01T07:00:00.000Z,
   },
   "_publicKey": "publicKey",
-  "_recoveryKeys": Array [
-    "key1",
-    "key2",
-  ],
+  "_recoveryKey": Object {
+    "signature": "key",
+    "updated": 2020-01-01T07:00:00.000Z,
+  },
   "_secret": Object {
     "signature": "secret",
     "updated": 2020-01-01T07:00:00.000Z,
@@ -77,10 +77,10 @@ Device {
     "updated": 2020-01-01T07:00:00.000Z,
   },
   "_publicKey": "publicKey",
-  "_recoveryKeys": Array [
-    "key1",
-    "key2",
-  ],
+  "_recoveryKey": Object {
+    "signature": "key",
+    "updated": 2020-01-01T07:00:00.000Z,
+  },
   "_secret": Object {
     "signature": "secret",
     "updated": 2020-01-01T07:00:00.000Z,
@@ -122,10 +122,10 @@ Device {
     "updated": 2020-01-01T07:00:00.000Z,
   },
   "_publicKey": "publicKey",
-  "_recoveryKeys": Array [
-    "key1",
-    "key2",
-  ],
+  "_recoveryKey": Object {
+    "signature": "key",
+    "updated": 2020-01-01T07:00:00.000Z,
+  },
   "_secret": Object {
     "signature": "secret",
     "updated": 2020-01-01T07:00:00.000Z,
@@ -136,27 +136,26 @@ Device {
 }
 `;
 
-exports[`Device.ts should get/set recovery keys 1`] = `
-Array [
-  "key1",
-  "key2",
-]
+exports[`Device.ts should get/set recoveryKey 1`] = `
+Object {
+  "signature": "key",
+  "updated": 2020-01-01T07:00:00.000Z,
+}
 `;
 
-exports[`Device.ts should get/set recovery keys 2`] = `
+exports[`Device.ts should get/set recoveryKey 2`] = `
 Device {
   "_accountId": "accountId",
   "_created": 2020-01-01T07:00:00.000Z,
   "_events": Array [
     Object {
       "date": 2020-01-01T07:00:00.000Z,
-      "name": "device_recovery_keys_changed",
+      "name": "device_recovery_key_changed",
       "payload": Object {
-        "recoveryKeys": Array [
-          "key1",
-          "key2",
-          "key3",
-        ],
+        "recoveryKey": Object {
+          "signature": "new-key",
+          "updated": 2020-01-01T07:00:00.000Z,
+        },
       },
     },
   ],
@@ -168,11 +167,10 @@ Device {
     "updated": 2020-01-01T07:00:00.000Z,
   },
   "_publicKey": "publicKey",
-  "_recoveryKeys": Array [
-    "key1",
-    "key2",
-    "key3",
-  ],
+  "_recoveryKey": Object {
+    "signature": "new-key",
+    "updated": 2020-01-01T07:00:00.000Z,
+  },
   "_secret": Object {
     "signature": "secret",
     "updated": 2020-01-01T07:00:00.000Z,
@@ -214,10 +212,10 @@ Device {
     "updated": 2020-01-01T07:00:00.000Z,
   },
   "_publicKey": "publicKey",
-  "_recoveryKeys": Array [
-    "key1",
-    "key2",
-  ],
+  "_recoveryKey": Object {
+    "signature": "key",
+    "updated": 2020-01-01T07:00:00.000Z,
+  },
   "_secret": Object {
     "signature": "new-secret",
     "updated": 2020-01-01T07:00:00.000Z,
@@ -241,10 +239,10 @@ Device {
     "updated": 2020-01-01T07:00:00.000Z,
   },
   "_publicKey": "publicKey",
-  "_recoveryKeys": Array [
-    "key1",
-    "key2",
-  ],
+  "_recoveryKey": Object {
+    "signature": "key",
+    "updated": 2020-01-01T07:00:00.000Z,
+  },
   "_secret": Object {
     "signature": "secret",
     "updated": 2020-01-01T07:00:00.000Z,
@@ -268,7 +266,10 @@ Device {
     "updated": null,
   },
   "_publicKey": "publicKey",
-  "_recoveryKeys": Array [],
+  "_recoveryKey": Object {
+    "signature": null,
+    "updated": null,
+  },
   "_secret": Object {
     "signature": null,
     "updated": null,

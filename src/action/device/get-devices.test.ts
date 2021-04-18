@@ -1,12 +1,7 @@
 import MockDate from "mockdate";
 import { Device } from "../../entity";
 import { getDevices } from "./get-devices";
-import { getTestRepository, resetStore } from "../../test";
-import { winston } from "../../logger";
-
-jest.mock("../../support", () => ({
-  assertAccountPermission: jest.fn(() => () => {}),
-}));
+import { getTestRepository, logger, resetStore } from "../../test";
 
 MockDate.set("2020-01-01 08:00:00.000");
 
@@ -15,11 +10,16 @@ describe("removeDevice", () => {
 
   beforeEach(async () => {
     ctx = {
-      logger: winston,
+      handler: {
+        authTokenHandler: {
+          assertAccountPermission: () => {},
+        },
+      },
+      logger,
       repository: await getTestRepository(),
     };
 
-    await ctx.repository.device.create(
+    await ctx.repository.deviceRepository.create(
       new Device({
         id: "d7230fc6-322f-44d9-9ef6-b2abba9ad6a4",
         macAddress: "macAddress-1",
@@ -29,7 +29,7 @@ describe("removeDevice", () => {
         uniqueId: "uniqueId-1",
       }),
     );
-    await ctx.repository.device.create(
+    await ctx.repository.deviceRepository.create(
       new Device({
         id: "b49724b8-94e7-4d84-aa10-682e18333098",
         macAddress: "macAddress-2",

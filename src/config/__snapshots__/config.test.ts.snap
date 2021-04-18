@@ -17,11 +17,9 @@ Object {
       "user": "root",
     },
     "databaseName": "device",
+    "hostname": "localhost",
+    "port": 27017,
     "type": "STORAGE",
-    "url": Object {
-      "host": "localhost",
-      "port": 27017,
-    },
   },
   "NODE_ENVIRONMENT": "test",
   "REDIS_CONNECTION_OPTIONS": Object {

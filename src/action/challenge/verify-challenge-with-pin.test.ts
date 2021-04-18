@@ -1,14 +1,7 @@
 import MockDate from "mockdate";
 import { ChallengeStrategy } from "../../enum";
-import { assertChallenge, assertDevicePIN, getChallengeConfirmationToken } from "../../support";
 import { getTestDevice, logger } from "../../test";
 import { verifyChallengeWithPin } from "./verify-challenge-with-pin";
-
-jest.mock("../../support", () => ({
-  assertChallenge: jest.fn(() => () => {}),
-  assertDevicePIN: jest.fn(),
-  getChallengeConfirmationToken: jest.fn(() => () => "getChallengeConfirmationToken"),
-}));
 
 MockDate.set("2020-01-01 08:00:00.000");
 
@@ -17,11 +10,22 @@ describe("verifyChallengeWithPin", () => {
 
   beforeEach(async () => {
     ctx = {
-      device: await getTestDevice({
-        pin: null,
-        recoveryKey: null,
-        secret: null,
-      }),
+      entity: {
+        device: await getTestDevice({
+          pin: null,
+          recoveryKey: null,
+          secret: null,
+        }),
+      },
+      handler: {
+        challengeHandler: {
+          assertChallenge: () => {},
+          getChallengeConfirmationToken: () => "getChallengeConfirmationToken",
+        },
+        deviceHandler: {
+          assertDevicePIN: () => {},
+        },
+      },
       logger,
     };
   });
@@ -34,9 +38,5 @@ describe("verifyChallengeWithPin", () => {
         strategy: ChallengeStrategy.PIN,
       }),
     ).resolves.toMatchSnapshot();
-
-    expect(assertChallenge).toHaveBeenCalled();
-    expect(assertDevicePIN).toHaveBeenCalled();
-    expect(getChallengeConfirmationToken).toHaveBeenCalled();
   });
 });

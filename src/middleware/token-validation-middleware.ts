@@ -2,16 +2,16 @@ import { IKoaDeviceContext } from "../typing";
 import { isString } from "lodash";
 import { Audience } from "../enum";
 import { sanitiseToken } from "@lindorm-io/jwt";
-import { TNext } from "@lindorm-io/koa";
+import { Next } from "@lindorm-io/koa";
 
-export const tokenValidationMiddleware = async (ctx: IKoaDeviceContext, next: TNext) => {
+export const tokenValidationMiddleware = async (ctx: IKoaDeviceContext, next: Next) => {
   const start = Date.now();
 
   const { issuer, logger, metadata } = ctx;
   const { challengeConfirmationToken } = ctx.request.body;
 
   if (isString(challengeConfirmationToken)) {
-    const verified = issuer.device.verify({
+    const verified = issuer.deviceIssuer.verify({
       audience: Audience.CHALLENGE_CONFIRMATION,
       clientId: metadata.clientId,
       deviceId: metadata.deviceId,

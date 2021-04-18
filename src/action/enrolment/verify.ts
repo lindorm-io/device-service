@@ -1,11 +1,5 @@
 import Joi from "@hapi/joi";
 import { IKoaDeviceContext } from "../../typing";
-import {
-  assertEnrolment,
-  createDeviceFromEnrolment,
-  createDeviceRecoveryKeys,
-  removeEnrolledDevice,
-} from "../../support";
 
 interface IConcludeEnrolmentOptions {
   certificateVerifier: string;
@@ -16,7 +10,7 @@ interface IConcludeEnrolmentOptions {
 
 interface IConcludeEnrolmentData {
   deviceId: string;
-  recoveryKeys: Array<string>;
+  recoveryKey: string;
 }
 
 const schema = Joi.object({
@@ -31,21 +25,20 @@ export const verifyEnrolment = (ctx: IKoaDeviceContext) => async (
 ): Promise<IConcludeEnrolmentData> => {
   await schema.validateAsync(options);
 
-  const { cache, logger } = ctx;
+  const { logger } = ctx;
+  const { enrolmentCache } = ctx.cache;
+  const { enrolmentHandler, deviceHandler } = ctx.handler;
   const { certificateVerifier, enrolmentId, pin, secret } = options;
 
-  const enrolment = await assertEnrolment(ctx)({
-    certificateVerifier,
-    enrolmentId,
-  });
+  const enrolment = await enrolmentHandler.assertEnrolment(enrolmentId, certificateVerifier);
+  await enrolmentHandler.removeEnrolledDevice(enrolment);
 
-  const { recoveryKeys, signatures } = await createDeviceRecoveryKeys(3);
+  const recoveryKey = await deviceHandler.createDeviceRecoveryKey();
 
-  await removeEnrolledDevice(ctx)(enrolment);
-  const device = await createDeviceFromEnrolment(ctx)({
+  const device = await enrolmentHandler.createDeviceFromEnrolment({
     enrolment,
     pin,
-    recoveryKeys: signatures,
+    recoveryKey,
     secret,
   });
 
@@ -53,7 +46,7 @@ export const verifyEnrolment = (ctx: IKoaDeviceContext) => async (
     deviceId: device.id,
   });
 
-  await cache.enrolment.remove(enrolment);
+  await enrolmentCache.remove(enrolment);
 
-  return { deviceId: device.id, recoveryKeys };
+  return { deviceId: device.id, recoveryKey };
 };

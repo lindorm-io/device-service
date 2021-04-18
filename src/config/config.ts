@@ -29,14 +29,12 @@ export const REDIS_CONNECTION_OPTIONS = {
 };
 
 export const MONGO_CONNECTION_OPTIONS = {
-  type: MongoConnectionType.STORAGE,
   auth: {
     user: config.MONGO_INITDB_ROOT_USERNAME,
     password: config.MONGO_INITDB_ROOT_PASSWORD,
   },
-  url: {
-    host: config.MONGO_HOST,
-    port: config.MONGO_EXPOSE_PORT,
-  },
   databaseName: config.MONGO_DB_NAME,
+  hostname: config.MONGO_HOST,
+  port: config.MONGO_EXPOSE_PORT,
+  type: MongoConnectionType.STORAGE,
 };

@@ -22,7 +22,10 @@ Object {
                   "updated": 2020-01-01T07:00:00.000Z,
                 },
                 "publicKey": "publicKey",
-                "recoveryKeys": Array [],
+                "recoveryKey": Object {
+                  "signature": null,
+                  "updated": null,
+                },
                 "secret": Object {
                   "signature": null,
                   "updated": null,
@@ -49,7 +52,10 @@ Object {
             "updated": 2020-01-01T07:00:00.000Z,
           },
           "publicKey": "publicKey",
-          "recoveryKeys": Array [],
+          "recoveryKey": Object {
+            "signature": null,
+            "updated": null,
+          },
           "secret": Object {
             "signature": null,
             "updated": null,

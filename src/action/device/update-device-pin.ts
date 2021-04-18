@@ -1,7 +1,6 @@
 import Joi from "@hapi/joi";
 import { IKoaDeviceContext } from "../../typing";
 import { Scope } from "@lindorm-io/jwt";
-import { assertScope, encryptDevicePIN } from "../../support";
 
 interface IUpdateDevicePinOptions {
   pin: string;
@@ -14,22 +13,22 @@ const schema = Joi.object({
 export const updateDevicePIN = (ctx: IKoaDeviceContext) => async (options: IUpdateDevicePinOptions): Promise<void> => {
   await schema.validateAsync(options);
 
-  const { logger, repository, token } = ctx;
+  const { logger } = ctx;
+  const { authTokenHandler, deviceHandler } = ctx.handler;
+  const { deviceRepository } = ctx.repository;
+  const { deviceId } = ctx.token.challengeConfirmation;
   const { pin } = options;
-  const {
-    challengeConfirmation: { deviceId },
-  } = token;
 
-  const device = await repository.device.find({ id: deviceId });
+  const device = await deviceRepository.find({ id: deviceId });
 
-  assertScope(ctx)([Scope.EDIT]);
+  authTokenHandler.assertScope([Scope.EDIT]);
 
   device.pin = {
-    signature: await encryptDevicePIN(pin),
+    signature: await deviceHandler.encryptDevicePIN(pin),
     updated: new Date(),
   };
 
-  await repository.device.update(device);
+  await deviceRepository.update(device);
 
   logger.debug("device pin updated", {
     accountId: device.accountId,

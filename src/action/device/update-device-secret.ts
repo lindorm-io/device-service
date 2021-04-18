@@ -1,7 +1,6 @@
 import Joi from "@hapi/joi";
 import { IKoaDeviceContext } from "../../typing";
 import { Scope } from "@lindorm-io/jwt";
-import { assertScope, encryptDeviceSecret } from "../../support";
 
 interface IChangeDeviceSecretOptions {
   secret: string;
@@ -16,22 +15,22 @@ export const updateDeviceSecret = (ctx: IKoaDeviceContext) => async (
 ): Promise<void> => {
   await schema.validateAsync(options);
 
-  const { logger, repository, token } = ctx;
+  const { logger } = ctx;
+  const { authTokenHandler, deviceHandler } = ctx.handler;
+  const { deviceRepository } = ctx.repository;
+  const { deviceId } = ctx.token.challengeConfirmation;
   const { secret } = options;
-  const {
-    challengeConfirmation: { deviceId },
-  } = token;
 
-  const device = await repository.device.find({ id: deviceId });
+  const device = await deviceRepository.find({ id: deviceId });
 
-  assertScope(ctx)([Scope.EDIT]);
+  authTokenHandler.assertScope([Scope.EDIT]);
 
   device.secret = {
-    signature: await encryptDeviceSecret(secret),
+    signature: await deviceHandler.encryptDeviceSecret(secret),
     updated: new Date(),
   };
 
-  await repository.device.update(device);
+  await deviceRepository.update(device);
 
   logger.debug("device secret updated", {
     accountId: device.accountId,

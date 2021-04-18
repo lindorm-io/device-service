@@ -13,7 +13,7 @@ export const schema = Joi.object({
   name: Joi.string().allow(null).required(),
   pin: JOI_ENCRYPTED_DATA,
   publicKey: Joi.string().required(),
-  recoveryKeys: Joi.array().items(Joi.string()).required(),
+  recoveryKey: JOI_ENCRYPTED_DATA,
   secret: JOI_ENCRYPTED_DATA,
   uniqueId: Joi.string().allow(null).required(),
 });

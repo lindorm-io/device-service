@@ -5,7 +5,6 @@ import { authJwksCacheWorker, keyPairCacheWorker } from "../worker";
 import { keyPairRepositoryMiddleware } from "@lindorm-io/koa-keystore";
 import { winston } from "../logger";
 import {
-  cacheMiddleware,
   redisMiddleware,
   authKeyPairCacheMiddleware,
   authKeystoreMiddleware,
@@ -14,7 +13,13 @@ import {
   deviceKeystoreMiddleware,
   deviceTokenIssuerMiddleware,
   mongoMiddleware,
-  repositoryMiddleware,
+  enrolmentCacheMiddleware,
+  challengeCacheMiddleware,
+  authTokenHandlerMiddleware,
+  challengeHandlerMiddleware,
+  deviceHandlerMiddleware,
+  enrolmentHandlerMiddleware,
+  deviceRepositoryMiddleware,
 } from "../middleware";
 
 export const koa = new KoaApp({
@@ -25,13 +30,14 @@ export const koa = new KoaApp({
 // mongo
 koa.addMiddleware(mongoMiddleware);
 koa.addMiddleware(keyPairRepositoryMiddleware);
-koa.addMiddleware(repositoryMiddleware);
+koa.addMiddleware(deviceRepositoryMiddleware);
 
 // redis
 koa.addMiddleware(redisMiddleware);
 koa.addMiddleware(authKeyPairCacheMiddleware);
 koa.addMiddleware(deviceKeyPairCacheMiddleware);
-koa.addMiddleware(cacheMiddleware);
+koa.addMiddleware(challengeCacheMiddleware);
+koa.addMiddleware(enrolmentCacheMiddleware);
 
 // auth tokens
 koa.addMiddleware(authKeystoreMiddleware);
@@ -40,6 +46,12 @@ koa.addMiddleware(authTokenIssuerMiddleware);
 // device tokens
 koa.addMiddleware(deviceKeystoreMiddleware);
 koa.addMiddleware(deviceTokenIssuerMiddleware);
+
+// handlers
+koa.addMiddleware(authTokenHandlerMiddleware);
+koa.addMiddleware(challengeHandlerMiddleware);
+koa.addMiddleware(deviceHandlerMiddleware);
+koa.addMiddleware(enrolmentHandlerMiddleware);
 
 // routes
 koa.addRoute("/account", accountRoute);

@@ -1,7 +1,6 @@
 import Joi from "@hapi/joi";
 import { IKoaDeviceContext, IVerifyChallengeData, IVerifyChallengeOptions } from "../../typing";
 import { JOI_STRATEGY } from "../../constant";
-import { assertChallenge, getChallengeConfirmationToken } from "../../support";
 
 const schema = Joi.object({
   certificateVerifier: Joi.string().required(),
@@ -13,10 +12,12 @@ export const verifyChallengeImplicit = (ctx: IKoaDeviceContext) => async (
 ): Promise<IVerifyChallengeData> => {
   await schema.validateAsync(options);
 
-  const { device, logger } = ctx;
+  const { logger } = ctx;
+  const { device } = ctx.entity;
+  const { challengeHandler } = ctx.handler;
   const { certificateVerifier, strategy } = options;
 
-  await assertChallenge(ctx)({ certificateVerifier, strategy });
+  await challengeHandler.assertChallenge(strategy, certificateVerifier);
 
   logger.debug("certificate challenge verified", {
     accountId: device.accountId,
@@ -24,6 +25,6 @@ export const verifyChallengeImplicit = (ctx: IKoaDeviceContext) => async (
   });
 
   return {
-    challengeConfirmation: getChallengeConfirmationToken(ctx)(),
+    challengeConfirmation: challengeHandler.getChallengeConfirmationToken(),
   };
 };

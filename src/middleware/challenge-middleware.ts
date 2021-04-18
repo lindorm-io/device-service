@@ -1,25 +1,25 @@
 import Joi from "@hapi/joi";
 import { IKoaDeviceContext } from "../typing";
 import { InvalidChallengeError, InvalidPermissionError } from "../error";
-import { TNext } from "@lindorm-io/koa";
+import { Next } from "@lindorm-io/koa";
 import { stringComparison } from "@lindorm-io/core";
 
 const schema = Joi.object({
   challengeId: Joi.string().guid().required(),
 });
 
-export const challengeMiddleware = async (ctx: IKoaDeviceContext, next: TNext) => {
+export const challengeMiddleware = async (ctx: IKoaDeviceContext, next: Next) => {
   const start = Date.now();
 
-  const { cache, device, logger } = ctx;
+  const { cache, entity, logger } = ctx;
   const { challengeId } = ctx.request.body;
 
   await schema.validateAsync({ challengeId });
 
   try {
-    ctx.challenge = await cache.challenge.find(challengeId);
+    ctx.entity.challenge = await cache.challengeCache.find(challengeId);
 
-    if (!stringComparison(ctx.challenge.deviceId, device.id)) {
+    if (!stringComparison(ctx.entity.challenge.deviceId, entity.device.id)) {
       throw new InvalidPermissionError();
     }
 

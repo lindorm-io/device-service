@@ -3,9 +3,7 @@
 exports[`verifyChallengeWithRecoveryKey should verify device challenge 1`] = `
 Object {
   "challengeConfirmation": "getChallengeConfirmationToken",
-  "recoveryKeys": Array [
-    "key1",
-  ],
+  "recoveryKey": "recoveryKey",
 }
 `;
 
@@ -44,7 +42,10 @@ lBUcoS4sBIR3urpvx1EKM1xaUHfchhIKnY5KGTEM+5rJVwlDq+3lLcrJI3AErTAX
 gSR6fcZmKuI4nCfTKl3ykozcPwpEmfRgSBDHKwDJe6ZbK0sL4ScVookCAwEAAQ==
 -----END RSA PUBLIC KEY-----
 ",
-                "recoveryKeys": Array [],
+                "recoveryKey": Object {
+                  "signature": null,
+                  "updated": null,
+                },
                 "secret": Object {
                   "signature": null,
                   "updated": null,
@@ -54,11 +55,12 @@ gSR6fcZmKuI4nCfTKl3ykozcPwpEmfRgSBDHKwDJe6ZbK0sL4ScVookCAwEAAQ==
             },
             Object {
               "date": 2020-01-01T07:00:00.000Z,
-              "name": "device_recovery_keys_changed",
+              "name": "device_recovery_key_changed",
               "payload": Object {
-                "recoveryKeys": Array [
-                  "a2V5MQ==",
-                ],
+                "recoveryKey": Object {
+                  "signature": "cmVjb3ZlcnlLZXk=",
+                  "updated": 2020-01-01T07:00:00.000Z,
+                },
               },
             },
           ],
@@ -83,9 +85,10 @@ lBUcoS4sBIR3urpvx1EKM1xaUHfchhIKnY5KGTEM+5rJVwlDq+3lLcrJI3AErTAX
 gSR6fcZmKuI4nCfTKl3ykozcPwpEmfRgSBDHKwDJe6ZbK0sL4ScVookCAwEAAQ==
 -----END RSA PUBLIC KEY-----
 ",
-          "recoveryKeys": Array [
-            "a2V5MQ==",
-          ],
+          "recoveryKey": Object {
+            "signature": "cmVjb3ZlcnlLZXk=",
+            "updated": 2020-01-01T07:00:00.000Z,
+          },
           "secret": Object {
             "signature": null,
             "updated": null,

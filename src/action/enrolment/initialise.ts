@@ -1,6 +1,5 @@
 import Joi from "@hapi/joi";
 import { IKoaDeviceContext } from "../../typing";
-import { createEnrolment } from "../../support";
 
 interface IInitialiseEnrolmentOptions {
   macAddress: string;
@@ -27,13 +26,18 @@ export const initialiseEnrolment = (ctx: IKoaDeviceContext) => async (
 ): Promise<IInitialiseEnrolmentData> => {
   await schema.validateAsync(options);
 
-  const { logger, token } = ctx;
+  const { logger } = ctx;
+  const { enrolmentHandler } = ctx.handler;
+  const { subject: accountId } = ctx.token.bearer;
   const { macAddress, name, publicKey, uniqueId } = options;
-  const {
-    bearer: { subject: accountId },
-  } = token;
 
-  const enrolment = await createEnrolment(ctx)({ accountId, macAddress, name, publicKey, uniqueId });
+  const enrolment = await enrolmentHandler.createEnrolment({
+    accountId,
+    macAddress,
+    name,
+    publicKey,
+    uniqueId,
+  });
 
   logger.debug("enrolment initialised", {
     enrolmentId: enrolment.id,

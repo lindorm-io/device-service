@@ -12,7 +12,7 @@ export interface IDevice extends IEntity {
   name: string;
   pin: IEncryptedData;
   publicKey: string;
-  recoveryKeys: Array<string>;
+  recoveryKey: IEncryptedData;
   secret: IEncryptedData;
   uniqueId: string;
 }
@@ -23,7 +23,7 @@ export interface IDeviceOptions extends IEntityBaseOptions {
   name?: string;
   pin?: IEncryptedData;
   publicKey: string;
-  recoveryKeys?: Array<string>;
+  recoveryKey?: IEncryptedData;
   secret?: IEncryptedData;
   uniqueId?: string;
 }
@@ -34,7 +34,7 @@ export class Device extends EntityBase implements IDevice {
   private _name: string;
   private _pin: IEncryptedData;
   private _publicKey: string;
-  private _recoveryKeys: Array<string>;
+  private _recoveryKey: IEncryptedData;
   private _secret: IEncryptedData;
   private _uniqueId: string;
 
@@ -48,7 +48,10 @@ export class Device extends EntityBase implements IDevice {
       updated: options.pin?.updated || null,
     };
     this._publicKey = options.publicKey;
-    this._recoveryKeys = options.recoveryKeys || [];
+    this._recoveryKey = {
+      signature: options.recoveryKey?.signature || null,
+      updated: options.recoveryKey?.updated || null,
+    };
     this._secret = {
       signature: options.secret?.signature || null,
       updated: options.secret?.updated || null,
@@ -88,12 +91,12 @@ export class Device extends EntityBase implements IDevice {
     return this._publicKey;
   }
 
-  public get recoveryKeys(): Array<string> {
-    return this._recoveryKeys;
+  public get recoveryKey(): IEncryptedData {
+    return this._recoveryKey;
   }
-  public set recoveryKeys(recoveryKeys: Array<string>) {
-    this._recoveryKeys = recoveryKeys;
-    this.addEvent(DeviceEvent.RECOVERY_KEYS_CHANGED, { recoveryKeys: this._recoveryKeys });
+  public set recoveryKey(recoveryKey: IEncryptedData) {
+    this._recoveryKey = recoveryKey;
+    this.addEvent(DeviceEvent.RECOVERY_KEY_CHANGED, { recoveryKey: this._recoveryKey });
   }
 
   public get secret(): IEncryptedData {
@@ -123,7 +126,7 @@ export class Device extends EntityBase implements IDevice {
       name: this._name,
       pin: this._pin,
       publicKey: this._publicKey,
-      recoveryKeys: this._recoveryKeys,
+      recoveryKey: this._recoveryKey,
       secret: this._secret,
       created: this._created,
       updated: this._updated,

@@ -1,6 +1,10 @@
 import { Device } from "../../entity";
-import { encryptDevicePIN, encryptDeviceRecoveryKey, encryptDeviceSecret } from "../../support";
 import { getTestKeyPairRSA } from "./test-key-pair";
+import { DeviceHandler } from "../../handler";
+import { context } from "./test-context";
+
+// @ts-ignore
+const handler = new DeviceHandler(context);
 
 export const getTestDevice = async ({
   id = "d9b9adec-81fa-4ea0-8cf3-44ccd4fe5162",
@@ -28,9 +32,9 @@ export const getTestDevice = async ({
     accountId,
     macAddress,
     name,
-    pin: pin ? { signature: await encryptDevicePIN(pin), updated: new Date() } : null,
+    pin: pin ? { signature: await handler.encryptDevicePIN(pin), updated: new Date() } : null,
     publicKey,
-    recoveryKeys: recoveryKey ? [await encryptDeviceRecoveryKey(recoveryKey)] : [],
-    secret: secret ? { signature: await encryptDeviceSecret(secret), updated: new Date() } : null,
+    recoveryKey: recoveryKey ? { signature: await handler.encryptRecoveryKey(recoveryKey), updated: new Date() } : null,
+    secret: secret ? { signature: await handler.encryptDeviceSecret(secret), updated: new Date() } : null,
     uniqueId,
   });

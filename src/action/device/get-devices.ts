@@ -1,6 +1,5 @@
 import Joi from "@hapi/joi";
 import { IKoaDeviceContext } from "../../typing";
-import { assertAccountPermission } from "../../support";
 
 interface IGetDevicesOptions {
   accountId: string;
@@ -24,12 +23,14 @@ const schema = Joi.object({
 export const getDevices = (ctx: IKoaDeviceContext) => async (options: IGetDevicesOptions): Promise<IGetDevicesData> => {
   await schema.validateAsync(options);
 
-  const { logger, repository } = ctx;
+  const { logger } = ctx;
+  const { authTokenHandler } = ctx.handler;
+  const { deviceRepository } = ctx.repository;
   const { accountId } = options;
 
-  await assertAccountPermission(ctx)(accountId);
+  authTokenHandler.assertAccountPermission(accountId);
 
-  const array = await repository.device.findMany({ accountId });
+  const array = await deviceRepository.findMany({ accountId });
   const devices: Array<IDeviceData> = [];
 
   for (const device of array) {

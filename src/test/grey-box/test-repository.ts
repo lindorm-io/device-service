@@ -1,21 +1,17 @@
 import { DeviceRepository } from "../../infrastructure";
+import { IKoaDeviceRepository } from "../../typing";
 import { KeyPairRepository } from "@lindorm-io/koa-keystore";
 import { getTestMongo } from "./test-mongo";
 import { winston } from "../../logger";
 
-export interface IGetGreyBoxRepository {
-  device: DeviceRepository;
-  keyPair: KeyPairRepository;
-}
-
-export const getTestRepository = async (): Promise<IGetGreyBoxRepository> => {
+export const getTestRepository = async (): Promise<IKoaDeviceRepository> => {
   const mongo = await getTestMongo();
 
-  const db = mongo.getDatabase();
+  const db = mongo.database();
   const logger = winston;
 
   return {
-    device: new DeviceRepository({ db, logger }),
-    keyPair: new KeyPairRepository({ db, logger }),
+    deviceRepository: new DeviceRepository({ db, logger }),
+    keyPairRepository: new KeyPairRepository({ db, logger }),
   };
 };

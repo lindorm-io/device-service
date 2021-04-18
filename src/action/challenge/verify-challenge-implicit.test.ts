@@ -1,13 +1,7 @@
 import MockDate from "mockdate";
 import { ChallengeStrategy } from "../../enum";
-import { assertChallenge, getChallengeConfirmationToken } from "../../support";
 import { getTestDevice, logger } from "../../test";
 import { verifyChallengeImplicit } from "./verify-challenge-implicit";
-
-jest.mock("../../support", () => ({
-  assertChallenge: jest.fn(() => () => {}),
-  getChallengeConfirmationToken: jest.fn(() => () => "getChallengeConfirmationToken"),
-}));
 
 MockDate.set("2020-01-01 08:00:00.000");
 
@@ -16,11 +10,19 @@ describe("verifyChallengeImplicit", () => {
 
   beforeEach(async () => {
     ctx = {
-      device: await getTestDevice({
-        pin: null,
-        recoveryKey: null,
-        secret: null,
-      }),
+      entity: {
+        device: await getTestDevice({
+          pin: null,
+          recoveryKey: null,
+          secret: null,
+        }),
+      },
+      handler: {
+        challengeHandler: {
+          assertChallenge: () => {},
+          getChallengeConfirmationToken: () => "getChallengeConfirmationToken",
+        },
+      },
       logger,
     };
   });
@@ -32,8 +34,5 @@ describe("verifyChallengeImplicit", () => {
         strategy: ChallengeStrategy.IMPLICIT,
       }),
     ).resolves.toMatchSnapshot();
-
-    expect(assertChallenge).toHaveBeenCalled();
-    expect(getChallengeConfirmationToken).toHaveBeenCalled();
   });
 });

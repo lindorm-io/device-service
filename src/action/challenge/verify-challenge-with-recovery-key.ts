@@ -1,12 +1,6 @@
 import Joi from "@hapi/joi";
 import { JOI_STRATEGY } from "../../constant";
 import {
-  assertChallenge,
-  assertDeviceRecoveryKey,
-  createDeviceRecoveryKeys,
-  getChallengeConfirmationToken,
-} from "../../support";
-import {
   IKoaDeviceContext,
   IVerifyChallengeWithRecoveryKeyData,
   IVerifyChallengeWithRecoveryKeyOptions,
@@ -23,25 +17,31 @@ export const verifyChallengeWithRecoveryKey = (ctx: IKoaDeviceContext) => async 
 ): Promise<IVerifyChallengeWithRecoveryKeyData> => {
   await schema.validateAsync(options);
 
-  const { device, logger, repository } = ctx;
+  const { logger } = ctx;
+  const { device } = ctx.entity;
+  const { challengeHandler, deviceHandler } = ctx.handler;
+  const { deviceRepository } = ctx.repository;
   const { certificateVerifier, recoveryKey, strategy } = options;
 
-  await assertChallenge(ctx)({ certificateVerifier, strategy });
-  await assertDeviceRecoveryKey(device, recoveryKey);
+  await challengeHandler.assertChallenge(strategy, certificateVerifier);
+  await deviceHandler.assertDeviceRecoveryKey(recoveryKey);
 
   logger.debug("certificate challenge with recovery key verified", {
     accountId: device.accountId,
     deviceId: device.id,
   });
 
-  const { recoveryKeys, signatures } = await createDeviceRecoveryKeys(3);
+  const createdKey = await deviceHandler.createDeviceRecoveryKey();
 
-  device.recoveryKeys = signatures;
+  device.recoveryKey = {
+    signature: await deviceHandler.encryptRecoveryKey(createdKey),
+    updated: new Date(),
+  };
 
-  await repository.device.update(device);
+  await deviceRepository.update(device);
 
   return {
-    challengeConfirmation: getChallengeConfirmationToken(ctx)(),
-    recoveryKeys,
+    challengeConfirmation: challengeHandler.getChallengeConfirmationToken(),
+    recoveryKey: createdKey,
   };
 };

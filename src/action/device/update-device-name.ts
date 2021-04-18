@@ -1,7 +1,6 @@
 import Joi from "@hapi/joi";
 import { IKoaDeviceContext } from "../../typing";
 import { Scope } from "@lindorm-io/jwt";
-import { assertAccountPermission, assertScope } from "../../support";
 
 interface IUpdateDeviceName {
   deviceId: string;
@@ -16,17 +15,19 @@ const schema = Joi.object({
 export const updateDeviceName = (ctx: IKoaDeviceContext) => async (options: IUpdateDeviceName): Promise<void> => {
   await schema.validateAsync(options);
 
-  const { logger, repository } = ctx;
+  const { logger } = ctx;
+  const { authTokenHandler } = ctx.handler;
+  const { deviceRepository } = ctx.repository;
   const { deviceId, name } = options;
 
-  const device = await repository.device.find({ id: deviceId });
+  const device = await deviceRepository.find({ id: deviceId });
 
-  await assertAccountPermission(ctx)(device.accountId);
-  assertScope(ctx)([Scope.EDIT]);
+  authTokenHandler.assertAccountPermission(device.accountId);
+  authTokenHandler.assertScope([Scope.EDIT]);
 
   device.name = name;
 
-  await repository.device.update(device);
+  await deviceRepository.update(device);
 
   logger.debug("device updated", {
     accountId: device.accountId,

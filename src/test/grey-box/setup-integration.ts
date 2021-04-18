@@ -22,18 +22,18 @@ export let TEST_DEVICE_TOKEN_ISSUER: TokenIssuer;
 export let TEST_KEY_PAIR_HANDLER: KeyPairHandler;
 
 export const setupIntegration = async (): Promise<void> => {
-  const { device, keyPair } = await getTestRepository();
+  const { deviceRepository, keyPairRepository } = await getTestRepository();
   const {
-    challenge: challengeCache,
-    enrolment: enrolmentCache,
+    challengeCache: challengeCache,
+    enrolmentCache: enrolmentCache,
     keyPair: { auth: authKeyPairCache, device: deviceKeyPairCache },
   } = await getTestCache();
 
   const keyPairEC = getTestKeyPairEC();
   const keyPairRSA = getTestKeyPairRSA();
 
-  TEST_DEVICE_REPOSITORY = device;
-  TEST_KEY_PAIR_REPOSITORY = keyPair;
+  TEST_DEVICE_REPOSITORY = deviceRepository;
+  TEST_KEY_PAIR_REPOSITORY = keyPairRepository;
 
   TEST_CHALLENGE_CACHE = challengeCache;
   TEST_ENROLMENT_CACHE = enrolmentCache;

@@ -2,6 +2,7 @@ export * from "./in-memory";
 export * from "./setup-integration";
 export * from "./test-cache";
 export * from "./test-challenge";
+export * from "./test-context";
 export * from "./test-device";
 export * from "./test-enrolment";
 export * from "./test-issuer";
