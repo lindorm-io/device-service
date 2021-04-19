@@ -2,9 +2,8 @@ import { AccountController } from "../controller";
 import { AuthTokenHandler } from "../handler";
 import { HttpStatus } from "@lindorm-io/core";
 import { IKoaDeviceContext } from "../typing";
-import { Router } from "@lindorm-io/koa";
+import { Router, controllerMiddleware, handlerMiddleware } from "@lindorm-io/koa";
 import { bearerAuthMiddleware } from "../middleware";
-import { controllerMiddleware, handlerMiddleware } from "@lindorm-io/koa/dist/middleware";
 
 export const router = new Router();
 

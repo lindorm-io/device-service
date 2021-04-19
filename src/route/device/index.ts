@@ -2,9 +2,8 @@ import { AuthTokenHandler, DeviceHandler } from "../../handler";
 import { DeviceController } from "../../controller";
 import { HttpStatus } from "@lindorm-io/core";
 import { IKoaDeviceContext } from "../../typing";
-import { Router } from "@lindorm-io/koa";
+import { Router, controllerMiddleware, handlerMiddleware } from "@lindorm-io/koa";
 import { bearerAuthMiddleware } from "../../middleware";
-import { controllerMiddleware, handlerMiddleware } from "@lindorm-io/koa/dist/middleware";
 import { router as changeRoute } from "./change";
 
 export const router = new Router();

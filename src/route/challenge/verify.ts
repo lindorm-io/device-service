@@ -1,11 +1,10 @@
+import { ChallengeController } from "../../controller";
+import { ChallengeHandler, DeviceHandler } from "../../handler";
 import { ChallengeStrategy } from "../../enum";
 import { HttpStatus } from "@lindorm-io/core";
 import { IKoaDeviceContext } from "../../typing";
-import { Router } from "@lindorm-io/koa";
+import { Router, controllerMiddleware, handlerMiddleware } from "@lindorm-io/koa";
 import { challengeMiddleware, deviceMiddleware } from "../../middleware";
-import { controllerMiddleware, handlerMiddleware } from "@lindorm-io/koa/dist/middleware";
-import { ChallengeController } from "../../controller";
-import { ChallengeHandler, DeviceHandler } from "../../handler";
 
 export const router = new Router();
 

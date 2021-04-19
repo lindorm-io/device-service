@@ -42,7 +42,7 @@
     "@lindorm-io/errors": "0.0.1",
     "@lindorm-io/jwt": "0.2.1",
     "@lindorm-io/key-pair": "0.1.3",
-    "@lindorm-io/koa": "0.2.6",
+    "@lindorm-io/koa": "0.2.7",
     "@lindorm-io/koa-basic-auth": "0.1.2",
     "@lindorm-io/koa-bearer-auth": "0.1.0",
     "@lindorm-io/koa-config": "0.0.2",
