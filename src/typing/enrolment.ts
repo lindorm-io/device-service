@@ -14,3 +14,28 @@ export interface ICreateEnrolmentOptions {
   publicKey: string;
   uniqueId: string;
 }
+
+export interface IInitialiseEnrolmentOptions {
+  macAddress: string;
+  name: string;
+  publicKey: string;
+  uniqueId: string;
+}
+
+export interface IInitialiseEnrolmentData {
+  certificateChallenge: string;
+  enrolmentId: string;
+  expires: Date;
+}
+
+export interface IConcludeEnrolmentOptions {
+  certificateVerifier: string;
+  enrolmentId: string;
+  pin: string;
+  secret?: string;
+}
+
+export interface IConcludeEnrolmentData {
+  deviceId: string;
+  recoveryKey: string;
+}

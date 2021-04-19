@@ -1,5 +1,6 @@
 import { AuthTokenHandler, ChallengeHandler, DeviceHandler, EnrolmentHandler } from "../handler";
 import { Challenge, Device } from "../entity";
+import { ChallengeController, EnrolmentController } from "../controller";
 import { DeviceRepository, ChallengeCache, EnrolmentCache } from "../infrastructure";
 import { IKoaAppContext } from "@lindorm-io/koa";
 import { ITokenIssuerVerifyData, TokenIssuer } from "@lindorm-io/jwt";
@@ -7,7 +8,6 @@ import { KeyPairCache, KeyPairRepository } from "@lindorm-io/koa-keystore";
 import { Keystore } from "@lindorm-io/key-pair";
 import { MongoConnection } from "@lindorm-io/mongo";
 import { RedisConnection } from "@lindorm-io/redis";
-import { ChallengeController } from "../controller";
 
 export interface IKoaDeviceCache {
   challengeCache: ChallengeCache;
@@ -25,6 +25,7 @@ export interface IKoaDeviceClient {
 
 export interface IKoaDeviceController {
   challengeController: ChallengeController;
+  enrolmentController: EnrolmentController;
 }
 
 export interface IKoaDeviceEntity {

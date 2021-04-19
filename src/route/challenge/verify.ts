@@ -11,7 +11,6 @@ export const router = new Router();
 
 router.use(deviceMiddleware);
 router.use(challengeMiddleware);
-
 router.use(handlerMiddleware(ChallengeHandler));
 router.use(handlerMiddleware(DeviceHandler));
 router.use(controllerMiddleware(ChallengeController));

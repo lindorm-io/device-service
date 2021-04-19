@@ -9,7 +9,6 @@ import { deviceMiddleware } from "../../middleware";
 export const router = new Router();
 
 router.use(deviceMiddleware);
-
 router.use(handlerMiddleware(ChallengeHandler));
 router.use(handlerMiddleware(DeviceHandler));
 router.use(controllerMiddleware(ChallengeController));

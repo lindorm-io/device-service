@@ -1,8 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`verifyEnrolment should verify device enrolment 1`] = `
-Object {
-  "deviceId": "d256c6ec-b7b5-4cbf-8673-da2b21f5c703",
-  "recoveryKey": "recoveryKey",
-}
-`;
