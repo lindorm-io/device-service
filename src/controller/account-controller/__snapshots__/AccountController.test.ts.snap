@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`removeDevice should get a list of devices 1`] = `
+exports[`AccountController getDevices should initialise device enrolment 1`] = `
 Object {
   "devices": Array [
     Object {

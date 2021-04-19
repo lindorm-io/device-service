@@ -8,6 +8,7 @@ import { KeyPairCache, KeyPairRepository } from "@lindorm-io/koa-keystore";
 import { Keystore } from "@lindorm-io/key-pair";
 import { MongoConnection } from "@lindorm-io/mongo";
 import { RedisConnection } from "@lindorm-io/redis";
+import { AccountController } from "../controller/account-controller";
 
 export interface IKoaDeviceCache {
   challengeCache: ChallengeCache;
@@ -24,6 +25,7 @@ export interface IKoaDeviceClient {
 }
 
 export interface IKoaDeviceController {
+  accountController: AccountController;
   challengeController: ChallengeController;
   enrolmentController: EnrolmentController;
 }
