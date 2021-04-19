@@ -1,9 +1,7 @@
-import { AuthTokenHandler, DeviceHandler } from "../handler";
 import { KoaApp } from "@lindorm-io/koa";
 import { accountRoute, challengeRoute, deviceRoute, enrolmentRoute, wellKnownRoute } from "../route";
 import { authJwksCacheWorker, keyPairCacheWorker } from "../worker";
 import { config, IS_TEST } from "../config";
-import { handlerMiddleware } from "@lindorm-io/koa/dist/middleware";
 import { keyPairRepositoryMiddleware } from "@lindorm-io/koa-keystore";
 import { winston } from "../logger";
 import {
@@ -44,10 +42,6 @@ koa.addMiddleware(authTokenIssuerMiddleware);
 // device tokens
 koa.addMiddleware(deviceKeystoreMiddleware);
 koa.addMiddleware(deviceTokenIssuerMiddleware);
-
-// handlers
-koa.addMiddleware(handlerMiddleware(AuthTokenHandler));
-koa.addMiddleware(handlerMiddleware(DeviceHandler));
 
 // routes
 koa.addRoute("/account", accountRoute);
