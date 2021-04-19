@@ -32,9 +32,9 @@ export const getTestDevice = async ({
     accountId,
     macAddress,
     name,
-    pin: pin ? { signature: await handler.encryptDevicePIN(pin), updated: new Date() } : null,
+    pin: pin ? { signature: await handler.encryptPin(pin), updated: new Date() } : null,
     publicKey,
     recoveryKey: recoveryKey ? { signature: await handler.encryptRecoveryKey(recoveryKey), updated: new Date() } : null,
-    secret: secret ? { signature: await handler.encryptDeviceSecret(secret), updated: new Date() } : null,
+    secret: secret ? { signature: await handler.encryptSecret(secret), updated: new Date() } : null,
     uniqueId,
   });

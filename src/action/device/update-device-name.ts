@@ -22,7 +22,7 @@ export const updateDeviceName = (ctx: IKoaDeviceContext) => async (options: IUpd
 
   const device = await deviceRepository.find({ id: deviceId });
 
-  authTokenHandler.assertAccountPermission(device.accountId);
+  authTokenHandler.assertPermission(device.accountId);
   authTokenHandler.assertScope([Scope.EDIT]);
 
   device.name = name;

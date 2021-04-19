@@ -23,11 +23,11 @@ export class DeviceHandler extends KoaDeviceContextAware {
     });
   }
 
-  public async encryptDevicePIN(pin: string): Promise<string> {
+  public async encryptPin(pin: string): Promise<string> {
     return await this.password.encrypt(pin);
   }
 
-  public async assertDevicePIN(pin: string): Promise<void> {
+  public async assertPin(pin: string): Promise<void> {
     const { device } = this.ctx.entity;
 
     try {
@@ -37,11 +37,11 @@ export class DeviceHandler extends KoaDeviceContextAware {
     }
   }
 
-  public async encryptDeviceSecret(secret: string): Promise<string> {
+  public async encryptSecret(secret: string): Promise<string> {
     return await this.password.encrypt(secret);
   }
 
-  public async assertDeviceSecret(secret: string): Promise<void> {
+  public async assertSecret(secret: string): Promise<void> {
     const { device } = this.ctx.entity;
 
     try {
@@ -51,7 +51,7 @@ export class DeviceHandler extends KoaDeviceContextAware {
     }
   }
 
-  public async createDeviceRecoveryKey(): Promise<string> {
+  public async generateRecoveryKey(): Promise<string> {
     return (
       `${getRandomValue(4).toUpperCase()}-` +
       `${await getRandomNumber(6)}-` +
@@ -65,7 +65,7 @@ export class DeviceHandler extends KoaDeviceContextAware {
     return await this.secret.encrypt(recoveryKey);
   }
 
-  public async assertDeviceRecoveryKey(recoveryKey: string): Promise<void> {
+  public async assertRecoveryKey(recoveryKey: string): Promise<void> {
     const { device } = this.ctx.entity;
 
     try {

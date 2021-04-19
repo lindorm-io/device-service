@@ -19,11 +19,11 @@ describe("verifyChallengeWithSecret", () => {
       },
       handler: {
         challengeHandler: {
-          assertChallenge: () => {},
-          getChallengeConfirmationToken: () => "getChallengeConfirmationToken",
+          assert: () => {},
+          getConfirmationToken: () => "getConfirmationToken",
         },
         deviceHandler: {
-          assertDeviceSecret: () => {},
+          assertSecret: () => {},
         },
       },
       logger,

@@ -24,7 +24,7 @@ export const updateDevicePIN = (ctx: IKoaDeviceContext) => async (options: IUpda
   authTokenHandler.assertScope([Scope.EDIT]);
 
   device.pin = {
-    signature: await deviceHandler.encryptDevicePIN(pin),
+    signature: await deviceHandler.encryptPin(pin),
     updated: new Date(),
   };
 

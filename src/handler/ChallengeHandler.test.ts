@@ -32,7 +32,7 @@ describe("ChallengeHandler", () => {
   let ctx: any;
   let handler: ChallengeHandler;
 
-  describe("assertChallenge", () => {
+  describe("assert", () => {
     let challenge: Challenge;
     let keyPair: KeyPairHandler;
 
@@ -65,12 +65,12 @@ describe("ChallengeHandler", () => {
 
     test("should verify challenge", async () => {
       await expect(
-        handler.assertChallenge(ChallengeStrategy.SECRET, keyPair.sign(challenge.certificateChallenge)),
+        handler.assert(ChallengeStrategy.SECRET, keyPair.sign(challenge.certificateChallenge)),
       ).resolves.toBe(undefined);
     });
   });
 
-  describe("createChallenge", () => {
+  describe("create", () => {
     beforeEach(async () => {
       ctx = {
         ...context,
@@ -88,14 +88,12 @@ describe("ChallengeHandler", () => {
     });
 
     test("should create a challenge", async () => {
-      await expect(
-        handler.createChallenge(ChallengeStrategy.IMPLICIT, ChallengeScope.SIGN_IN),
-      ).resolves.toMatchSnapshot();
+      await expect(handler.create(ChallengeStrategy.IMPLICIT, ChallengeScope.SIGN_IN)).resolves.toMatchSnapshot();
       expect(inMemoryCache).toMatchSnapshot();
     });
   });
 
-  describe("assertChallengeIsNotExpired", () => {
+  describe("isNotExpired", () => {
     let challenge: Challenge;
 
     beforeEach(async () => {
@@ -108,18 +106,18 @@ describe("ChallengeHandler", () => {
 
     test("should succeed when date is before", () => {
       challenge = getTestChallenge({});
-      expect(() => handler.assertChallengeIsNotExpired(challenge)).not.toThrow();
+      expect(() => handler.isNotExpired(challenge)).not.toThrow();
     });
 
     test("should throw error when date is after", () => {
       challenge = getTestChallenge({
         expires: new Date("1999-01-01 01:00:00.000"),
       });
-      expect(() => handler.assertChallengeIsNotExpired(challenge)).toThrow(expect.any(ExpiredChallengeError));
+      expect(() => handler.isNotExpired(challenge)).toThrow(expect.any(ExpiredChallengeError));
     });
   });
 
-  describe("getChallengeConfirmationToken", () => {
+  describe("getConfirmationToken", () => {
     beforeEach(async () => {
       ctx = {
         ...context,
@@ -139,7 +137,7 @@ describe("ChallengeHandler", () => {
     });
 
     test("should return a challenge confirmation token", () => {
-      expect(handler.getChallengeConfirmationToken()).toMatchSnapshot();
+      expect(handler.getConfirmationToken()).toMatchSnapshot();
     });
   });
 });

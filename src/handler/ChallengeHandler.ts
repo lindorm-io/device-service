@@ -10,7 +10,22 @@ import { getRandomValue } from "@lindorm-io/core";
 import { isAfter } from "date-fns";
 
 export class ChallengeHandler extends KoaDeviceContextAware {
-  public async assertChallenge(strategy: ChallengeStrategy, certificateVerifier: string): Promise<void> {
+  public async create(strategy: ChallengeStrategy, scope: ChallengeScope): Promise<Challenge> {
+    const { challengeCache } = this.ctx.cache;
+    const { device } = this.ctx.entity;
+
+    return await challengeCache.create(
+      new Challenge({
+        certificateChallenge: getRandomValue(64),
+        deviceId: device.id,
+        expires: getExpiryDate(config.CHALLENGE_EXPIRY),
+        scope,
+        strategy,
+      }),
+    );
+  }
+
+  public async assert(strategy: ChallengeStrategy, certificateVerifier: string): Promise<void> {
     const { challenge, device } = this.ctx.entity;
 
     if (strategy !== challenge.strategy) {
@@ -31,28 +46,13 @@ export class ChallengeHandler extends KoaDeviceContextAware {
     }
   }
 
-  public async createChallenge(strategy: ChallengeStrategy, scope: ChallengeScope): Promise<Challenge> {
-    const { challengeCache } = this.ctx.cache;
-    const { device } = this.ctx.entity;
-
-    return await challengeCache.create(
-      new Challenge({
-        certificateChallenge: getRandomValue(64),
-        deviceId: device.id,
-        expires: getExpiryDate(config.CHALLENGE_EXPIRY),
-        scope,
-        strategy,
-      }),
-    );
-  }
-
-  public assertChallengeIsNotExpired(challenge: Challenge): void {
+  public isNotExpired(challenge: Challenge): void {
     if (isAfter(new Date(), new Date(challenge.expires))) {
       throw new ExpiredChallengeError(challenge);
     }
   }
 
-  public getChallengeConfirmationToken(): ITokenIssuerSignData {
+  public getConfirmationToken(): ITokenIssuerSignData {
     const { challenge, device } = this.ctx.entity;
     const { deviceIssuer } = this.ctx.issuer;
 

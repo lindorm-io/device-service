@@ -23,15 +23,15 @@ export const verifyChallengeWithRecoveryKey = (ctx: IKoaDeviceContext) => async 
   const { deviceRepository } = ctx.repository;
   const { certificateVerifier, recoveryKey, strategy } = options;
 
-  await challengeHandler.assertChallenge(strategy, certificateVerifier);
-  await deviceHandler.assertDeviceRecoveryKey(recoveryKey);
+  await challengeHandler.assert(strategy, certificateVerifier);
+  await deviceHandler.assertRecoveryKey(recoveryKey);
 
   logger.debug("certificate challenge with recovery key verified", {
     accountId: device.accountId,
     deviceId: device.id,
   });
 
-  const createdKey = await deviceHandler.createDeviceRecoveryKey();
+  const createdKey = await deviceHandler.generateRecoveryKey();
 
   device.recoveryKey = {
     signature: await deviceHandler.encryptRecoveryKey(createdKey),
@@ -41,7 +41,7 @@ export const verifyChallengeWithRecoveryKey = (ctx: IKoaDeviceContext) => async 
   await deviceRepository.update(device);
 
   return {
-    challengeConfirmation: challengeHandler.getChallengeConfirmationToken(),
+    challengeConfirmation: challengeHandler.getConfirmationToken(),
     recoveryKey: createdKey,
   };
 };

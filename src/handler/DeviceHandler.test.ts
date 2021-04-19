@@ -21,7 +21,7 @@ describe("DeviceHandler", () => {
 
   describe("PIN", () => {
     test("should encrypt device pin", async () => {
-      await expect(handler.encryptDevicePIN("secret")).resolves.not.toBe("secret");
+      await expect(handler.encryptPin("secret")).resolves.not.toBe("secret");
     });
 
     test("should assert device pin", async () => {
@@ -29,18 +29,18 @@ describe("DeviceHandler", () => {
         accountId: "account-id",
         publicKey: "public-key",
         pin: {
-          signature: await handler.encryptDevicePIN("123456"),
+          signature: await handler.encryptPin("123456"),
           updated: new Date(),
         },
       });
 
-      await expect(handler.assertDevicePIN("123456")).resolves.toBe(undefined);
+      await expect(handler.assertPin("123456")).resolves.toBe(undefined);
     });
   });
 
   describe("Secret", () => {
     test("should encrypt device secret", async () => {
-      await expect(handler.encryptDeviceSecret("secret")).resolves.not.toBe("secret");
+      await expect(handler.encryptSecret("secret")).resolves.not.toBe("secret");
     });
 
     test("should assert device secret", async () => {
@@ -48,18 +48,18 @@ describe("DeviceHandler", () => {
         accountId: "account-id",
         publicKey: "public-key",
         secret: {
-          signature: await handler.encryptDeviceSecret("secret"),
+          signature: await handler.encryptSecret("secret"),
           updated: new Date(),
         },
       });
 
-      await expect(handler.assertDeviceSecret("secret")).resolves.toBe(undefined);
+      await expect(handler.assertSecret("secret")).resolves.toBe(undefined);
     });
   });
 
   describe("Recovery Key", () => {
     test("should generate device recovery key", async () => {
-      await expect(handler.createDeviceRecoveryKey()).resolves.toStrictEqual("ABCD-123456-ABCD-123456-ABCD");
+      await expect(handler.generateRecoveryKey()).resolves.toStrictEqual("ABCD-123456-ABCD-123456-ABCD");
     });
 
     test("should encrypt device secret", async () => {
@@ -78,7 +78,7 @@ describe("DeviceHandler", () => {
         },
       });
 
-      await expect(handler.assertDeviceRecoveryKey("recoveryKey")).resolves.toBe(undefined);
+      await expect(handler.assertRecoveryKey("recoveryKey")).resolves.toBe(undefined);
     });
   });
 });

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ChallengeHandler createChallenge should create a challenge 1`] = `
+exports[`ChallengeHandler create should create a challenge 1`] = `
 Challenge {
   "_created": 2020-01-01T07:00:00.000Z,
   "_events": Array [],
@@ -15,7 +15,7 @@ Challenge {
 }
 `;
 
-exports[`ChallengeHandler createChallenge should create a challenge 2`] = `
+exports[`ChallengeHandler create should create a challenge 2`] = `
 Object {
   "Challenge::bc54a8e9-3246-4cad-8244-0a1a42c914cd": Object {
     "blob": "{\\"json\\":{\\"id\\":\\"bc54a8e9-3246-4cad-8244-0a1a42c914cd\\",\\"version\\":\\"0\\",\\"created\\":\\"2020-01-01T07:00:00.000Z\\",\\"updated\\":\\"2020-01-01T07:00:00.000Z\\",\\"events\\":[],\\"certificateChallenge\\":\\"ESJh38hYfJ7481UFTQgq63wxxiOub1Xt7YKGJIukrBlIA5RNR6rDriiQ977psN1u\\",\\"deviceId\\":\\"c12b0d8e-956e-4556-927c-c8588a71a4e1\\",\\"expires\\":\\"2020-01-01T07:15:00.000Z\\",\\"scope\\":\\"sign_in\\",\\"strategy\\":\\"implicit\\"},\\"meta\\":{\\"id\\":\\"string\\",\\"version\\":\\"number\\",\\"created\\":\\"date\\",\\"updated\\":\\"date\\",\\"events\\":[],\\"certificateChallenge\\":\\"string\\",\\"deviceId\\":\\"string\\",\\"expires\\":\\"date\\",\\"scope\\":\\"string\\",\\"strategy\\":\\"string\\"}}",
@@ -28,7 +28,7 @@ Object {
 }
 `;
 
-exports[`ChallengeHandler getChallengeConfirmationToken should return a challenge confirmation token 1`] = `
+exports[`ChallengeHandler getConfirmationToken should return a challenge confirmation token 1`] = `
 Object {
   "expires": 1577862600,
   "expiresIn": 600,

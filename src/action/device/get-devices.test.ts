@@ -12,7 +12,7 @@ describe("removeDevice", () => {
     ctx = {
       handler: {
         authTokenHandler: {
-          assertAccountPermission: () => {},
+          assertPermission: () => {},
         },
       },
       logger,

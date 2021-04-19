@@ -30,12 +30,12 @@ export const verifyEnrolment = (ctx: IKoaDeviceContext) => async (
   const { enrolmentHandler, deviceHandler } = ctx.handler;
   const { certificateVerifier, enrolmentId, pin, secret } = options;
 
-  const enrolment = await enrolmentHandler.assertEnrolment(enrolmentId, certificateVerifier);
-  await enrolmentHandler.removeEnrolledDevice(enrolment);
+  const enrolment = await enrolmentHandler.assert(enrolmentId, certificateVerifier);
+  await enrolmentHandler.removeDevice(enrolment);
 
-  const recoveryKey = await deviceHandler.createDeviceRecoveryKey();
+  const recoveryKey = await deviceHandler.generateRecoveryKey();
 
-  const device = await enrolmentHandler.createDeviceFromEnrolment({
+  const device = await enrolmentHandler.createDevice({
     enrolment,
     pin,
     recoveryKey,

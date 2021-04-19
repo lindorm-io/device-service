@@ -26,7 +26,7 @@ export const updateDeviceSecret = (ctx: IKoaDeviceContext) => async (
   authTokenHandler.assertScope([Scope.EDIT]);
 
   device.secret = {
-    signature: await deviceHandler.encryptDeviceSecret(secret),
+    signature: await deviceHandler.encryptSecret(secret),
     updated: new Date(),
   };
 

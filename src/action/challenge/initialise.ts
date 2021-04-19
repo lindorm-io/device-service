@@ -17,7 +17,7 @@ export const initialiseChallenge = (ctx: IKoaDeviceContext) => async (
   const { challengeHandler } = ctx.handler;
   const { scope, strategy } = options;
 
-  const challenge = await challengeHandler.createChallenge(strategy, scope);
+  const challenge = await challengeHandler.create(strategy, scope);
 
   logger.debug("certificate challenge initialised", {
     deviceId: device.id,

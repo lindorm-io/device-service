@@ -18,8 +18,8 @@ export const verifyChallengeWithSecret = (ctx: IKoaDeviceContext) => async (
   const { challengeHandler, deviceHandler } = ctx.handler;
   const { certificateVerifier, secret, strategy } = options;
 
-  await challengeHandler.assertChallenge(strategy, certificateVerifier);
-  await deviceHandler.assertDeviceSecret(secret);
+  await challengeHandler.assert(strategy, certificateVerifier);
+  await deviceHandler.assertSecret(secret);
 
   logger.debug("certificate challenge with secret verified", {
     accountId: device.accountId,
@@ -27,6 +27,6 @@ export const verifyChallengeWithSecret = (ctx: IKoaDeviceContext) => async (
   });
 
   return {
-    challengeConfirmation: challengeHandler.getChallengeConfirmationToken(),
+    challengeConfirmation: challengeHandler.getConfirmationToken(),
   };
 };

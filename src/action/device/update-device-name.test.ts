@@ -12,7 +12,7 @@ describe("updateDeviceName", () => {
     ctx = {
       handler: {
         authTokenHandler: {
-          assertAccountPermission: () => {},
+          assertPermission: () => {},
           assertScope: () => {},
         },
       },

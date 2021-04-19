@@ -13,11 +13,11 @@ describe("updateDeviceSecret", () => {
     ctx = {
       handler: {
         authTokenHandler: {
-          assertAccountPermission: () => {},
+          assertPermission: () => {},
           assertScope: () => {},
         },
         deviceHandler: {
-          encryptDeviceSecret: (input: string) => baseHash(input),
+          encryptSecret: (input: string) => baseHash(input),
         },
       },
       logger,

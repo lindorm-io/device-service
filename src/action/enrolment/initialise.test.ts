@@ -11,7 +11,7 @@ describe("initialiseEnrolment", () => {
     ctx = {
       handler: {
         enrolmentHandler: {
-          createEnrolment: () => ({
+          create: () => ({
             id: "a89b62b8-9956-4b0e-986c-e83b4e66c2ec",
             certificateChallenge: "certificateChallenge",
             expires: "expires",

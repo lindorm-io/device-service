@@ -18,8 +18,8 @@ export const verifyChallengeWithPin = (ctx: IKoaDeviceContext) => async (
   const { challengeHandler, deviceHandler } = ctx.handler;
   const { certificateVerifier, pin, strategy } = options;
 
-  await challengeHandler.assertChallenge(strategy, certificateVerifier);
-  await deviceHandler.assertDevicePIN(pin);
+  await challengeHandler.assert(strategy, certificateVerifier);
+  await deviceHandler.assertPin(pin);
 
   logger.debug("certificate challenge with pin verified", {
     accountId: device.accountId,
@@ -27,6 +27,6 @@ export const verifyChallengeWithPin = (ctx: IKoaDeviceContext) => async (
   });
 
   return {
-    challengeConfirmation: challengeHandler.getChallengeConfirmationToken(),
+    challengeConfirmation: challengeHandler.getConfirmationToken(),
   };
 };

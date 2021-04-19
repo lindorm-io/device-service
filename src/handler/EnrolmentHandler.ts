@@ -9,7 +9,24 @@ import { getExpiryDate } from "../util";
 import { getRandomValue } from "@lindorm-io/core";
 
 export class EnrolmentHandler extends KoaDeviceContextAware {
-  public async assertEnrolment(enrolmentId: string, certificateVerifier: string): Promise<Enrolment> {
+  public async create(options: ICreateEnrolmentOptions): Promise<Enrolment> {
+    const { enrolmentCache } = this.ctx.cache;
+    const { accountId, macAddress, name, publicKey, uniqueId } = options;
+
+    return await enrolmentCache.create(
+      new Enrolment({
+        accountId,
+        certificateChallenge: getRandomValue(64),
+        expires: getExpiryDate(config.ENROLMENT_EXPIRY),
+        macAddress,
+        name,
+        publicKey,
+        uniqueId,
+      }),
+    );
+  }
+
+  public async assert(enrolmentId: string, certificateVerifier: string): Promise<Enrolment> {
     const { enrolmentCache } = this.ctx.cache;
 
     const enrolment = await enrolmentCache.find(enrolmentId);
@@ -30,7 +47,7 @@ export class EnrolmentHandler extends KoaDeviceContextAware {
     return enrolment;
   }
 
-  public async createDeviceFromEnrolment(options: ICreateDeviceFromEnrolmentOptions): Promise<Device> {
+  public async createDevice(options: ICreateDeviceFromEnrolmentOptions): Promise<Device> {
     const { deviceHandler } = this.ctx.handler;
     const { deviceRepository } = this.ctx.repository;
     const { enrolment, pin, recoveryKey, secret } = options;
@@ -40,33 +57,16 @@ export class EnrolmentHandler extends KoaDeviceContextAware {
         accountId: enrolment.accountId,
         macAddress: enrolment.macAddress,
         name: enrolment.name,
-        pin: { signature: await deviceHandler.encryptDevicePIN(pin), updated: new Date() },
+        pin: { signature: await deviceHandler.encryptPin(pin), updated: new Date() },
         publicKey: enrolment.publicKey,
         recoveryKey: { signature: await deviceHandler.encryptRecoveryKey(recoveryKey), updated: new Date() },
-        secret: secret ? { signature: await deviceHandler.encryptDeviceSecret(secret), updated: new Date() } : null,
+        secret: secret ? { signature: await deviceHandler.encryptSecret(secret), updated: new Date() } : null,
         uniqueId: enrolment.uniqueId,
       }),
     );
   }
 
-  public async createEnrolment(options: ICreateEnrolmentOptions): Promise<Enrolment> {
-    const { enrolmentCache } = this.ctx.cache;
-    const { accountId, macAddress, name, publicKey, uniqueId } = options;
-
-    return await enrolmentCache.create(
-      new Enrolment({
-        accountId,
-        certificateChallenge: getRandomValue(64),
-        expires: getExpiryDate(config.ENROLMENT_EXPIRY),
-        macAddress,
-        name,
-        publicKey,
-        uniqueId,
-      }),
-    );
-  }
-
-  public async removeEnrolledDevice(enrolment: Enrolment): Promise<void> {
+  public async removeDevice(enrolment: Enrolment): Promise<void> {
     const { deviceRepository } = this.ctx.repository;
 
     try {

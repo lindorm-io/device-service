@@ -13,11 +13,11 @@ describe("updateDevicePIN", () => {
     ctx = {
       handler: {
         authTokenHandler: {
-          assertAccountPermission: () => {},
+          assertPermission: () => {},
           assertScope: () => {},
         },
         deviceHandler: {
-          encryptDevicePIN: (input: string) => baseHash(input),
+          encryptPin: (input: string) => baseHash(input),
         },
       },
       logger,

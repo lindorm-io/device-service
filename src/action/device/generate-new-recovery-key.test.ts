@@ -13,7 +13,7 @@ describe("generateNewRecoveryKey", () => {
     ctx = {
       handler: {
         deviceHandler: {
-          createDeviceRecoveryKey: () => "recoveryKey",
+          generateRecoveryKey: () => "recoveryKey",
           encryptRecoveryKey: (input: string) => baseHash(input),
         },
       },

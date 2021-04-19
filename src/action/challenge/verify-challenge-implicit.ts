@@ -17,7 +17,7 @@ export const verifyChallengeImplicit = (ctx: IKoaDeviceContext) => async (
   const { challengeHandler } = ctx.handler;
   const { certificateVerifier, strategy } = options;
 
-  await challengeHandler.assertChallenge(strategy, certificateVerifier);
+  await challengeHandler.assert(strategy, certificateVerifier);
 
   logger.debug("certificate challenge verified", {
     accountId: device.accountId,
@@ -25,6 +25,6 @@ export const verifyChallengeImplicit = (ctx: IKoaDeviceContext) => async (
   });
 
   return {
-    challengeConfirmation: challengeHandler.getChallengeConfirmationToken(),
+    challengeConfirmation: challengeHandler.getConfirmationToken(),
   };
 };

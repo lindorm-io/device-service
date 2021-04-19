@@ -19,8 +19,8 @@ describe("verifyChallengeImplicit", () => {
       },
       handler: {
         challengeHandler: {
-          assertChallenge: () => {},
-          getChallengeConfirmationToken: () => "getChallengeConfirmationToken",
+          assert: () => {},
+          getConfirmationToken: () => "getConfirmationToken",
         },
       },
       logger,

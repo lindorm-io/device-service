@@ -19,11 +19,11 @@ describe("verifyChallengeWithPin", () => {
       },
       handler: {
         challengeHandler: {
-          assertChallenge: () => {},
-          getChallengeConfirmationToken: () => "getChallengeConfirmationToken",
+          assert: () => {},
+          getConfirmationToken: () => "getConfirmationToken",
         },
         deviceHandler: {
-          assertDevicePIN: () => {},
+          assertPin: () => {},
         },
       },
       logger,

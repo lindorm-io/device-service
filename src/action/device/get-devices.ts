@@ -28,7 +28,7 @@ export const getDevices = (ctx: IKoaDeviceContext) => async (options: IGetDevice
   const { deviceRepository } = ctx.repository;
   const { accountId } = options;
 
-  authTokenHandler.assertAccountPermission(accountId);
+  authTokenHandler.assertPermission(accountId);
 
   const array = await deviceRepository.findMany({ accountId });
   const devices: Array<IDeviceData> = [];

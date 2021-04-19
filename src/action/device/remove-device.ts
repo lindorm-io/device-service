@@ -20,7 +20,7 @@ export const removeDevice = (ctx: IKoaDeviceContext) => async (options: IRemoveD
 
   const device = await deviceRepository.find({ id: deviceId });
 
-  authTokenHandler.assertAccountPermission(device.accountId);
+  authTokenHandler.assertPermission(device.accountId);
   authTokenHandler.assertScope([Scope.EDIT]);
 
   await deviceRepository.remove(device);

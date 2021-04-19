@@ -31,7 +31,7 @@ export const initialiseEnrolment = (ctx: IKoaDeviceContext) => async (
   const { subject: accountId } = ctx.token.bearer;
   const { macAddress, name, publicKey, uniqueId } = options;
 
-  const enrolment = await enrolmentHandler.createEnrolment({
+  const enrolment = await enrolmentHandler.create({
     accountId,
     macAddress,
     name,

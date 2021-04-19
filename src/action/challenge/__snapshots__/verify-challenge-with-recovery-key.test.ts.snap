@@ -2,7 +2,7 @@
 
 exports[`verifyChallengeWithRecoveryKey should verify device challenge 1`] = `
 Object {
-  "challengeConfirmation": "getChallengeConfirmationToken",
+  "challengeConfirmation": "getConfirmationToken",
   "recoveryKey": "recoveryKey",
 }
 `;

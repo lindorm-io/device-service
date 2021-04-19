@@ -12,7 +12,7 @@ export const generateNewRecoveryKey = (ctx: IKoaDeviceContext) => async (): Prom
 
   const device = await deviceRepository.find({ id: deviceId });
 
-  const createdKey = await deviceHandler.createDeviceRecoveryKey();
+  const createdKey = await deviceHandler.generateRecoveryKey();
 
   device.recoveryKey = {
     signature: await deviceHandler.encryptRecoveryKey(createdKey),

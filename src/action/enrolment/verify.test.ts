@@ -14,17 +14,17 @@ describe("verifyEnrolment", () => {
       cache: await getTestCache(),
       handler: {
         enrolmentHandler: {
-          assertEnrolment: () => getTestEnrolment({}),
-          createDeviceFromEnrolment: () =>
+          assert: () => getTestEnrolment({}),
+          createDevice: () =>
             new Device({
               id: "d256c6ec-b7b5-4cbf-8673-da2b21f5c703",
               accountId: "accountId",
               publicKey: "publicKey",
             }),
-          removeEnrolledDevice: () => {},
+          removeDevice: () => {},
         },
         deviceHandler: {
-          createDeviceRecoveryKey: () => "recoveryKey",
+          generateRecoveryKey: () => "recoveryKey",
         },
       },
       logger,

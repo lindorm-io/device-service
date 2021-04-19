@@ -20,12 +20,12 @@ describe("verifyChallengeWithRecoveryKey", () => {
       },
       handler: {
         challengeHandler: {
-          assertChallenge: () => {},
-          getChallengeConfirmationToken: () => "getChallengeConfirmationToken",
+          assert: () => {},
+          getConfirmationToken: () => "getConfirmationToken",
         },
         deviceHandler: {
-          assertDeviceRecoveryKey: () => {},
-          createDeviceRecoveryKey: () => "recoveryKey",
+          assertRecoveryKey: () => {},
+          generateRecoveryKey: () => "recoveryKey",
           encryptRecoveryKey: () => baseHash("recoveryKey"),
         },
       },

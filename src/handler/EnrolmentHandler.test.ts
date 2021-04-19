@@ -29,7 +29,7 @@ describe("EnrolmentHandler", () => {
   let ctx: any;
   let handler: EnrolmentHandler;
 
-  describe("assertEnrolment", () => {
+  describe("assert", () => {
     let enrolment: Enrolment;
     let keyPair: KeyPairHandler;
 
@@ -54,23 +54,23 @@ describe("EnrolmentHandler", () => {
 
     test("should verify enrolment", async () => {
       await expect(
-        handler.assertEnrolment(enrolment.id, keyPair.sign(enrolment.certificateChallenge)),
+        handler.assert(enrolment.id, keyPair.sign(enrolment.certificateChallenge)),
       ).resolves.toMatchSnapshot();
 
       expect(inMemoryCache).toMatchSnapshot();
     });
   });
 
-  describe("createDeviceFromEnrolment", () => {
+  describe("createDevice", () => {
     let enrolment: Enrolment;
 
     beforeEach(async () => {
       ctx = {
         handler: {
           deviceHandler: {
-            encryptDevicePIN: (input: string) => baseHash(input),
+            encryptPin: (input: string) => baseHash(input),
             encryptRecoveryKey: (input: string) => baseHash(input),
-            encryptDeviceSecret: (input: string) => baseHash(input),
+            encryptSecret: (input: string) => baseHash(input),
           },
         },
         repository: await getTestRepository(),
@@ -81,7 +81,7 @@ describe("EnrolmentHandler", () => {
 
     test("should verify enrolment", async () => {
       await expect(
-        handler.createDeviceFromEnrolment({
+        handler.createDevice({
           enrolment,
           pin: "123456",
           recoveryKey: "ABCD-123456-ABCD-123456-ABCD",
@@ -93,7 +93,7 @@ describe("EnrolmentHandler", () => {
     });
   });
 
-  describe("createEnrolment", () => {
+  describe("create", () => {
     beforeEach(async () => {
       ctx = { cache: await getTestCache() };
       handler = new EnrolmentHandler(ctx);
@@ -101,7 +101,7 @@ describe("EnrolmentHandler", () => {
 
     test("should create an enrolment", async () => {
       await expect(
-        handler.createEnrolment({
+        handler.create({
           accountId: "543afa16-ba6f-4f40-8882-30b4450cd59b",
           macAddress: "00:00:0A:BB:28:FC",
           name: "My iPhone 11 Pro",
@@ -114,7 +114,7 @@ describe("EnrolmentHandler", () => {
     });
   });
 
-  describe("removeEnrolledDevice", () => {
+  describe("removeDevice", () => {
     let enrolment: Enrolment;
     let device: Device;
 
@@ -134,13 +134,13 @@ describe("EnrolmentHandler", () => {
     test("should remove existing device", async () => {
       await ctx.repository.deviceRepository.create(device);
 
-      await expect(handler.removeEnrolledDevice(enrolment)).resolves.toBe(undefined);
+      await expect(handler.removeDevice(enrolment)).resolves.toBe(undefined);
 
       expect(inMemoryStore).toMatchSnapshot();
     });
 
     test("should not try to remove device that does not exist", async () => {
-      await expect(handler.removeEnrolledDevice(enrolment)).resolves.toBe(undefined);
+      await expect(handler.removeDevice(enrolment)).resolves.toBe(undefined);
 
       expect(inMemoryStore).toMatchSnapshot();
     });
@@ -151,7 +151,7 @@ describe("EnrolmentHandler", () => {
       });
       await ctx.repository.deviceRepository.create(device);
 
-      await expect(handler.removeEnrolledDevice(enrolment)).resolves.toBe(undefined);
+      await expect(handler.removeDevice(enrolment)).resolves.toBe(undefined);
 
       expect(inMemoryStore).toMatchSnapshot();
     });

@@ -19,7 +19,7 @@ describe("initialiseChallenge", () => {
       },
       handler: {
         challengeHandler: {
-          createChallenge: () => ({
+          create: () => ({
             challengeId: "challengeId",
             certificateChallenge: "certificateChallenge",
             expires: "expires",

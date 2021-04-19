@@ -3,7 +3,7 @@ import { KoaDeviceContextAware } from "../class";
 import { isAdmin, isScope, Scope } from "@lindorm-io/jwt";
 
 export class AuthTokenHandler extends KoaDeviceContextAware {
-  public assertAccountPermission(accountId: string): void {
+  public assertPermission(accountId: string): void {
     const { permission, scope, subject } = this.ctx.token.bearer;
 
     if (isAdmin(permission)) {

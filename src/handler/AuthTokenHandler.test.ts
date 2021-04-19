@@ -21,29 +21,25 @@ describe("AuthTokenHandler", () => {
     handler = new AuthTokenHandler(ctx);
   });
 
-  describe("assertAccountPermission", () => {
+  describe("assertPermission", () => {
     test("should assert admin permission", () => {
       ctx.token.bearer.permission = Permission.ADMIN;
 
-      expect(() => handler.assertAccountPermission("bfec6872-e074-42e6-a99a-299bec497bc7")).not.toThrow();
+      expect(() => handler.assertPermission("bfec6872-e074-42e6-a99a-299bec497bc7")).not.toThrow();
     });
 
     test("should assert user permission", () => {
-      expect(() => handler.assertAccountPermission("74319107-1246-4424-961d-0895c13ad248")).not.toThrow();
+      expect(() => handler.assertPermission("74319107-1246-4424-961d-0895c13ad248")).not.toThrow();
     });
 
     test("should throw error on invalid permission", () => {
-      expect(() => handler.assertAccountPermission("bfec6872-e074-42e6-a99a-299bec497bc7")).toThrow(
-        InvalidPermissionError,
-      );
+      expect(() => handler.assertPermission("bfec6872-e074-42e6-a99a-299bec497bc7")).toThrow(InvalidPermissionError);
     });
 
     test("should throw error on invalid scope", () => {
       ctx.token.bearer.scope = "wrong";
 
-      expect(() => handler.assertAccountPermission("74319107-1246-4424-961d-0895c13ad248")).toThrow(
-        InvalidPermissionError,
-      );
+      expect(() => handler.assertPermission("74319107-1246-4424-961d-0895c13ad248")).toThrow(InvalidPermissionError);
     });
   });
 
