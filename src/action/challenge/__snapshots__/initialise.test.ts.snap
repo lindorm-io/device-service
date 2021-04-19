@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`initialiseChallenge should initialise device challenge 1`] = `
-Object {
-  "certificateChallenge": "certificateChallenge",
-  "challengeId": undefined,
-  "expires": "expires",
-}
-`;

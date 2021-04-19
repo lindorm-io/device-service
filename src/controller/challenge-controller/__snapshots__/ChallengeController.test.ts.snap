@@ -1,13 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`verifyChallengeWithRecoveryKey should verify device challenge 1`] = `
+exports[`ChallengeController initialise should initialise device challenge 1`] = `
 Object {
-  "challengeConfirmation": "getConfirmationToken",
-  "recoveryKey": "recoveryKey",
+  "certificateChallenge": "ESJh38hYfJ7481UFTQgq63wxxiOub1Xt7YKGJIukrBlIA5RNR6rDriiQ977psN1u",
+  "challengeId": "eb14da97-6c96-4833-8046-54d1697d7a49",
+  "expires": 2099-01-01T00:00:00.000Z,
 }
 `;
 
-exports[`verifyChallengeWithRecoveryKey should verify device challenge 2`] = `
+exports[`ChallengeController verifyImplicit should verify device challenge 1`] = `
+Object {
+  "challengeConfirmation": "getConfirmationToken",
+}
+`;
+
+exports[`ChallengeController verifyPin should verify device challenge with pin 1`] = `
+Object {
+  "challengeConfirmation": "getConfirmationToken",
+}
+`;
+
+exports[`ChallengeController verifyRecoveryKey should verify device challenge with recovery key 1`] = `
+Object {
+  "challengeConfirmation": "getConfirmationToken",
+  "recoveryKey": "AAAA-111222-BBBB-333444-CCCC",
+}
+`;
+
+exports[`ChallengeController verifyRecoveryKey should verify device challenge with recovery key 2`] = `
 Object {
   "device": Object {
     "device": Object {
@@ -58,7 +78,7 @@ gSR6fcZmKuI4nCfTKl3ykozcPwpEmfRgSBDHKwDJe6ZbK0sL4ScVookCAwEAAQ==
               "name": "device_recovery_key_changed",
               "payload": Object {
                 "recoveryKey": Object {
-                  "signature": "cmVjb3ZlcnlLZXk=",
+                  "signature": "QUFBQS0xMTEyMjItQkJCQi0zMzM0NDQtQ0NDQw==",
                   "updated": 2020-01-01T07:00:00.000Z,
                 },
               },
@@ -86,7 +106,7 @@ gSR6fcZmKuI4nCfTKl3ykozcPwpEmfRgSBDHKwDJe6ZbK0sL4ScVookCAwEAAQ==
 -----END RSA PUBLIC KEY-----
 ",
           "recoveryKey": Object {
-            "signature": "cmVjb3ZlcnlLZXk=",
+            "signature": "QUFBQS0xMTEyMjItQkJCQi0zMzM0NDQtQ0NDQw==",
             "updated": 2020-01-01T07:00:00.000Z,
           },
           "secret": Object {
@@ -110,5 +130,11 @@ gSR6fcZmKuI4nCfTKl3ykozcPwpEmfRgSBDHKwDJe6ZbK0sL4ScVookCAwEAAQ==
       ],
     },
   },
+}
+`;
+
+exports[`ChallengeController verifySecret should verify device challenge 1`] = `
+Object {
+  "challengeConfirmation": "getConfirmationToken",
 }
 `;

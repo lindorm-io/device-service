@@ -8,3 +8,8 @@ export const resetCache = (): void => {
 export const resetStore = (): void => {
   inMemoryStore = {};
 };
+
+export const resetAll = (): void => {
+  resetCache();
+  resetStore();
+};

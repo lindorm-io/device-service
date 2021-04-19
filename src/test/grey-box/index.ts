@@ -5,6 +5,8 @@ export * from "./test-challenge";
 export * from "./test-context";
 export * from "./test-device";
 export * from "./test-enrolment";
+export * from "./test-entity";
+export * from "./test-handler";
 export * from "./test-issuer";
 export * from "./test-key-pair";
 export * from "./test-logger";

@@ -19,3 +19,8 @@ export const getTestDeviceIssuer = (): TokenIssuer =>
     // @ts-ignore
     logger,
   });
+
+export const getTestIssuer = () => ({
+  authIssuer: getTestAuthIssuer(),
+  deviceIssuer: getTestDeviceIssuer(),
+});

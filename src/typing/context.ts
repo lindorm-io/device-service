@@ -7,6 +7,7 @@ import { KeyPairCache, KeyPairRepository } from "@lindorm-io/koa-keystore";
 import { Keystore } from "@lindorm-io/key-pair";
 import { MongoConnection } from "@lindorm-io/mongo";
 import { RedisConnection } from "@lindorm-io/redis";
+import { ChallengeController } from "../controller";
 
 export interface IKoaDeviceCache {
   challengeCache: ChallengeCache;
@@ -20,6 +21,10 @@ export interface IKoaDeviceCache {
 export interface IKoaDeviceClient {
   mongo: MongoConnection;
   redis: RedisConnection;
+}
+
+export interface IKoaDeviceController {
+  challengeController: ChallengeController;
 }
 
 export interface IKoaDeviceEntity {
@@ -57,6 +62,7 @@ export interface IKoaDeviceToken {
 export interface IKoaDeviceContext extends IKoaAppContext {
   cache: IKoaDeviceCache;
   client: IKoaDeviceClient;
+  controller: IKoaDeviceController;
   entity: IKoaDeviceEntity;
   handler: IKoaDeviceHandler;
   issuer: IKoaDeviceIssuer;

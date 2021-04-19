@@ -12,13 +12,16 @@ const schema = Joi.object({
 export const deviceMiddleware = async (ctx: IKoaDeviceContext, next: Next): Promise<void> => {
   const start = Date.now();
 
-  const { logger, repository } = ctx;
+  const {
+    logger,
+    repository: { deviceRepository },
+  } = ctx;
   const { accountId, deviceId } = ctx.request.body;
 
   await schema.validateAsync({ accountId, deviceId });
 
   try {
-    ctx.entity.device = await repository.deviceRepository.find({ id: deviceId });
+    ctx.entity.device = await deviceRepository.find({ id: deviceId });
 
     if (!stringComparison(ctx.entity.device.accountId, accountId)) {
       throw new InvalidPermissionError();
