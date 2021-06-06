@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "experimentalDecorators": true,
     "declaration": true,
     "esModuleInterop": true,
     "module": "commonjs",
@@ -12,6 +11,7 @@
     "removeComments": true,
     "rootDir": "src",
     "sourceMap": true,
+    "strict": false,
     "target": "ESNEXT"
   },
   "include": [
@@ -19,6 +19,7 @@
   ],
   "exclude": [
     "node_modules",
+    "src/test/**/*.ts",
     "**/*.spec.ts",
     "**/*.test.ts"
   ]

@@ -1,20 +1,22 @@
 /* eslint-disable */
 module.exports = {
   collectCoverageFrom: [
-    "**/*.test.{ts, tsx}",
+    "**/*.integration.{ts, tsx}",
     // Non-library folders/files
     "!**/node_modules/**",
     "!**/coverage/**",
     "!**/dist/**",
     "!**/tmp/**",
-    "!jest.integration.js",
+    "!jest.integration.config.js",
     "!jest.config.js",
   ],
   coverageDirectory: "./coverage",
   coverageReporters: ["lcov"],
+  globalSetup: "./jest.global.setup.js",
   roots: ["src"],
   setupFiles: [],
   setupFilesAfterEnv: ["jest-extended"],
-  testMatch: ["**/*.test.ts"],
+  testEnvironment: "node",
+  testMatch: ["**/*.integration.ts"],
   transform: { "^.+\\.tsx?$": "ts-jest" },
 };

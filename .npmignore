@@ -19,5 +19,6 @@
 Thumbs.db
 
 jest.config.js
+jest.global.setup.js
 nodemon.json
 tsconfig.json
