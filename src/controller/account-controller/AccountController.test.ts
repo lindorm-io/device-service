@@ -3,7 +3,7 @@ import { AccountController } from "./AccountController";
 import { getTestContext, resetAll } from "../../test";
 import { Device } from "../../entity";
 
-MockDate.set("2020-01-01 08:00:00.000");
+MockDate.set("2021-01-01T08:00:00.000Z");
 
 describe("AccountController", () => {
   let ctx: any;

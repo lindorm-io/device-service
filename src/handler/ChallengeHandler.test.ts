@@ -2,8 +2,7 @@ import MockDate from "mockdate";
 import { Challenge, Device } from "../entity";
 import { ChallengeHandler } from "./ChallengeHandler";
 import { ChallengeScope, ChallengeStrategy } from "../enum";
-import { ExpiredChallengeError } from "../error";
-import { KeyPairHandler } from "@lindorm-io/key-pair";
+import { CryptoKeyPair } from "@lindorm-io/crypto";
 import {
   context,
   getTestCache,
@@ -14,6 +13,7 @@ import {
   inMemoryCache,
   logger,
 } from "../test";
+import { ClientError } from "@lindorm-io/errors";
 
 jest.mock("jsonwebtoken", () => ({
   sign: (data: any) => data,
@@ -22,11 +22,11 @@ jest.mock("uuid", () => ({
   v4: () => "bc54a8e9-3246-4cad-8244-0a1a42c914cd",
 }));
 jest.mock("@lindorm-io/core", () => ({
-  ...jest.requireActual("@lindorm-io/core"),
+  ...(jest.requireActual("@lindorm-io/core") as any),
   getRandomValue: jest.fn(() => "ESJh38hYfJ7481UFTQgq63wxxiOub1Xt7YKGJIukrBlIA5RNR6rDriiQ977psN1u"),
 }));
 
-MockDate.set("2020-01-01 08:00:00.000");
+MockDate.set("2021-01-01T08:00:00.000Z");
 
 describe("ChallengeHandler", () => {
   let ctx: any;
@@ -34,7 +34,7 @@ describe("ChallengeHandler", () => {
 
   describe("assert", () => {
     let challenge: Challenge;
-    let keyPair: KeyPairHandler;
+    let crypto: CryptoKeyPair;
 
     beforeEach(async () => {
       ctx = {
@@ -54,10 +54,10 @@ describe("ChallengeHandler", () => {
         logger,
       };
       challenge = await ctx.cache.challengeCache.create(ctx.entity.challenge);
-      keyPair = new KeyPairHandler({
+      crypto = new CryptoKeyPair({
         algorithm: "RS512",
         passphrase: "",
-        privateKey: getTestKeyPairRSA().privateKey,
+        privateKey: getTestKeyPairRSA().privateKey as string,
         publicKey: getTestKeyPairRSA().publicKey,
       });
       handler = new ChallengeHandler(ctx);
@@ -65,8 +65,8 @@ describe("ChallengeHandler", () => {
 
     test("should verify challenge", async () => {
       await expect(
-        handler.assert(ChallengeStrategy.SECRET, keyPair.sign(challenge.certificateChallenge)),
-      ).resolves.toBe(undefined);
+        handler.assert(ChallengeStrategy.SECRET, crypto.sign(challenge.certificateChallenge)),
+      ).resolves.toBeUndefined();
     });
   });
 
@@ -79,7 +79,10 @@ describe("ChallengeHandler", () => {
           device: new Device({
             id: "c12b0d8e-956e-4556-927c-c8588a71a4e1",
             accountId: "0e219ec4-66fd-4d96-a17f-bdbf89edea03",
+            macAddress: "macAddress",
+            name: "name",
             publicKey: "publicKey",
+            uniqueId: "uniqueId",
           }),
         },
         logger,
@@ -99,7 +102,6 @@ describe("ChallengeHandler", () => {
     beforeEach(async () => {
       ctx = {
         ...context,
-        logger,
       };
       handler = new ChallengeHandler(ctx);
     });
@@ -113,7 +115,7 @@ describe("ChallengeHandler", () => {
       challenge = getTestChallenge({
         expires: new Date("1999-01-01 01:00:00.000"),
       });
-      expect(() => handler.isNotExpired(challenge)).toThrow(expect.any(ExpiredChallengeError));
+      expect(() => handler.isNotExpired(challenge)).toThrow(expect.any(ClientError));
     });
   });
 
@@ -129,8 +131,7 @@ describe("ChallengeHandler", () => {
             secret: null,
           }),
         },
-        issuer: { deviceIssuer: getTestDeviceIssuer() },
-        logger,
+        jwt: getTestDeviceIssuer(),
         metadata: { clientId: "clientId" },
       };
       handler = new ChallengeHandler(ctx);

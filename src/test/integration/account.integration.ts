@@ -11,7 +11,7 @@ import {
   setupIntegration,
 } from "../grey-box";
 
-MockDate.set("2020-01-01 08:00:00.000");
+MockDate.set("2021-01-01T08:00:00.000Z");
 
 describe("/account", () => {
   let accessToken: string;

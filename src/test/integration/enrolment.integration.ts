@@ -4,7 +4,7 @@ import { Device } from "../../entity";
 import { koa } from "../../server/koa";
 import {
   TEST_DEVICE_REPOSITORY,
-  TEST_KEY_PAIR_HANDLER,
+  TEST_CRYPTO_KEY_PAIR,
   generateAccessToken,
   getTestKeyPairRSA,
   resetCache,
@@ -12,7 +12,7 @@ import {
   setupIntegration,
 } from "../grey-box";
 
-MockDate.set("2020-01-01 08:00:00.000");
+MockDate.set("2021-01-01T08:00:00.000Z");
 
 describe("/enrolment", () => {
   let accessToken: string;
@@ -55,7 +55,7 @@ describe("/enrolment", () => {
       body: { certificate_challenge: certificateChallenge, enrolment_id: enrolmentId },
     } = initialiseResponse;
 
-    const certificateVerifier = TEST_KEY_PAIR_HANDLER.sign(certificateChallenge);
+    const certificateVerifier = TEST_CRYPTO_KEY_PAIR.sign(certificateChallenge);
 
     const concludeResponse = await request(koa.callback())
       .post("/enrolment/verify")

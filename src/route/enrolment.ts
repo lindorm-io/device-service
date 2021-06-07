@@ -1,51 +1,42 @@
-import { DeviceHandler, EnrolmentHandler } from "../handler";
+import { DeviceContext } from "../typing";
 import { EnrolmentController } from "../controller";
-import { HttpStatus } from "@lindorm-io/core";
-import { IKoaDeviceContext } from "../typing";
-import { Router, controllerMiddleware, handlerMiddleware } from "@lindorm-io/koa";
+import { HttpStatus } from "@lindorm-io/koa";
+import { Router, controllerMiddleware } from "@lindorm-io/koa";
 import { bearerAuthMiddleware } from "../middleware";
 
-export const router = new Router();
+export const router = new Router<unknown, DeviceContext>();
 
 router.use(bearerAuthMiddleware);
-router.use(handlerMiddleware(EnrolmentHandler));
-router.use(handlerMiddleware(DeviceHandler));
 router.use(controllerMiddleware(EnrolmentController));
 
-router.post(
-  "/initialise",
-  async (ctx: IKoaDeviceContext): Promise<void> => {
-    const {
-      controller: { enrolmentController },
-    } = ctx;
+router.post("/initialise", async (ctx: DeviceContext): Promise<void> => {
+  const {
+    controller: { enrolmentController },
+  } = ctx;
 
-    const { macAddress, name, publicKey, uniqueId } = ctx.request.body;
+  const { macAddress, name, publicKey, uniqueId } = ctx.request.body;
 
-    ctx.body = await enrolmentController.initialise({
-      macAddress,
-      name,
-      publicKey,
-      uniqueId,
-    });
-    ctx.status = HttpStatus.Success.CREATED;
-  },
-);
+  ctx.body = await enrolmentController.initialise({
+    macAddress,
+    name,
+    publicKey,
+    uniqueId,
+  });
+  ctx.status = HttpStatus.Success.CREATED;
+});
 
-router.post(
-  "/verify",
-  async (ctx: IKoaDeviceContext): Promise<void> => {
-    const {
-      controller: { enrolmentController },
-    } = ctx;
+router.post("/verify", async (ctx): Promise<void> => {
+  const {
+    controller: { enrolmentController },
+  } = ctx;
 
-    const { certificateVerifier, enrolmentId, pin, secret } = ctx.request.body;
+  const { certificateVerifier, enrolmentId, pin, secret } = ctx.request.body;
 
-    ctx.body = await enrolmentController.verify({
-      certificateVerifier,
-      enrolmentId,
-      pin,
-      secret,
-    });
-    ctx.status = HttpStatus.Success.CREATED;
-  },
-);
+  ctx.body = await enrolmentController.verify({
+    certificateVerifier,
+    enrolmentId,
+    pin,
+    secret,
+  });
+  ctx.status = HttpStatus.Success.CREATED;
+});

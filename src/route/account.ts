@@ -1,26 +1,21 @@
 import { AccountController } from "../controller";
-import { AuthTokenHandler } from "../handler";
-import { HttpStatus } from "@lindorm-io/core";
-import { IKoaDeviceContext } from "../typing";
-import { Router, controllerMiddleware, handlerMiddleware } from "@lindorm-io/koa";
+import { DeviceContext } from "../typing";
+import { HttpStatus } from "@lindorm-io/koa";
+import { Router, controllerMiddleware } from "@lindorm-io/koa";
 import { bearerAuthMiddleware } from "../middleware";
 
-export const router = new Router();
+export const router = new Router<unknown, DeviceContext>();
 
 router.use(bearerAuthMiddleware);
-router.use(handlerMiddleware(AuthTokenHandler));
 router.use(controllerMiddleware(AccountController));
 
-router.get(
-  "/:id",
-  async (ctx: IKoaDeviceContext): Promise<void> => {
-    const {
-      controller: { accountController },
-    } = ctx;
+router.get("/:id", async (ctx): Promise<void> => {
+  const {
+    controller: { accountController },
+  } = ctx;
 
-    const accountId = ctx.params.id;
+  const accountId = ctx.params.id;
 
-    ctx.body = await accountController.getDevices({ accountId });
-    ctx.status = HttpStatus.Success.OK;
-  },
-);
+  ctx.body = await accountController.getDevices({ accountId });
+  ctx.status = HttpStatus.Success.OK;
+});

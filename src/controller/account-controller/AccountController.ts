@@ -1,8 +1,8 @@
-import { KoaDeviceContextAware } from "../../class";
+import { DeviceContextAware } from "../../class";
 import { IDeviceData, IGetDevicesData, IGetDevicesOptions } from "../../typing";
 import { schemaGetDevices } from "./schema";
 
-export class AccountController extends KoaDeviceContextAware {
+export class AccountController extends DeviceContextAware {
   public async getDevices(options: IGetDevicesOptions): Promise<IGetDevicesData> {
     const {
       handler: { authTokenHandler },

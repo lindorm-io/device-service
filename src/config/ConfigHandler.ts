@@ -1,6 +1,6 @@
-import { ConfigurationBase, IConfigurationDataBase, IConfigurationOptions } from "@lindorm-io/koa-config";
+import { ConfigurationBase, ConfigurationOptions, DefaultConfiguration } from "@lindorm-io/koa-config";
 
-export interface IConfigurationData extends IConfigurationDataBase {
+export interface Configuration extends DefaultConfiguration {
   SERVER_PORT: number;
   HOST: string;
 
@@ -34,8 +34,8 @@ export interface IConfigurationData extends IConfigurationDataBase {
   MONGO_DB_NAME: string;
 }
 
-export class ConfigHandler extends ConfigurationBase<IConfigurationData> {
-  constructor(options: IConfigurationOptions<IConfigurationData>) {
+export class ConfigHandler extends ConfigurationBase<Configuration> {
+  public constructor(options: ConfigurationOptions<Configuration>) {
     super(options);
   }
 }

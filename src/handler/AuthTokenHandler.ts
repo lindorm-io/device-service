@@ -1,8 +1,8 @@
-import { InvalidPermissionError, InvalidScopeError } from "../error";
-import { KoaDeviceContextAware } from "../class";
+import { DeviceContextAware } from "../class";
 import { isAdmin, isScope, Scope } from "@lindorm-io/jwt";
+import { ClientError } from "@lindorm-io/errors";
 
-export class AuthTokenHandler extends KoaDeviceContextAware {
+export class AuthTokenHandler extends DeviceContextAware {
   public assertPermission(accountId: string): void {
     const { permission, scope, subject } = this.ctx.token.bearer;
 
@@ -11,11 +11,17 @@ export class AuthTokenHandler extends KoaDeviceContextAware {
     }
 
     if (subject !== accountId) {
-      throw new InvalidPermissionError();
+      throw new ClientError("Invalid Account", {
+        debug: { subject, accountId },
+        statusCode: ClientError.StatusCode.BAD_REQUEST,
+      });
     }
 
     if (!isScope(scope, Scope.DEFAULT)) {
-      throw new InvalidPermissionError();
+      throw new ClientError("Invalid Scope", {
+        debug: { scope },
+        statusCode: ClientError.StatusCode.BAD_REQUEST,
+      });
     }
   }
 
@@ -24,7 +30,10 @@ export class AuthTokenHandler extends KoaDeviceContextAware {
 
     for (const expect of expectedScopes) {
       if (isScope(scope, expect)) continue;
-      throw new InvalidScopeError(scope, expect);
+      throw new ClientError("Invalid Scope", {
+        debug: { scope },
+        statusCode: ClientError.StatusCode.BAD_REQUEST,
+      });
     }
   }
 }

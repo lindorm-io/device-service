@@ -1,48 +1,48 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ChallengeHandler create should create a challenge 1`] = `
-Challenge {
-  "_created": 2020-01-01T07:00:00.000Z,
-  "_events": Array [],
-  "_id": "bc54a8e9-3246-4cad-8244-0a1a42c914cd",
-  "_updated": 2020-01-01T07:00:00.000Z,
-  "_version": 0,
+Object {
   "certificateChallenge": "ESJh38hYfJ7481UFTQgq63wxxiOub1Xt7YKGJIukrBlIA5RNR6rDriiQ977psN1u",
+  "created": 2021-01-01T08:00:00.000Z,
   "deviceId": "c12b0d8e-956e-4556-927c-c8588a71a4e1",
-  "expires": 2020-01-01T07:15:00.000Z,
+  "events": Array [],
+  "expires": 2021-01-01T08:15:00.000Z,
+  "id": "bc54a8e9-3246-4cad-8244-0a1a42c914cd",
   "scope": "sign_in",
   "strategy": "implicit",
+  "updated": 2021-01-01T08:00:00.000Z,
+  "version": 0,
 }
 `;
 
 exports[`ChallengeHandler create should create a challenge 2`] = `
 Object {
   "Challenge::bc54a8e9-3246-4cad-8244-0a1a42c914cd": Object {
-    "blob": "{\\"json\\":{\\"id\\":\\"bc54a8e9-3246-4cad-8244-0a1a42c914cd\\",\\"version\\":\\"0\\",\\"created\\":\\"2020-01-01T07:00:00.000Z\\",\\"updated\\":\\"2020-01-01T07:00:00.000Z\\",\\"events\\":[],\\"certificateChallenge\\":\\"ESJh38hYfJ7481UFTQgq63wxxiOub1Xt7YKGJIukrBlIA5RNR6rDriiQ977psN1u\\",\\"deviceId\\":\\"c12b0d8e-956e-4556-927c-c8588a71a4e1\\",\\"expires\\":\\"2020-01-01T07:15:00.000Z\\",\\"scope\\":\\"sign_in\\",\\"strategy\\":\\"implicit\\"},\\"meta\\":{\\"id\\":\\"string\\",\\"version\\":\\"number\\",\\"created\\":\\"date\\",\\"updated\\":\\"date\\",\\"events\\":[],\\"certificateChallenge\\":\\"string\\",\\"deviceId\\":\\"string\\",\\"expires\\":\\"date\\",\\"scope\\":\\"string\\",\\"strategy\\":\\"string\\"}}",
-    "expiresInSeconds": null,
+    "blob": "{\\"json\\":{\\"id\\":\\"bc54a8e9-3246-4cad-8244-0a1a42c914cd\\",\\"created\\":\\"2021-01-01T08:00:00.000Z\\",\\"events\\":[],\\"updated\\":\\"2021-01-01T08:00:00.000Z\\",\\"version\\":\\"0\\",\\"certificateChallenge\\":\\"ESJh38hYfJ7481UFTQgq63wxxiOub1Xt7YKGJIukrBlIA5RNR6rDriiQ977psN1u\\",\\"deviceId\\":\\"c12b0d8e-956e-4556-927c-c8588a71a4e1\\",\\"expires\\":\\"2021-01-01T08:15:00.000Z\\",\\"scope\\":\\"sign_in\\",\\"strategy\\":\\"implicit\\"},\\"meta\\":{\\"id\\":\\"string\\",\\"created\\":\\"date\\",\\"events\\":[],\\"updated\\":\\"date\\",\\"version\\":\\"number\\",\\"certificateChallenge\\":\\"string\\",\\"deviceId\\":\\"string\\",\\"expires\\":\\"date\\",\\"scope\\":\\"string\\",\\"strategy\\":\\"string\\"}}",
+    "expiresInSeconds": undefined,
   },
   "Challenge::eb14da97-6c96-4833-8046-54d1697d7a49": Object {
-    "blob": "{\\"json\\":{\\"id\\":\\"eb14da97-6c96-4833-8046-54d1697d7a49\\",\\"version\\":\\"0\\",\\"created\\":\\"2020-01-01T07:00:00.000Z\\",\\"updated\\":\\"2020-01-01T07:00:00.000Z\\",\\"events\\":[],\\"certificateChallenge\\":\\"ESJh38hYfJ7481UFTQgq63wxxiOub1Xt7YKGJIukrBlIA5RNR6rDriiQ977psN1u\\",\\"deviceId\\":\\"d9b9adec-81fa-4ea0-8cf3-44ccd4fe5162\\",\\"expires\\":\\"2099-01-01T00:00:00.000Z\\",\\"scope\\":\\"sign_in\\",\\"strategy\\":\\"secret\\"},\\"meta\\":{\\"id\\":\\"string\\",\\"version\\":\\"number\\",\\"created\\":\\"date\\",\\"updated\\":\\"date\\",\\"events\\":[],\\"certificateChallenge\\":\\"string\\",\\"deviceId\\":\\"string\\",\\"expires\\":\\"date\\",\\"scope\\":\\"string\\",\\"strategy\\":\\"string\\"}}",
-    "expiresInSeconds": null,
+    "blob": "{\\"json\\":{\\"id\\":\\"eb14da97-6c96-4833-8046-54d1697d7a49\\",\\"created\\":\\"2021-01-01T08:00:00.000Z\\",\\"events\\":[],\\"updated\\":\\"2021-01-01T08:00:00.000Z\\",\\"version\\":\\"0\\",\\"certificateChallenge\\":\\"ESJh38hYfJ7481UFTQgq63wxxiOub1Xt7YKGJIukrBlIA5RNR6rDriiQ977psN1u\\",\\"deviceId\\":\\"d9b9adec-81fa-4ea0-8cf3-44ccd4fe5162\\",\\"expires\\":\\"2099-01-01T00:00:00.000Z\\",\\"scope\\":\\"sign_in\\",\\"strategy\\":\\"secret\\"},\\"meta\\":{\\"id\\":\\"string\\",\\"created\\":\\"date\\",\\"events\\":[],\\"updated\\":\\"date\\",\\"version\\":\\"number\\",\\"certificateChallenge\\":\\"string\\",\\"deviceId\\":\\"string\\",\\"expires\\":\\"date\\",\\"scope\\":\\"string\\",\\"strategy\\":\\"string\\"}}",
+    "expiresInSeconds": undefined,
   },
 }
 `;
 
 exports[`ChallengeHandler getConfirmationToken should return a challenge confirmation token 1`] = `
 Object {
-  "expires": 1577862600,
+  "expires": 1609488600,
   "expiresIn": 600,
   "id": "eb14da97-6c96-4833-8046-54d1697d7a49",
   "token": Object {
     "aud": "challenge_confirmation",
-    "cid": "clientId",
-    "did": "d9b9adec-81fa-4ea0-8cf3-44ccd4fe5162",
-    "exp": 1577862600,
-    "iat": 1577862000,
+    "client_id": "clientId",
+    "device_id": "d9b9adec-81fa-4ea0-8cf3-44ccd4fe5162",
+    "exp": 1609488600,
+    "iat": 1609488000,
     "iss": "https://test.device.lindorm.io",
     "jti": "eb14da97-6c96-4833-8046-54d1697d7a49",
-    "nbf": 1577862000,
-    "sco": "sign_in",
+    "nbf": 1609488000,
+    "scope": "sign_in",
     "sub": "51cc7c03-3f86-44ae-8be2-5fcf5536c08b",
   },
 }

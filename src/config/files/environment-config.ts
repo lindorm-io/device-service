@@ -1,9 +1,9 @@
 import dotenv from "dotenv";
-import { IConfigurationData } from "../ConfigHandler";
+import { Configuration } from "../ConfigHandler";
 
 dotenv.config();
 
-export const environmentConfig: IConfigurationData = {
+export const environmentConfig: Configuration = {
   NODE_ENVIRONMENT: process.env.NODE_ENV,
   SERVER_PORT: process.env.SERVER_PORT ? parseInt(process.env.SERVER_PORT, 10) : null,
   HOST: process.env.HOST,

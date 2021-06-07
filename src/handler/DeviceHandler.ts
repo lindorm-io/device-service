@@ -1,63 +1,72 @@
-import { CryptoPassword, CryptoSecret } from "@lindorm-io/crypto";
-import { IKoaDeviceContext } from "../typing";
-import { InvalidDevicePINError, InvalidDeviceRecoveryKeyError, InvalidDeviceSecretError } from "../error";
-import { KoaDeviceContextAware } from "../class";
+import { CryptoLayered, CryptoSecret } from "@lindorm-io/crypto";
+import { DeviceContext } from "../typing";
+import { DeviceContextAware } from "../class";
 import { config } from "../config";
-import { getRandomNumber, getRandomValue } from "@lindorm-io/core";
+import { getRandomValue } from "@lindorm-io/core";
+import { ClientError } from "@lindorm-io/errors";
 
-export class DeviceHandler extends KoaDeviceContextAware {
-  private password: CryptoPassword;
-  private secret: CryptoSecret;
+export class DeviceHandler extends DeviceContextAware {
+  private readonly layered: CryptoLayered;
+  private readonly secret: CryptoSecret;
 
-  constructor(ctx: IKoaDeviceContext) {
+  public constructor(ctx: DeviceContext) {
     super(ctx);
 
-    this.password = new CryptoPassword({
-      aesSecret: config.CRYPTO_AES_SECRET,
-      shaSecret: config.CRYPTO_SHA_SECRET,
+    this.layered = new CryptoLayered({
+      aes: { secret: config.CRYPTO_AES_SECRET },
+      sha: { secret: config.CRYPTO_SHA_SECRET },
     });
 
     this.secret = new CryptoSecret({
-      aesSecret: config.CRYPTO_AES_SECRET,
-      shaSecret: config.CRYPTO_SHA_SECRET,
+      aes: { secret: config.CRYPTO_AES_SECRET },
+      sha: { secret: config.CRYPTO_SHA_SECRET },
     });
   }
 
   public async encryptPin(pin: string): Promise<string> {
-    return await this.password.encrypt(pin);
+    return await this.layered.encrypt(pin);
   }
 
   public async assertPin(pin: string): Promise<void> {
     const { device } = this.ctx.entity;
 
     try {
-      await this.password.assert(pin, device.pin.signature);
+      await this.layered.assert(pin, device.pin.signature);
     } catch (err) {
-      throw new InvalidDevicePINError(device.id, err);
+      throw new ClientError("Forbidden", {
+        debug: { deviceId: device.id },
+        error: err,
+        statusCode: ClientError.StatusCode.CONFLICT,
+      });
     }
   }
 
   public async encryptSecret(secret: string): Promise<string> {
-    return await this.password.encrypt(secret);
+    return await this.layered.encrypt(secret);
   }
 
   public async assertSecret(secret: string): Promise<void> {
     const { device } = this.ctx.entity;
 
     try {
-      await this.password.assert(secret, device.secret.signature);
+      await this.layered.assert(secret, device.secret.signature);
     } catch (err) {
-      throw new InvalidDeviceSecretError(device.id, err);
+      throw new ClientError("Forbidden", {
+        debug: { deviceId: device.id },
+        error: err,
+        statusCode: ClientError.StatusCode.CONFLICT,
+      });
     }
   }
 
   public async generateRecoveryKey(): Promise<string> {
     return (
-      `${getRandomValue(4).toUpperCase()}-` +
-      `${await getRandomNumber(6)}-` +
-      `${getRandomValue(4).toUpperCase()}-` +
-      `${await getRandomNumber(6)}-` +
-      `${getRandomValue(4).toUpperCase()}`
+      `${getRandomValue(5).toUpperCase()}-` +
+      `${getRandomValue(5).toUpperCase()}-` +
+      `${getRandomValue(5).toUpperCase()}-` +
+      `${getRandomValue(5).toUpperCase()}-` +
+      `${getRandomValue(5).toUpperCase()}-` +
+      `${getRandomValue(5).toUpperCase()}`
     );
   }
 
@@ -71,7 +80,11 @@ export class DeviceHandler extends KoaDeviceContextAware {
     try {
       await this.secret.assert(recoveryKey, device.recoveryKey.signature);
     } catch (err) {
-      throw new InvalidDeviceRecoveryKeyError(device.id);
+      throw new ClientError("Forbidden", {
+        debug: { deviceId: device.id },
+        error: err,
+        statusCode: ClientError.StatusCode.CONFLICT,
+      });
     }
   }
 }

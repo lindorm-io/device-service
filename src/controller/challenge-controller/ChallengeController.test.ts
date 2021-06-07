@@ -3,7 +3,7 @@ import { ChallengeController } from "./ChallengeController";
 import { ChallengeScope, ChallengeStrategy } from "../../enum";
 import { getTestContext, inMemoryStore, resetAll } from "../../test";
 
-MockDate.set("2020-01-01 08:00:00.000");
+MockDate.set("2021-01-01T08:00:00.000Z");
 
 describe("ChallengeController", () => {
   let ctx: any;

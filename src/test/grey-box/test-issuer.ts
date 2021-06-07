@@ -8,7 +8,6 @@ export const getTestAuthIssuer = (): TokenIssuer =>
   new TokenIssuer({
     issuer: config.AUTH_JWT_ISSUER,
     keystore: new Keystore({ keys: [getTestKeyPairEC()] }),
-    // @ts-ignore
     logger,
   });
 
@@ -16,7 +15,6 @@ export const getTestDeviceIssuer = (): TokenIssuer =>
   new TokenIssuer({
     issuer: config.DEVICE_JWT_ISSUER,
     keystore: new Keystore({ keys: [getTestKeyPairEC()] }),
-    // @ts-ignore
     logger,
   });
 

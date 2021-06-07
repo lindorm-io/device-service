@@ -1,21 +1,19 @@
-import { KoaApp } from "@lindorm-io/koa";
+import { AuthTokenHandler, ChallengeHandler, DeviceHandler, EnrolmentHandler } from "../handler";
 import { accountRoute, challengeRoute, deviceRoute, enrolmentRoute, wellKnownRoute } from "../route";
-import { authJwksCacheWorker, keyPairCacheWorker } from "../worker";
+import { authJwksCacheWorker, keyPairCacheWorker, keyPairCleanupWorker } from "../worker";
+import { cacheKeysMiddleware, keystoreMiddleware } from "@lindorm-io/koa-keystore";
 import { config, IS_TEST } from "../config";
-import { keyPairRepositoryMiddleware } from "@lindorm-io/koa-keystore";
+import { handlerMiddleware, KoaApp } from "@lindorm-io/koa";
 import { winston } from "../logger";
 import {
-  redisMiddleware,
-  authKeyPairCacheMiddleware,
-  authKeystoreMiddleware,
-  authTokenIssuerMiddleware,
-  deviceKeyPairCacheMiddleware,
-  deviceKeystoreMiddleware,
-  deviceTokenIssuerMiddleware,
-  mongoMiddleware,
-  enrolmentCacheMiddleware,
   challengeCacheMiddleware,
   deviceRepositoryMiddleware,
+  enrolmentCacheMiddleware,
+  keyPairCacheMiddleware,
+  keyPairRepositoryMiddleware,
+  mongoMiddleware,
+  redisMiddleware,
+  tokenIssuerMiddleware,
 } from "../middleware";
 
 export const koa = new KoaApp({
@@ -25,23 +23,25 @@ export const koa = new KoaApp({
 
 // mongo
 koa.addMiddleware(mongoMiddleware);
-koa.addMiddleware(keyPairRepositoryMiddleware);
 koa.addMiddleware(deviceRepositoryMiddleware);
+koa.addMiddleware(keyPairRepositoryMiddleware);
 
 // redis
 koa.addMiddleware(redisMiddleware);
-koa.addMiddleware(authKeyPairCacheMiddleware);
-koa.addMiddleware(deviceKeyPairCacheMiddleware);
 koa.addMiddleware(challengeCacheMiddleware);
 koa.addMiddleware(enrolmentCacheMiddleware);
+koa.addMiddleware(keyPairCacheMiddleware);
 
-// auth tokens
-koa.addMiddleware(authKeystoreMiddleware);
-koa.addMiddleware(authTokenIssuerMiddleware);
+// jwt
+koa.addMiddleware(cacheKeysMiddleware);
+koa.addMiddleware(keystoreMiddleware);
+koa.addMiddleware(tokenIssuerMiddleware);
 
-// device tokens
-koa.addMiddleware(deviceKeystoreMiddleware);
-koa.addMiddleware(deviceTokenIssuerMiddleware);
+// handlers
+koa.addMiddleware(handlerMiddleware(AuthTokenHandler));
+koa.addMiddleware(handlerMiddleware(ChallengeHandler));
+koa.addMiddleware(handlerMiddleware(DeviceHandler));
+koa.addMiddleware(handlerMiddleware(EnrolmentHandler));
 
 // routes
 koa.addRoute("/account", accountRoute);
@@ -54,4 +54,5 @@ koa.addRoute("/.well-known", wellKnownRoute);
 if (!IS_TEST) {
   koa.addWorker(authJwksCacheWorker);
   koa.addWorker(keyPairCacheWorker);
+  koa.addWorker(keyPairCleanupWorker);
 }

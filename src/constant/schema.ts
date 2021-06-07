@@ -1,21 +1,11 @@
-import Joi from "@hapi/joi";
+import Joi from "joi";
 import { ChallengeStrategy } from "../enum";
-
-export const JOI_EVENTS = Joi.array()
-  .items(
-    Joi.object({
-      date: Joi.date().required(),
-      name: Joi.string().required(),
-      payload: Joi.object().required(),
-    }),
-  )
-  .required();
 
 export const JOI_STRATEGY = Joi.string()
   .valid(ChallengeStrategy.IMPLICIT, ChallengeStrategy.PIN, ChallengeStrategy.RECOVERY, ChallengeStrategy.SECRET)
   .required();
 
-export const JOI_ENCRYPTED_DATA = Joi.object({
+export const JOI_SIGNATURE = Joi.object({
   signature: Joi.string().base64().allow(null).required(),
   updated: Joi.date().allow(null).required(),
 });

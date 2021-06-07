@@ -1,3 +1,7 @@
+export interface IGenerateNewRecoveryKeysOptions {
+  deviceId: string;
+}
+
 export interface IGenerateNewRecoveryKeysData {
   recoveryKey: string;
 }
@@ -12,9 +16,11 @@ export interface IUpdateDeviceName {
 }
 
 export interface IUpdateDevicePinOptions {
+  deviceId: string;
   pin: string;
 }
 
 export interface IChangeDeviceSecretOptions {
+  deviceId: string;
   secret: string;
 }

@@ -1,7 +1,7 @@
 import MockDate from "mockdate";
 import { EnrolmentHandler } from "./EnrolmentHandler";
 import { Device, Enrolment } from "../entity";
-import { KeyPairHandler } from "@lindorm-io/key-pair";
+import { CryptoKeyPair } from "@lindorm-io/crypto";
 import { baseHash } from "@lindorm-io/core";
 import {
   context,
@@ -19,11 +19,11 @@ jest.mock("uuid", () => ({
   v4: () => "bc54a8e9-3246-4cad-8244-0a1a42c914cd",
 }));
 jest.mock("@lindorm-io/core", () => ({
-  ...jest.requireActual("@lindorm-io/core"),
+  ...(jest.requireActual("@lindorm-io/core") as any),
   getRandomValue: jest.fn(() => "ESJh38hYfJ7481UFTQgq63wxxiOub1Xt7YKGJIukrBlIA5RNR6rDriiQ977psN1u"),
 }));
 
-MockDate.set("2020-01-01 08:00:00.000");
+MockDate.set("2021-01-01T08:00:00.000Z");
 
 describe("EnrolmentHandler", () => {
   let ctx: any;
@@ -31,7 +31,7 @@ describe("EnrolmentHandler", () => {
 
   describe("assert", () => {
     let enrolment: Enrolment;
-    let keyPair: KeyPairHandler;
+    let keyPair: CryptoKeyPair;
 
     beforeEach(async () => {
       ctx = {
@@ -43,10 +43,10 @@ describe("EnrolmentHandler", () => {
           publicKey: getTestKeyPairRSA().publicKey,
         }),
       );
-      keyPair = new KeyPairHandler({
+      keyPair = new CryptoKeyPair({
         algorithm: "RS512",
         passphrase: "",
-        privateKey: getTestKeyPairRSA().privateKey,
+        privateKey: getTestKeyPairRSA().privateKey as string,
         publicKey: getTestKeyPairRSA().publicKey,
       });
       handler = new EnrolmentHandler(ctx);
@@ -66,6 +66,7 @@ describe("EnrolmentHandler", () => {
 
     beforeEach(async () => {
       ctx = {
+        ...context,
         handler: {
           deviceHandler: {
             encryptPin: (input: string) => baseHash(input),
@@ -95,7 +96,10 @@ describe("EnrolmentHandler", () => {
 
   describe("create", () => {
     beforeEach(async () => {
-      ctx = { cache: await getTestCache() };
+      ctx = {
+        ...context,
+        cache: await getTestCache(),
+      };
       handler = new EnrolmentHandler(ctx);
     });
 
@@ -119,7 +123,10 @@ describe("EnrolmentHandler", () => {
     let device: Device;
 
     beforeEach(async () => {
-      ctx = { repository: await getTestRepository() };
+      ctx = {
+        ...context,
+        repository: await getTestRepository(),
+      };
       enrolment = getTestEnrolment({});
       device = await getTestDevice({
         pin: null,
@@ -134,13 +141,13 @@ describe("EnrolmentHandler", () => {
     test("should remove existing device", async () => {
       await ctx.repository.deviceRepository.create(device);
 
-      await expect(handler.removeDevice(enrolment)).resolves.toBe(undefined);
+      await expect(handler.removeDevice(enrolment)).resolves.toBeUndefined();
 
       expect(inMemoryStore).toMatchSnapshot();
     });
 
     test("should not try to remove device that does not exist", async () => {
-      await expect(handler.removeDevice(enrolment)).resolves.toBe(undefined);
+      await expect(handler.removeDevice(enrolment)).resolves.toBeUndefined();
 
       expect(inMemoryStore).toMatchSnapshot();
     });
@@ -151,7 +158,7 @@ describe("EnrolmentHandler", () => {
       });
       await ctx.repository.deviceRepository.create(device);
 
-      await expect(handler.removeDevice(enrolment)).resolves.toBe(undefined);
+      await expect(handler.removeDevice(enrolment)).resolves.toBeUndefined();
 
       expect(inMemoryStore).toMatchSnapshot();
     });

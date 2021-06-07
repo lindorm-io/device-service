@@ -2,74 +2,48 @@ import { AccountController, ChallengeController, DeviceController, EnrolmentCont
 import { AuthTokenHandler, ChallengeHandler, DeviceHandler, EnrolmentHandler } from "../handler";
 import { Challenge, Device } from "../entity";
 import { DeviceRepository, ChallengeCache, EnrolmentCache } from "../infrastructure";
-import { IKoaAppContext } from "@lindorm-io/koa";
-import { ITokenIssuerVerifyData, TokenIssuer } from "@lindorm-io/jwt";
+import { IssuerVerifyData, TokenIssuer } from "@lindorm-io/jwt";
+import { KeyPair, Keystore } from "@lindorm-io/key-pair";
 import { KeyPairCache, KeyPairRepository } from "@lindorm-io/koa-keystore";
-import { Keystore } from "@lindorm-io/key-pair";
+import { KoaContext } from "@lindorm-io/koa";
 import { MongoConnection } from "@lindorm-io/mongo";
 import { RedisConnection } from "@lindorm-io/redis";
 
-export interface IKoaDeviceCache {
-  challengeCache: ChallengeCache;
-  enrolmentCache: EnrolmentCache;
-  keyPair: {
-    auth: KeyPairCache;
-    device: KeyPairCache;
+export interface DeviceContext<Body = Record<string, any>> extends KoaContext<Body> {
+  cache: {
+    challengeCache: ChallengeCache;
+    enrolmentCache: EnrolmentCache;
+    keyPairCache: KeyPairCache;
   };
-}
-
-export interface IKoaDeviceClient {
-  mongo: MongoConnection;
-  redis: RedisConnection;
-}
-
-export interface IKoaDeviceController {
-  accountController: AccountController;
-  challengeController: ChallengeController;
-  deviceController: DeviceController;
-  enrolmentController: EnrolmentController;
-}
-
-export interface IKoaDeviceEntity {
-  challenge?: Challenge;
-  device?: Device;
-}
-
-export interface IKoaDeviceHandler {
-  authTokenHandler: AuthTokenHandler;
-  challengeHandler: ChallengeHandler;
-  deviceHandler: DeviceHandler;
-  enrolmentHandler: EnrolmentHandler;
-}
-
-export interface IKoaDeviceIssuer {
-  authIssuer: TokenIssuer;
-  deviceIssuer: TokenIssuer;
-}
-
-export interface IKoaDeviceKeystore {
-  auth: Keystore;
-  device: Keystore;
-}
-
-export interface IKoaDeviceRepository {
-  deviceRepository: DeviceRepository;
-  keyPairRepository: KeyPairRepository;
-}
-
-export interface IKoaDeviceToken {
-  bearer?: ITokenIssuerVerifyData;
-  challengeConfirmation?: ITokenIssuerVerifyData;
-}
-
-export interface IKoaDeviceContext extends IKoaAppContext {
-  cache: IKoaDeviceCache;
-  client: IKoaDeviceClient;
-  controller: IKoaDeviceController;
-  entity: IKoaDeviceEntity;
-  handler: IKoaDeviceHandler;
-  issuer: IKoaDeviceIssuer;
-  keystore: IKoaDeviceKeystore;
-  repository: IKoaDeviceRepository;
-  token: IKoaDeviceToken;
+  client: {
+    mongo: MongoConnection;
+    redis: RedisConnection;
+  };
+  controller: {
+    accountController: AccountController;
+    challengeController: ChallengeController;
+    deviceController: DeviceController;
+    enrolmentController: EnrolmentController;
+  };
+  entity: {
+    challenge: Challenge;
+    device: Device;
+  };
+  handler: {
+    authTokenHandler: AuthTokenHandler;
+    challengeHandler: ChallengeHandler;
+    deviceHandler: DeviceHandler;
+    enrolmentHandler: EnrolmentHandler;
+  };
+  jwt: TokenIssuer;
+  keys: Array<KeyPair>;
+  keystore: Keystore;
+  repository: {
+    deviceRepository: DeviceRepository;
+    keyPairRepository: KeyPairRepository;
+  };
+  token: {
+    bearer: IssuerVerifyData<unknown>;
+    challengeConfirmation: IssuerVerifyData<unknown>;
+  };
 }

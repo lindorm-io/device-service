@@ -1,5 +1,5 @@
 import { ChallengeScope, ChallengeStrategy } from "../enum";
-import { ITokenIssuerSignData } from "@lindorm-io/jwt";
+import { IssuerSignData } from "@lindorm-io/jwt";
 
 export interface IInitialiseChallengeOptions {
   scope: ChallengeScope;
@@ -30,10 +30,10 @@ export interface IVerifyChallengeWithSecretOptions extends IVerifyChallengeOptio
 }
 
 export interface IVerifyChallengeData {
-  challengeConfirmation: ITokenIssuerSignData;
+  challengeConfirmation: IssuerSignData;
 }
 
 export interface IVerifyChallengeWithRecoveryKeyData {
-  challengeConfirmation: ITokenIssuerSignData;
+  challengeConfirmation: IssuerSignData;
   recoveryKey: string;
 }

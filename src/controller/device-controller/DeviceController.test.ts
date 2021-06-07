@@ -2,7 +2,7 @@ import MockDate from "mockdate";
 import { DeviceController } from "./DeviceController";
 import { getTestContext, inMemoryStore, resetAll } from "../../test";
 
-MockDate.set("2020-01-01 08:00:00.000");
+MockDate.set("2021-01-01T08:00:00.000Z");
 
 describe("DeviceController", () => {
   let ctx: any;
@@ -27,7 +27,11 @@ describe("DeviceController", () => {
 
   describe("generateRecoveryKey", () => {
     test("should update device recovery key", async () => {
-      await expect(controller.generateRecoveryKey()).resolves.toMatchSnapshot();
+      await expect(
+        controller.generateRecoveryKey({
+          deviceId: "d9b9adec-81fa-4ea0-8cf3-44ccd4fe5162",
+        }),
+      ).resolves.toMatchSnapshot();
       expect(inMemoryStore).toMatchSnapshot();
     });
   });
@@ -39,7 +43,7 @@ describe("DeviceController", () => {
           deviceId: "d9b9adec-81fa-4ea0-8cf3-44ccd4fe5162",
           name: "name",
         }),
-      ).resolves.toBe(undefined);
+      ).resolves.toBeUndefined();
       expect(inMemoryStore).toMatchSnapshot();
     });
   });
@@ -48,9 +52,10 @@ describe("DeviceController", () => {
     test("should update device pin", async () => {
       await expect(
         controller.updatePin({
+          deviceId: "d9b9adec-81fa-4ea0-8cf3-44ccd4fe5162",
           pin: "123456",
         }),
-      ).resolves.toBe(undefined);
+      ).resolves.toBeUndefined();
       expect(inMemoryStore).toMatchSnapshot();
     });
   });
@@ -59,9 +64,10 @@ describe("DeviceController", () => {
     test("should update device secret", async () => {
       await expect(
         controller.updateSecret({
+          deviceId: "d9b9adec-81fa-4ea0-8cf3-44ccd4fe5162",
           secret: "new_updated_secret",
         }),
-      ).resolves.toBe(undefined);
+      ).resolves.toBeUndefined();
       expect(inMemoryStore).toMatchSnapshot();
     });
   });
@@ -72,7 +78,7 @@ describe("DeviceController", () => {
         controller.remove({
           deviceId: "d9b9adec-81fa-4ea0-8cf3-44ccd4fe5162",
         }),
-      ).resolves.toBe(undefined);
+      ).resolves.toBeUndefined();
       expect(inMemoryStore).toMatchSnapshot();
     });
   });

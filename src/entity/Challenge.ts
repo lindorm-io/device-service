@@ -1,7 +1,9 @@
+import Joi from "joi";
 import { ChallengeScope, ChallengeStrategy } from "../enum";
-import { EntityBase, IEntity, IEntityBaseOptions } from "@lindorm-io/entity";
+import { EntityAttributes, LindormEntity, EntityOptions, JOI_ENTITY_BASE } from "@lindorm-io/entity";
+import { JOI_CERTIFICATE_CHALLENGE, JOI_STRATEGY } from "../constant";
 
-export interface IChallenge extends IEntity {
+export interface ChallengeAttributes extends EntityAttributes {
   certificateChallenge: string;
   deviceId: string;
   expires: Date;
@@ -9,7 +11,7 @@ export interface IChallenge extends IEntity {
   strategy: ChallengeStrategy;
 }
 
-export interface IChallengeOptions extends IEntityBaseOptions {
+export interface ChallengeOptions extends EntityOptions {
   certificateChallenge: string;
   deviceId: string;
   expires: Date;
@@ -17,14 +19,24 @@ export interface IChallengeOptions extends IEntityBaseOptions {
   strategy: ChallengeStrategy;
 }
 
-export class Challenge extends EntityBase implements IChallenge {
-  readonly certificateChallenge: string;
-  readonly deviceId: string;
-  readonly expires: Date;
-  readonly scope: ChallengeScope;
-  readonly strategy: ChallengeStrategy;
+const schema = Joi.object({
+  ...JOI_ENTITY_BASE,
 
-  constructor(options: IChallengeOptions) {
+  certificateChallenge: JOI_CERTIFICATE_CHALLENGE,
+  deviceId: Joi.string().guid().required(),
+  expires: Joi.date().required(),
+  scope: Joi.string().required(),
+  strategy: JOI_STRATEGY,
+});
+
+export class Challenge extends LindormEntity<ChallengeAttributes> {
+  public readonly certificateChallenge: string;
+  public readonly deviceId: string;
+  public readonly expires: Date;
+  public readonly scope: ChallengeScope;
+  public readonly strategy: ChallengeStrategy;
+
+  public constructor(options: ChallengeOptions) {
     super(options);
 
     this.certificateChallenge = options.certificateChallenge;
@@ -36,5 +48,25 @@ export class Challenge extends EntityBase implements IChallenge {
 
   public create(): void {
     /* intentionally left empty */
+  }
+
+  public getKey(): string {
+    return this.id;
+  }
+
+  public async schemaValidation(): Promise<void> {
+    await schema.validateAsync(this.toJSON());
+  }
+
+  public toJSON(): ChallengeAttributes {
+    return {
+      ...this.defaultJSON(),
+
+      certificateChallenge: this.certificateChallenge,
+      deviceId: this.deviceId,
+      expires: this.expires,
+      scope: this.scope,
+      strategy: this.strategy,
+    };
   }
 }

@@ -1,16 +1,17 @@
-import { KoaDeviceContextAware } from "../../class";
+import { DeviceContextAware } from "../../class";
 import { Scope } from "@lindorm-io/jwt";
 import { schemaRemove, schemaUpdateName, schemaUpdatePin, schemaUpdateSecret } from "./schema";
 import {
   IChangeDeviceSecretOptions,
   IGenerateNewRecoveryKeysData,
+  IGenerateNewRecoveryKeysOptions,
   IRemoveDeviceOptions,
   IUpdateDeviceName,
   IUpdateDevicePinOptions,
 } from "../../typing";
 
-export class DeviceController extends KoaDeviceContextAware {
-  public async generateRecoveryKey(): Promise<IGenerateNewRecoveryKeysData> {
+export class DeviceController extends DeviceContextAware {
+  public async generateRecoveryKey(options: IGenerateNewRecoveryKeysOptions): Promise<IGenerateNewRecoveryKeysData> {
     const {
       handler: { deviceHandler },
       logger,

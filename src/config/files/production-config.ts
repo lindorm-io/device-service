@@ -1,6 +1,6 @@
-import { IConfigurationData } from "../ConfigHandler";
+import { Configuration } from "../ConfigHandler";
 
-export const productionConfig: IConfigurationData = {
+export const productionConfig: Configuration = {
   NODE_ENVIRONMENT: process.env.NODE_ENV,
   SERVER_PORT: 3000,
   HOST: "http://device.lindorm.io",

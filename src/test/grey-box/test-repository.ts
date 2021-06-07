@@ -1,10 +1,14 @@
 import { DeviceRepository } from "../../infrastructure";
-import { IKoaDeviceRepository } from "../../typing";
 import { KeyPairRepository } from "@lindorm-io/koa-keystore";
 import { getTestMongo } from "./test-mongo";
 import { winston } from "../../logger";
 
-export const getTestRepository = async (): Promise<IKoaDeviceRepository> => {
+interface TestRepository {
+  deviceRepository: DeviceRepository;
+  keyPairRepository: KeyPairRepository;
+}
+
+export const getTestRepository = async (): Promise<TestRepository> => {
   const mongo = await getTestMongo();
 
   const db = mongo.database();

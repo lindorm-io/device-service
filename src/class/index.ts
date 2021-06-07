@@ -1,1 +1,1 @@
-export * from "./KoaDeviceContextAware";
+export * from "./DeviceContextAware";

@@ -1,6 +1,6 @@
-import { IConfigurationData } from "../ConfigHandler";
+import { Configuration } from "../ConfigHandler";
 
-export const developmentConfig: IConfigurationData = {
+export const developmentConfig: Configuration = {
   NODE_ENVIRONMENT: process.env.NODE_ENV,
   SERVER_PORT: 3003,
   HOST: "http://localhost",

@@ -1,4 +1,4 @@
-import { KoaDeviceContextAware } from "../../class";
+import { DeviceContextAware } from "../../class";
 import { schemaInitialise, schemaVerify } from "./schema";
 import {
   IConcludeEnrolmentData,
@@ -7,7 +7,7 @@ import {
   IInitialiseEnrolmentOptions,
 } from "../../typing";
 
-export class EnrolmentController extends KoaDeviceContextAware {
+export class EnrolmentController extends DeviceContextAware {
   public async initialise(options: IInitialiseEnrolmentOptions): Promise<IInitialiseEnrolmentData> {
     const {
       handler: { enrolmentHandler },

@@ -1,14 +1,15 @@
-import { Algorithm, KeyPairHandler } from "@lindorm-io/key-pair";
+import { Algorithm } from "@lindorm-io/key-pair";
+import { ClientError } from "@lindorm-io/errors";
+import { CryptoKeyPair } from "@lindorm-io/crypto";
 import { Device, Enrolment } from "../entity";
+import { DeviceContextAware } from "../class";
 import { ICreateDeviceFromEnrolmentOptions, ICreateEnrolmentOptions } from "../typing";
-import { InvalidCertificateVerifierError } from "../error";
-import { KoaDeviceContextAware } from "../class";
-import { RepositoryEntityNotFoundError } from "@lindorm-io/mongo";
 import { config } from "../config";
 import { getExpiryDate } from "../util";
 import { getRandomValue } from "@lindorm-io/core";
+import { EntityNotFoundError } from "@lindorm-io/mongo";
 
-export class EnrolmentHandler extends KoaDeviceContextAware {
+export class EnrolmentHandler extends DeviceContextAware {
   public async create(options: ICreateEnrolmentOptions): Promise<Enrolment> {
     const { enrolmentCache } = this.ctx.cache;
     const { accountId, macAddress, name, publicKey, uniqueId } = options;
@@ -31,7 +32,7 @@ export class EnrolmentHandler extends KoaDeviceContextAware {
 
     const enrolment = await enrolmentCache.find(enrolmentId);
 
-    const handler = new KeyPairHandler({
+    const handler = new CryptoKeyPair({
       algorithm: Algorithm.RS512,
       passphrase: "",
       privateKey: null,
@@ -41,7 +42,10 @@ export class EnrolmentHandler extends KoaDeviceContextAware {
     try {
       handler.assert(enrolment.certificateChallenge, certificateVerifier);
     } catch (err) {
-      throw new InvalidCertificateVerifierError(enrolment.certificateChallenge, certificateVerifier);
+      throw new ClientError("Invalid Certificate Challenge", {
+        debug: { certificateChallenge: enrolment.certificateChallenge, certificateVerifier },
+        statusCode: ClientError.StatusCode.FORBIDDEN,
+      });
     }
 
     return enrolment;
@@ -77,7 +81,7 @@ export class EnrolmentHandler extends KoaDeviceContextAware {
 
       await deviceRepository.remove(device);
     } catch (err) {
-      if (err instanceof RepositoryEntityNotFoundError) {
+      if (err instanceof EntityNotFoundError) {
         return;
       }
 

@@ -5,7 +5,7 @@ import { baseHash } from "@lindorm-io/core";
 import { koa } from "../../server/koa";
 import {
   TEST_DEVICE_REPOSITORY,
-  TEST_KEY_PAIR_HANDLER,
+  TEST_CRYPTO_KEY_PAIR,
   getTestDevice,
   resetStore,
   setupIntegration,
@@ -13,7 +13,7 @@ import {
 } from "../grey-box";
 import { ChallengeScope, ChallengeStrategy } from "../../enum";
 
-MockDate.set("2020-01-01 08:00:00.000");
+MockDate.set("2021-01-01T08:00:00.000Z");
 
 const basicAuth = baseHash("secret:secret");
 
@@ -59,7 +59,7 @@ describe("/device", () => {
       body: { certificate_challenge: certificateChallenge, challenge_id: challengeId },
     } = initialiseResponse;
 
-    const certificateVerifier = TEST_KEY_PAIR_HANDLER.sign(certificateChallenge);
+    const certificateVerifier = TEST_CRYPTO_KEY_PAIR.sign(certificateChallenge);
 
     const verifyResponse = await request(koa.callback())
       .post("/challenge/verify")
@@ -80,7 +80,7 @@ describe("/device", () => {
 
     expect(verifyResponse.body).toStrictEqual({
       challenge_confirmation: {
-        expires: 1577862600,
+        expires: 1609488600,
         expires_in: 600,
         id: expect.any(String),
         token: expect.any(String),

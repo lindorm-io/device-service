@@ -1,27 +1,22 @@
 import { ChallengeController } from "../../controller";
-import { ChallengeHandler, DeviceHandler } from "../../handler";
-import { HttpStatus } from "@lindorm-io/core";
-import { IKoaDeviceContext } from "../../typing";
-import { Router, controllerMiddleware, handlerMiddleware } from "@lindorm-io/koa";
-import { deviceMiddleware } from "../../middleware";
+import { DeviceContext } from "../../typing";
+import { HttpStatus } from "@lindorm-io/koa";
+import { Router, controllerMiddleware } from "@lindorm-io/koa";
+import { deviceEntityMiddleware, deviceValidationMiddleware } from "../../middleware";
 
-export const router = new Router();
+export const router = new Router<unknown, DeviceContext>();
 
-router.use(deviceMiddleware);
-router.use(handlerMiddleware(ChallengeHandler));
-router.use(handlerMiddleware(DeviceHandler));
+router.use(deviceEntityMiddleware);
+router.use(deviceValidationMiddleware);
 router.use(controllerMiddleware(ChallengeController));
 
-router.post(
-  "/",
-  async (ctx: IKoaDeviceContext): Promise<void> => {
-    const {
-      controller: { challengeController },
-    } = ctx;
+router.post("/", async (ctx): Promise<void> => {
+  const {
+    controller: { challengeController },
+  } = ctx;
 
-    const { scope, strategy } = ctx.request.body;
+  const { scope, strategy } = ctx.request.body;
 
-    ctx.body = await challengeController.initialise({ scope, strategy });
-    ctx.status = HttpStatus.Success.CREATED;
-  },
-);
+  ctx.body = await challengeController.initialise({ scope, strategy });
+  ctx.status = HttpStatus.Success.CREATED;
+});

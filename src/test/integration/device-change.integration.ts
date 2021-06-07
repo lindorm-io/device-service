@@ -11,7 +11,7 @@ import {
   generateChallengeConfirmationToken,
 } from "../grey-box";
 
-MockDate.set("2020-01-01 08:00:00.000");
+MockDate.set("2021-01-01T08:00:00.000Z");
 
 describe("/device", () => {
   let accessToken: string;
@@ -47,6 +47,7 @@ describe("/device", () => {
       .set("X-Correlation-ID", "5c63ca22-6617-45eb-9005-7c897a25d375")
       .send({
         challenge_confirmation_token: challengeConfirmationToken,
+        device_id: device.id,
         pin: "123456",
       })
       .expect(202);
@@ -64,6 +65,7 @@ describe("/device", () => {
       .set("X-Correlation-ID", "5c63ca22-6617-45eb-9005-7c897a25d375")
       .send({
         challenge_confirmation_token: challengeConfirmationToken,
+        device_id: device.id,
       })
       .expect(200);
 
@@ -84,6 +86,7 @@ describe("/device", () => {
       .set("X-Correlation-ID", "5c63ca22-6617-45eb-9005-7c897a25d375")
       .send({
         challenge_confirmation_token: challengeConfirmationToken,
+        device_id: device.id,
         secret: "new_test_device_secret",
       })
       .expect(202);

@@ -4,9 +4,9 @@ import { stringToSeconds } from "@lindorm-io/core";
 import { config } from "../config";
 
 export const challengeCacheMiddleware = cacheMiddleware(ChallengeCache, {
-  expiresInSeconds: stringToSeconds(config.CHALLENGE_EXPIRY) + 60,
+  expiresInSeconds: stringToSeconds(config.CHALLENGE_EXPIRY),
 });
 
 export const enrolmentCacheMiddleware = cacheMiddleware(EnrolmentCache, {
-  expiresInSeconds: stringToSeconds(config.ENROLMENT_EXPIRY) + 60,
+  expiresInSeconds: stringToSeconds(config.ENROLMENT_EXPIRY),
 });

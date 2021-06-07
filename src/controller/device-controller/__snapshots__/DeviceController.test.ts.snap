@@ -13,52 +13,47 @@ Object {
       "data": Array [
         Object {
           "accountId": "51cc7c03-3f86-44ae-8be2-5fcf5536c08b",
-          "created": 2020-01-01T07:00:00.000Z,
+          "created": 2021-01-01T08:00:00.000Z,
           "events": Array [
             Object {
-              "date": 2020-01-01T07:00:00.000Z,
+              "date": 2021-01-01T08:00:00.000Z,
               "name": "device_created",
               "payload": Object {
                 "accountId": "51cc7c03-3f86-44ae-8be2-5fcf5536c08b",
-                "created": 2020-01-01T07:00:00.000Z,
+                "created": 2021-01-01T08:00:00.000Z,
+                "id": "d9b9adec-81fa-4ea0-8cf3-44ccd4fe5162",
                 "macAddress": "0025:96FF:FE12:3456",
                 "name": "My iPhone 12",
                 "pin": Object {
                   "signature": null,
-                  "updated": null,
+                  "updated": 2021-01-01T08:00:00.000Z,
                 },
                 "publicKey": "-----BEGIN RSA PUBLIC KEY-----
-MIICCgKCAgEAs7ydT9Ndt1Idx9NE2zMhAcecJGUcIlbWeXEtZJA7aKZDDhxYaEGB
-WZvX+GRndllnPrOgzoxukITGYvj88bnrGZVZX2ckjIVUR1NxDrhyMjqnn4yDz4UB
-Q3Zqt6Gz6DcE+Y9ro6kyhu01KPMyUlhDQAUdwpIJA3saUJ5KZj6ai4NTuXbLqzly
-+3H5TMQY4WjrQwj/KRuq8LBEsR4YGaiaFZjHaf5n8+s2Gim/dDgAbIsZS+lGTwgx
-nigd7dKP9tG6q3GwNPNBSuuQh6rVbBKbmzBa5rO9SmeZ+HLUyClpzhZ+Hp8yOGAn
-qQFZZnokJ6dhxDEQcxPV2HUsYpi3oYSSomXsLgYSja1VT7CgeBchWj07ux6MnagM
-AB1+O7O2yzu0LYJc72BQOJaSIrBCh1FcPjM0KC1CPocux2JtqgDL/Td+V5HbLU9n
-ZQQoYDcrK3ozSne9ojioUWEwdBEzQmj9e3Wei87EyLe5bn/6tDbg17R7ZlVy2iVs
-IFziLHrv3VUIbESy5tTCdzK/qzFR0hlxejT12CTUSkN5eKmfz0pfzt+w8ldEfpws
-lBUcoS4sBIR3urpvx1EKM1xaUHfchhIKnY5KGTEM+5rJVwlDq+3lLcrJI3AErTAX
-gSR6fcZmKuI4nCfTKl3ykozcPwpEmfRgSBDHKwDJe6ZbK0sL4ScVookCAwEAAQ==
+MIGJAoGBAMpaNgFfgnUINKdxyxjlZs3L0GBjcW7qqwtzBAAMgdJWcEo7Z8flDNGy
+rvl8GarL3tkwoBcpUyi1/awyHpHeRMSLgKOnwMeMenK99TzeU4UWPX9ZXIQ4KxWE
+tWWfrWyCckHTDgGD/gvpM5ygkHbhru8nu0pMZNI1N5GW5bMgmX1tAgMBAAE=
 -----END RSA PUBLIC KEY-----
 ",
                 "recoveryKey": Object {
                   "signature": null,
-                  "updated": null,
+                  "updated": 2021-01-01T08:00:00.000Z,
                 },
                 "secret": Object {
                   "signature": null,
-                  "updated": null,
+                  "updated": 2021-01-01T08:00:00.000Z,
                 },
-                "updated": 2020-01-01T07:00:00.000Z,
+                "uniqueId": "a097a56f506a4091b4c93a8bfb8cec0f",
+                "updated": 2021-01-01T08:00:00.000Z,
+                "version": 0,
               },
             },
             Object {
-              "date": 2020-01-01T07:00:00.000Z,
+              "date": 2021-01-01T08:00:00.000Z,
               "name": "device_recovery_key_changed",
               "payload": Object {
                 "recoveryKey": Object {
                   "signature": "QUFBQS0xMTEyMjItQkJCQi0zMzM0NDQtQ0NDQw==",
-                  "updated": 2020-01-01T07:00:00.000Z,
+                  "updated": 2021-01-01T08:00:00.000Z,
                 },
               },
             },
@@ -68,32 +63,24 @@ gSR6fcZmKuI4nCfTKl3ykozcPwpEmfRgSBDHKwDJe6ZbK0sL4ScVookCAwEAAQ==
           "name": "My iPhone 12",
           "pin": Object {
             "signature": null,
-            "updated": null,
+            "updated": 2021-01-01T08:00:00.000Z,
           },
           "publicKey": "-----BEGIN RSA PUBLIC KEY-----
-MIICCgKCAgEAs7ydT9Ndt1Idx9NE2zMhAcecJGUcIlbWeXEtZJA7aKZDDhxYaEGB
-WZvX+GRndllnPrOgzoxukITGYvj88bnrGZVZX2ckjIVUR1NxDrhyMjqnn4yDz4UB
-Q3Zqt6Gz6DcE+Y9ro6kyhu01KPMyUlhDQAUdwpIJA3saUJ5KZj6ai4NTuXbLqzly
-+3H5TMQY4WjrQwj/KRuq8LBEsR4YGaiaFZjHaf5n8+s2Gim/dDgAbIsZS+lGTwgx
-nigd7dKP9tG6q3GwNPNBSuuQh6rVbBKbmzBa5rO9SmeZ+HLUyClpzhZ+Hp8yOGAn
-qQFZZnokJ6dhxDEQcxPV2HUsYpi3oYSSomXsLgYSja1VT7CgeBchWj07ux6MnagM
-AB1+O7O2yzu0LYJc72BQOJaSIrBCh1FcPjM0KC1CPocux2JtqgDL/Td+V5HbLU9n
-ZQQoYDcrK3ozSne9ojioUWEwdBEzQmj9e3Wei87EyLe5bn/6tDbg17R7ZlVy2iVs
-IFziLHrv3VUIbESy5tTCdzK/qzFR0hlxejT12CTUSkN5eKmfz0pfzt+w8ldEfpws
-lBUcoS4sBIR3urpvx1EKM1xaUHfchhIKnY5KGTEM+5rJVwlDq+3lLcrJI3AErTAX
-gSR6fcZmKuI4nCfTKl3ykozcPwpEmfRgSBDHKwDJe6ZbK0sL4ScVookCAwEAAQ==
+MIGJAoGBAMpaNgFfgnUINKdxyxjlZs3L0GBjcW7qqwtzBAAMgdJWcEo7Z8flDNGy
+rvl8GarL3tkwoBcpUyi1/awyHpHeRMSLgKOnwMeMenK99TzeU4UWPX9ZXIQ4KxWE
+tWWfrWyCckHTDgGD/gvpM5ygkHbhru8nu0pMZNI1N5GW5bMgmX1tAgMBAAE=
 -----END RSA PUBLIC KEY-----
 ",
           "recoveryKey": Object {
             "signature": "QUFBQS0xMTEyMjItQkJCQi0zMzM0NDQtQ0NDQw==",
-            "updated": 2020-01-01T07:00:00.000Z,
+            "updated": 2021-01-01T08:00:00.000Z,
           },
           "secret": Object {
             "signature": null,
-            "updated": null,
+            "updated": 2021-01-01T08:00:00.000Z,
           },
           "uniqueId": "a097a56f506a4091b4c93a8bfb8cec0f",
-          "updated": 2020-01-01T07:00:00.000Z,
+          "updated": 2021-01-01T08:00:00.000Z,
           "version": 1,
         },
       ],
@@ -139,47 +126,42 @@ Object {
       "data": Array [
         Object {
           "accountId": "51cc7c03-3f86-44ae-8be2-5fcf5536c08b",
-          "created": 2020-01-01T07:00:00.000Z,
+          "created": 2021-01-01T08:00:00.000Z,
           "events": Array [
             Object {
-              "date": 2020-01-01T07:00:00.000Z,
+              "date": 2021-01-01T08:00:00.000Z,
               "name": "device_created",
               "payload": Object {
                 "accountId": "51cc7c03-3f86-44ae-8be2-5fcf5536c08b",
-                "created": 2020-01-01T07:00:00.000Z,
+                "created": 2021-01-01T08:00:00.000Z,
+                "id": "d9b9adec-81fa-4ea0-8cf3-44ccd4fe5162",
                 "macAddress": "0025:96FF:FE12:3456",
                 "name": "My iPhone 12",
                 "pin": Object {
                   "signature": null,
-                  "updated": null,
+                  "updated": 2021-01-01T08:00:00.000Z,
                 },
                 "publicKey": "-----BEGIN RSA PUBLIC KEY-----
-MIICCgKCAgEAs7ydT9Ndt1Idx9NE2zMhAcecJGUcIlbWeXEtZJA7aKZDDhxYaEGB
-WZvX+GRndllnPrOgzoxukITGYvj88bnrGZVZX2ckjIVUR1NxDrhyMjqnn4yDz4UB
-Q3Zqt6Gz6DcE+Y9ro6kyhu01KPMyUlhDQAUdwpIJA3saUJ5KZj6ai4NTuXbLqzly
-+3H5TMQY4WjrQwj/KRuq8LBEsR4YGaiaFZjHaf5n8+s2Gim/dDgAbIsZS+lGTwgx
-nigd7dKP9tG6q3GwNPNBSuuQh6rVbBKbmzBa5rO9SmeZ+HLUyClpzhZ+Hp8yOGAn
-qQFZZnokJ6dhxDEQcxPV2HUsYpi3oYSSomXsLgYSja1VT7CgeBchWj07ux6MnagM
-AB1+O7O2yzu0LYJc72BQOJaSIrBCh1FcPjM0KC1CPocux2JtqgDL/Td+V5HbLU9n
-ZQQoYDcrK3ozSne9ojioUWEwdBEzQmj9e3Wei87EyLe5bn/6tDbg17R7ZlVy2iVs
-IFziLHrv3VUIbESy5tTCdzK/qzFR0hlxejT12CTUSkN5eKmfz0pfzt+w8ldEfpws
-lBUcoS4sBIR3urpvx1EKM1xaUHfchhIKnY5KGTEM+5rJVwlDq+3lLcrJI3AErTAX
-gSR6fcZmKuI4nCfTKl3ykozcPwpEmfRgSBDHKwDJe6ZbK0sL4ScVookCAwEAAQ==
+MIGJAoGBAMpaNgFfgnUINKdxyxjlZs3L0GBjcW7qqwtzBAAMgdJWcEo7Z8flDNGy
+rvl8GarL3tkwoBcpUyi1/awyHpHeRMSLgKOnwMeMenK99TzeU4UWPX9ZXIQ4KxWE
+tWWfrWyCckHTDgGD/gvpM5ygkHbhru8nu0pMZNI1N5GW5bMgmX1tAgMBAAE=
 -----END RSA PUBLIC KEY-----
 ",
                 "recoveryKey": Object {
                   "signature": null,
-                  "updated": null,
+                  "updated": 2021-01-01T08:00:00.000Z,
                 },
                 "secret": Object {
                   "signature": null,
-                  "updated": null,
+                  "updated": 2021-01-01T08:00:00.000Z,
                 },
-                "updated": 2020-01-01T07:00:00.000Z,
+                "uniqueId": "a097a56f506a4091b4c93a8bfb8cec0f",
+                "updated": 2021-01-01T08:00:00.000Z,
+                "version": 0,
               },
             },
             Object {
-              "date": 2020-01-01T07:00:00.000Z,
+              "date": 2021-01-01T08:00:00.000Z,
               "name": "device_name_changed",
               "payload": Object {
                 "name": "name",
@@ -191,32 +173,24 @@ gSR6fcZmKuI4nCfTKl3ykozcPwpEmfRgSBDHKwDJe6ZbK0sL4ScVookCAwEAAQ==
           "name": "name",
           "pin": Object {
             "signature": null,
-            "updated": null,
+            "updated": 2021-01-01T08:00:00.000Z,
           },
           "publicKey": "-----BEGIN RSA PUBLIC KEY-----
-MIICCgKCAgEAs7ydT9Ndt1Idx9NE2zMhAcecJGUcIlbWeXEtZJA7aKZDDhxYaEGB
-WZvX+GRndllnPrOgzoxukITGYvj88bnrGZVZX2ckjIVUR1NxDrhyMjqnn4yDz4UB
-Q3Zqt6Gz6DcE+Y9ro6kyhu01KPMyUlhDQAUdwpIJA3saUJ5KZj6ai4NTuXbLqzly
-+3H5TMQY4WjrQwj/KRuq8LBEsR4YGaiaFZjHaf5n8+s2Gim/dDgAbIsZS+lGTwgx
-nigd7dKP9tG6q3GwNPNBSuuQh6rVbBKbmzBa5rO9SmeZ+HLUyClpzhZ+Hp8yOGAn
-qQFZZnokJ6dhxDEQcxPV2HUsYpi3oYSSomXsLgYSja1VT7CgeBchWj07ux6MnagM
-AB1+O7O2yzu0LYJc72BQOJaSIrBCh1FcPjM0KC1CPocux2JtqgDL/Td+V5HbLU9n
-ZQQoYDcrK3ozSne9ojioUWEwdBEzQmj9e3Wei87EyLe5bn/6tDbg17R7ZlVy2iVs
-IFziLHrv3VUIbESy5tTCdzK/qzFR0hlxejT12CTUSkN5eKmfz0pfzt+w8ldEfpws
-lBUcoS4sBIR3urpvx1EKM1xaUHfchhIKnY5KGTEM+5rJVwlDq+3lLcrJI3AErTAX
-gSR6fcZmKuI4nCfTKl3ykozcPwpEmfRgSBDHKwDJe6ZbK0sL4ScVookCAwEAAQ==
+MIGJAoGBAMpaNgFfgnUINKdxyxjlZs3L0GBjcW7qqwtzBAAMgdJWcEo7Z8flDNGy
+rvl8GarL3tkwoBcpUyi1/awyHpHeRMSLgKOnwMeMenK99TzeU4UWPX9ZXIQ4KxWE
+tWWfrWyCckHTDgGD/gvpM5ygkHbhru8nu0pMZNI1N5GW5bMgmX1tAgMBAAE=
 -----END RSA PUBLIC KEY-----
 ",
           "recoveryKey": Object {
             "signature": null,
-            "updated": null,
+            "updated": 2021-01-01T08:00:00.000Z,
           },
           "secret": Object {
             "signature": null,
-            "updated": null,
+            "updated": 2021-01-01T08:00:00.000Z,
           },
           "uniqueId": "a097a56f506a4091b4c93a8bfb8cec0f",
-          "updated": 2020-01-01T07:00:00.000Z,
+          "updated": 2021-01-01T08:00:00.000Z,
           "version": 1,
         },
       ],
@@ -242,52 +216,47 @@ Object {
       "data": Array [
         Object {
           "accountId": "51cc7c03-3f86-44ae-8be2-5fcf5536c08b",
-          "created": 2020-01-01T07:00:00.000Z,
+          "created": 2021-01-01T08:00:00.000Z,
           "events": Array [
             Object {
-              "date": 2020-01-01T07:00:00.000Z,
+              "date": 2021-01-01T08:00:00.000Z,
               "name": "device_created",
               "payload": Object {
                 "accountId": "51cc7c03-3f86-44ae-8be2-5fcf5536c08b",
-                "created": 2020-01-01T07:00:00.000Z,
+                "created": 2021-01-01T08:00:00.000Z,
+                "id": "d9b9adec-81fa-4ea0-8cf3-44ccd4fe5162",
                 "macAddress": "0025:96FF:FE12:3456",
                 "name": "My iPhone 12",
                 "pin": Object {
                   "signature": null,
-                  "updated": null,
+                  "updated": 2021-01-01T08:00:00.000Z,
                 },
                 "publicKey": "-----BEGIN RSA PUBLIC KEY-----
-MIICCgKCAgEAs7ydT9Ndt1Idx9NE2zMhAcecJGUcIlbWeXEtZJA7aKZDDhxYaEGB
-WZvX+GRndllnPrOgzoxukITGYvj88bnrGZVZX2ckjIVUR1NxDrhyMjqnn4yDz4UB
-Q3Zqt6Gz6DcE+Y9ro6kyhu01KPMyUlhDQAUdwpIJA3saUJ5KZj6ai4NTuXbLqzly
-+3H5TMQY4WjrQwj/KRuq8LBEsR4YGaiaFZjHaf5n8+s2Gim/dDgAbIsZS+lGTwgx
-nigd7dKP9tG6q3GwNPNBSuuQh6rVbBKbmzBa5rO9SmeZ+HLUyClpzhZ+Hp8yOGAn
-qQFZZnokJ6dhxDEQcxPV2HUsYpi3oYSSomXsLgYSja1VT7CgeBchWj07ux6MnagM
-AB1+O7O2yzu0LYJc72BQOJaSIrBCh1FcPjM0KC1CPocux2JtqgDL/Td+V5HbLU9n
-ZQQoYDcrK3ozSne9ojioUWEwdBEzQmj9e3Wei87EyLe5bn/6tDbg17R7ZlVy2iVs
-IFziLHrv3VUIbESy5tTCdzK/qzFR0hlxejT12CTUSkN5eKmfz0pfzt+w8ldEfpws
-lBUcoS4sBIR3urpvx1EKM1xaUHfchhIKnY5KGTEM+5rJVwlDq+3lLcrJI3AErTAX
-gSR6fcZmKuI4nCfTKl3ykozcPwpEmfRgSBDHKwDJe6ZbK0sL4ScVookCAwEAAQ==
+MIGJAoGBAMpaNgFfgnUINKdxyxjlZs3L0GBjcW7qqwtzBAAMgdJWcEo7Z8flDNGy
+rvl8GarL3tkwoBcpUyi1/awyHpHeRMSLgKOnwMeMenK99TzeU4UWPX9ZXIQ4KxWE
+tWWfrWyCckHTDgGD/gvpM5ygkHbhru8nu0pMZNI1N5GW5bMgmX1tAgMBAAE=
 -----END RSA PUBLIC KEY-----
 ",
                 "recoveryKey": Object {
                   "signature": null,
-                  "updated": null,
+                  "updated": 2021-01-01T08:00:00.000Z,
                 },
                 "secret": Object {
                   "signature": null,
-                  "updated": null,
+                  "updated": 2021-01-01T08:00:00.000Z,
                 },
-                "updated": 2020-01-01T07:00:00.000Z,
+                "uniqueId": "a097a56f506a4091b4c93a8bfb8cec0f",
+                "updated": 2021-01-01T08:00:00.000Z,
+                "version": 0,
               },
             },
             Object {
-              "date": 2020-01-01T07:00:00.000Z,
+              "date": 2021-01-01T08:00:00.000Z,
               "name": "device_pin_changed",
               "payload": Object {
                 "pin": Object {
                   "signature": "MTIzNDU2",
-                  "updated": 2020-01-01T07:00:00.000Z,
+                  "updated": 2021-01-01T08:00:00.000Z,
                 },
               },
             },
@@ -297,32 +266,24 @@ gSR6fcZmKuI4nCfTKl3ykozcPwpEmfRgSBDHKwDJe6ZbK0sL4ScVookCAwEAAQ==
           "name": "My iPhone 12",
           "pin": Object {
             "signature": "MTIzNDU2",
-            "updated": 2020-01-01T07:00:00.000Z,
+            "updated": 2021-01-01T08:00:00.000Z,
           },
           "publicKey": "-----BEGIN RSA PUBLIC KEY-----
-MIICCgKCAgEAs7ydT9Ndt1Idx9NE2zMhAcecJGUcIlbWeXEtZJA7aKZDDhxYaEGB
-WZvX+GRndllnPrOgzoxukITGYvj88bnrGZVZX2ckjIVUR1NxDrhyMjqnn4yDz4UB
-Q3Zqt6Gz6DcE+Y9ro6kyhu01KPMyUlhDQAUdwpIJA3saUJ5KZj6ai4NTuXbLqzly
-+3H5TMQY4WjrQwj/KRuq8LBEsR4YGaiaFZjHaf5n8+s2Gim/dDgAbIsZS+lGTwgx
-nigd7dKP9tG6q3GwNPNBSuuQh6rVbBKbmzBa5rO9SmeZ+HLUyClpzhZ+Hp8yOGAn
-qQFZZnokJ6dhxDEQcxPV2HUsYpi3oYSSomXsLgYSja1VT7CgeBchWj07ux6MnagM
-AB1+O7O2yzu0LYJc72BQOJaSIrBCh1FcPjM0KC1CPocux2JtqgDL/Td+V5HbLU9n
-ZQQoYDcrK3ozSne9ojioUWEwdBEzQmj9e3Wei87EyLe5bn/6tDbg17R7ZlVy2iVs
-IFziLHrv3VUIbESy5tTCdzK/qzFR0hlxejT12CTUSkN5eKmfz0pfzt+w8ldEfpws
-lBUcoS4sBIR3urpvx1EKM1xaUHfchhIKnY5KGTEM+5rJVwlDq+3lLcrJI3AErTAX
-gSR6fcZmKuI4nCfTKl3ykozcPwpEmfRgSBDHKwDJe6ZbK0sL4ScVookCAwEAAQ==
+MIGJAoGBAMpaNgFfgnUINKdxyxjlZs3L0GBjcW7qqwtzBAAMgdJWcEo7Z8flDNGy
+rvl8GarL3tkwoBcpUyi1/awyHpHeRMSLgKOnwMeMenK99TzeU4UWPX9ZXIQ4KxWE
+tWWfrWyCckHTDgGD/gvpM5ygkHbhru8nu0pMZNI1N5GW5bMgmX1tAgMBAAE=
 -----END RSA PUBLIC KEY-----
 ",
           "recoveryKey": Object {
             "signature": null,
-            "updated": null,
+            "updated": 2021-01-01T08:00:00.000Z,
           },
           "secret": Object {
             "signature": null,
-            "updated": null,
+            "updated": 2021-01-01T08:00:00.000Z,
           },
           "uniqueId": "a097a56f506a4091b4c93a8bfb8cec0f",
-          "updated": 2020-01-01T07:00:00.000Z,
+          "updated": 2021-01-01T08:00:00.000Z,
           "version": 1,
         },
       ],
@@ -348,52 +309,47 @@ Object {
       "data": Array [
         Object {
           "accountId": "51cc7c03-3f86-44ae-8be2-5fcf5536c08b",
-          "created": 2020-01-01T07:00:00.000Z,
+          "created": 2021-01-01T08:00:00.000Z,
           "events": Array [
             Object {
-              "date": 2020-01-01T07:00:00.000Z,
+              "date": 2021-01-01T08:00:00.000Z,
               "name": "device_created",
               "payload": Object {
                 "accountId": "51cc7c03-3f86-44ae-8be2-5fcf5536c08b",
-                "created": 2020-01-01T07:00:00.000Z,
+                "created": 2021-01-01T08:00:00.000Z,
+                "id": "d9b9adec-81fa-4ea0-8cf3-44ccd4fe5162",
                 "macAddress": "0025:96FF:FE12:3456",
                 "name": "My iPhone 12",
                 "pin": Object {
                   "signature": null,
-                  "updated": null,
+                  "updated": 2021-01-01T08:00:00.000Z,
                 },
                 "publicKey": "-----BEGIN RSA PUBLIC KEY-----
-MIICCgKCAgEAs7ydT9Ndt1Idx9NE2zMhAcecJGUcIlbWeXEtZJA7aKZDDhxYaEGB
-WZvX+GRndllnPrOgzoxukITGYvj88bnrGZVZX2ckjIVUR1NxDrhyMjqnn4yDz4UB
-Q3Zqt6Gz6DcE+Y9ro6kyhu01KPMyUlhDQAUdwpIJA3saUJ5KZj6ai4NTuXbLqzly
-+3H5TMQY4WjrQwj/KRuq8LBEsR4YGaiaFZjHaf5n8+s2Gim/dDgAbIsZS+lGTwgx
-nigd7dKP9tG6q3GwNPNBSuuQh6rVbBKbmzBa5rO9SmeZ+HLUyClpzhZ+Hp8yOGAn
-qQFZZnokJ6dhxDEQcxPV2HUsYpi3oYSSomXsLgYSja1VT7CgeBchWj07ux6MnagM
-AB1+O7O2yzu0LYJc72BQOJaSIrBCh1FcPjM0KC1CPocux2JtqgDL/Td+V5HbLU9n
-ZQQoYDcrK3ozSne9ojioUWEwdBEzQmj9e3Wei87EyLe5bn/6tDbg17R7ZlVy2iVs
-IFziLHrv3VUIbESy5tTCdzK/qzFR0hlxejT12CTUSkN5eKmfz0pfzt+w8ldEfpws
-lBUcoS4sBIR3urpvx1EKM1xaUHfchhIKnY5KGTEM+5rJVwlDq+3lLcrJI3AErTAX
-gSR6fcZmKuI4nCfTKl3ykozcPwpEmfRgSBDHKwDJe6ZbK0sL4ScVookCAwEAAQ==
+MIGJAoGBAMpaNgFfgnUINKdxyxjlZs3L0GBjcW7qqwtzBAAMgdJWcEo7Z8flDNGy
+rvl8GarL3tkwoBcpUyi1/awyHpHeRMSLgKOnwMeMenK99TzeU4UWPX9ZXIQ4KxWE
+tWWfrWyCckHTDgGD/gvpM5ygkHbhru8nu0pMZNI1N5GW5bMgmX1tAgMBAAE=
 -----END RSA PUBLIC KEY-----
 ",
                 "recoveryKey": Object {
                   "signature": null,
-                  "updated": null,
+                  "updated": 2021-01-01T08:00:00.000Z,
                 },
                 "secret": Object {
                   "signature": null,
-                  "updated": null,
+                  "updated": 2021-01-01T08:00:00.000Z,
                 },
-                "updated": 2020-01-01T07:00:00.000Z,
+                "uniqueId": "a097a56f506a4091b4c93a8bfb8cec0f",
+                "updated": 2021-01-01T08:00:00.000Z,
+                "version": 0,
               },
             },
             Object {
-              "date": 2020-01-01T07:00:00.000Z,
+              "date": 2021-01-01T08:00:00.000Z,
               "name": "device_secret_changed",
               "payload": Object {
                 "secret": Object {
                   "signature": "bmV3X3VwZGF0ZWRfc2VjcmV0",
-                  "updated": 2020-01-01T07:00:00.000Z,
+                  "updated": 2021-01-01T08:00:00.000Z,
                 },
               },
             },
@@ -403,32 +359,24 @@ gSR6fcZmKuI4nCfTKl3ykozcPwpEmfRgSBDHKwDJe6ZbK0sL4ScVookCAwEAAQ==
           "name": "My iPhone 12",
           "pin": Object {
             "signature": null,
-            "updated": null,
+            "updated": 2021-01-01T08:00:00.000Z,
           },
           "publicKey": "-----BEGIN RSA PUBLIC KEY-----
-MIICCgKCAgEAs7ydT9Ndt1Idx9NE2zMhAcecJGUcIlbWeXEtZJA7aKZDDhxYaEGB
-WZvX+GRndllnPrOgzoxukITGYvj88bnrGZVZX2ckjIVUR1NxDrhyMjqnn4yDz4UB
-Q3Zqt6Gz6DcE+Y9ro6kyhu01KPMyUlhDQAUdwpIJA3saUJ5KZj6ai4NTuXbLqzly
-+3H5TMQY4WjrQwj/KRuq8LBEsR4YGaiaFZjHaf5n8+s2Gim/dDgAbIsZS+lGTwgx
-nigd7dKP9tG6q3GwNPNBSuuQh6rVbBKbmzBa5rO9SmeZ+HLUyClpzhZ+Hp8yOGAn
-qQFZZnokJ6dhxDEQcxPV2HUsYpi3oYSSomXsLgYSja1VT7CgeBchWj07ux6MnagM
-AB1+O7O2yzu0LYJc72BQOJaSIrBCh1FcPjM0KC1CPocux2JtqgDL/Td+V5HbLU9n
-ZQQoYDcrK3ozSne9ojioUWEwdBEzQmj9e3Wei87EyLe5bn/6tDbg17R7ZlVy2iVs
-IFziLHrv3VUIbESy5tTCdzK/qzFR0hlxejT12CTUSkN5eKmfz0pfzt+w8ldEfpws
-lBUcoS4sBIR3urpvx1EKM1xaUHfchhIKnY5KGTEM+5rJVwlDq+3lLcrJI3AErTAX
-gSR6fcZmKuI4nCfTKl3ykozcPwpEmfRgSBDHKwDJe6ZbK0sL4ScVookCAwEAAQ==
+MIGJAoGBAMpaNgFfgnUINKdxyxjlZs3L0GBjcW7qqwtzBAAMgdJWcEo7Z8flDNGy
+rvl8GarL3tkwoBcpUyi1/awyHpHeRMSLgKOnwMeMenK99TzeU4UWPX9ZXIQ4KxWE
+tWWfrWyCckHTDgGD/gvpM5ygkHbhru8nu0pMZNI1N5GW5bMgmX1tAgMBAAE=
 -----END RSA PUBLIC KEY-----
 ",
           "recoveryKey": Object {
             "signature": null,
-            "updated": null,
+            "updated": 2021-01-01T08:00:00.000Z,
           },
           "secret": Object {
             "signature": "bmV3X3VwZGF0ZWRfc2VjcmV0",
-            "updated": 2020-01-01T07:00:00.000Z,
+            "updated": 2021-01-01T08:00:00.000Z,
           },
           "uniqueId": "a097a56f506a4091b4c93a8bfb8cec0f",
-          "updated": 2020-01-01T07:00:00.000Z,
+          "updated": 2021-01-01T08:00:00.000Z,
           "version": 1,
         },
       ],

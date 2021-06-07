@@ -1,53 +1,77 @@
+import Joi from "joi";
 import { DeviceEvent } from "../enum";
-import { EntityBase, EntityCreationError, IEntity, IEntityBaseOptions } from "@lindorm-io/entity";
+import { JOI_SIGNATURE } from "../constant";
+import {
+  EntityAttributes,
+  EntityCreationError,
+  EntityOptions,
+  JOI_ENTITY_BASE,
+  LindormEntity,
+} from "@lindorm-io/entity";
 
-export interface IEncryptedData {
-  signature: string;
-  updated: Date;
+export interface Signature {
+  signature: string | null;
+  updated: Date | null;
 }
 
-export interface IDevice extends IEntity {
+export interface DeviceAttributes extends EntityAttributes {
   accountId: string;
   macAddress: string;
   name: string;
-  pin: IEncryptedData;
+  pin: Signature;
   publicKey: string;
-  recoveryKey: IEncryptedData;
-  secret: IEncryptedData;
+  recoveryKey: Signature;
+  secret: Signature;
   uniqueId: string;
 }
 
-export interface IDeviceOptions extends IEntityBaseOptions {
+export interface DeviceOptions extends EntityOptions {
   accountId: string;
-  macAddress?: string;
-  name?: string;
-  pin?: IEncryptedData;
+  macAddress: string;
+  name: string;
+  pin?: Signature;
   publicKey: string;
-  recoveryKey?: IEncryptedData;
-  secret?: IEncryptedData;
-  uniqueId?: string;
+  recoveryKey?: Signature;
+  secret?: Signature;
+  uniqueId: string;
 }
 
-export class Device extends EntityBase implements IDevice {
-  private _accountId: string;
-  private _macAddress: string;
-  private _name: string;
-  private _pin: IEncryptedData;
-  private _publicKey: string;
-  private _recoveryKey: IEncryptedData;
-  private _secret: IEncryptedData;
-  private _uniqueId: string;
+const schema = Joi.object({
+  ...JOI_ENTITY_BASE,
 
-  constructor(options: IDeviceOptions) {
+  accountId: Joi.string().guid().required(),
+  macAddress: Joi.string().required(),
+  name: Joi.string().required(),
+  pin: JOI_SIGNATURE,
+  publicKey: Joi.string().required(),
+  recoveryKey: JOI_SIGNATURE,
+  secret: JOI_SIGNATURE,
+  uniqueId: Joi.string().required(),
+});
+
+export class Device extends LindormEntity<DeviceAttributes> {
+  public readonly accountId: string;
+  public readonly macAddress: string;
+  public readonly publicKey: string;
+  public readonly uniqueId: string;
+  private _name: string;
+  private _pin: Signature;
+  private _recoveryKey: Signature;
+  private _secret: Signature;
+
+  public constructor(options: DeviceOptions) {
     super(options);
-    this._accountId = options.accountId;
-    this._macAddress = options.macAddress || null;
-    this._name = options.name || null;
+
+    this.accountId = options.accountId;
+    this.macAddress = options.macAddress;
+    this.publicKey = options.publicKey;
+    this.uniqueId = options.uniqueId;
+
+    this._name = options.name;
     this._pin = {
       signature: options.pin?.signature || null,
       updated: options.pin?.updated || null,
     };
-    this._publicKey = options.publicKey;
     this._recoveryKey = {
       signature: options.recoveryKey?.signature || null,
       updated: options.recoveryKey?.updated || null,
@@ -56,19 +80,6 @@ export class Device extends EntityBase implements IDevice {
       signature: options.secret?.signature || null,
       updated: options.secret?.updated || null,
     };
-    this._uniqueId = options.uniqueId || null;
-  }
-
-  public get accountId(): string {
-    return this._accountId;
-  }
-
-  public get macAddress(): string {
-    return this._macAddress;
-  }
-  public set macAddress(macAddress: string) {
-    this._macAddress = macAddress;
-    this.addEvent(DeviceEvent.MAC_ADDRESS_CHANGED, { macAddress: this._macAddress });
   }
 
   public get name(): string {
@@ -79,57 +90,60 @@ export class Device extends EntityBase implements IDevice {
     this.addEvent(DeviceEvent.NAME_CHANGED, { name: this._name });
   }
 
-  public get pin(): IEncryptedData {
+  public get pin(): Signature {
     return this._pin;
   }
-  public set pin(pin: IEncryptedData) {
+  public set pin(pin: Signature) {
     this._pin = pin;
     this.addEvent(DeviceEvent.PIN_CHANGED, { pin: this._pin });
   }
 
-  public get publicKey(): string {
-    return this._publicKey;
-  }
-
-  public get recoveryKey(): IEncryptedData {
+  public get recoveryKey(): Signature {
     return this._recoveryKey;
   }
-  public set recoveryKey(recoveryKey: IEncryptedData) {
+  public set recoveryKey(recoveryKey: Signature) {
     this._recoveryKey = recoveryKey;
     this.addEvent(DeviceEvent.RECOVERY_KEY_CHANGED, { recoveryKey: this._recoveryKey });
   }
 
-  public get secret(): IEncryptedData {
+  public get secret(): Signature {
     return this._secret;
   }
-  public set secret(secret: IEncryptedData) {
+  public set secret(secret: Signature) {
     this._secret = secret;
     this.addEvent(DeviceEvent.SECRET_CHANGED, { secret: this._secret });
   }
 
-  public get uniqueId(): string {
-    return this._uniqueId;
-  }
-  public set uniqueId(uniqueId: string) {
-    this._uniqueId = uniqueId;
-    this.addEvent(DeviceEvent.UNIQUE_ID_CHANGED, { uniqueId: this._uniqueId });
-  }
-
   public create(): void {
-    for (const evt of this._events) {
+    for (const evt of this.events) {
       if (evt.name !== DeviceEvent.CREATED) continue;
       throw new EntityCreationError("Device");
     }
-    this.addEvent(DeviceEvent.CREATED, {
-      accountId: this._accountId,
-      macAddress: this._macAddress,
-      name: this._name,
-      pin: this._pin,
-      publicKey: this._publicKey,
-      recoveryKey: this._recoveryKey,
-      secret: this._secret,
-      created: this._created,
-      updated: this._updated,
-    });
+
+    const { events, ...rest } = this.toJSON();
+    this.addEvent(DeviceEvent.CREATED, rest);
+  }
+
+  public getKey(): string {
+    return this.id;
+  }
+
+  public async schemaValidation(): Promise<void> {
+    await schema.validateAsync(this.toJSON());
+  }
+
+  public toJSON(): DeviceAttributes {
+    return {
+      ...this.defaultJSON(),
+
+      accountId: this.accountId,
+      macAddress: this.macAddress,
+      name: this.name,
+      pin: this.pin,
+      publicKey: this.publicKey,
+      recoveryKey: this.recoveryKey,
+      secret: this.secret,
+      uniqueId: this.uniqueId,
+    };
   }
 }

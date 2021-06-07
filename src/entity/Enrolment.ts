@@ -1,6 +1,8 @@
-import { EntityBase, IEntity, IEntityBaseOptions } from "@lindorm-io/entity";
+import Joi from "joi";
+import { EntityAttributes, LindormEntity, EntityOptions, JOI_ENTITY_BASE } from "@lindorm-io/entity";
+import { JOI_CERTIFICATE_CHALLENGE } from "../constant";
 
-export interface IEnrolment extends IEntity {
+export interface EnrolmentAttributes extends EntityAttributes {
   accountId: string;
   certificateChallenge: string;
   expires: Date;
@@ -10,7 +12,7 @@ export interface IEnrolment extends IEntity {
   uniqueId: string;
 }
 
-export interface IEnrolmentOptions extends IEntityBaseOptions {
+export interface EnrolmentOptions extends EntityOptions {
   accountId: string;
   certificateChallenge: string;
   expires: Date;
@@ -20,16 +22,28 @@ export interface IEnrolmentOptions extends IEntityBaseOptions {
   uniqueId: string;
 }
 
-export class Enrolment extends EntityBase implements IEnrolment {
-  readonly accountId: string;
-  readonly certificateChallenge: string;
-  readonly expires: Date;
-  readonly macAddress: string;
-  readonly name: string;
-  readonly publicKey: string;
-  readonly uniqueId: string;
+export const schema = Joi.object({
+  ...JOI_ENTITY_BASE,
 
-  constructor(options: IEnrolmentOptions) {
+  accountId: Joi.string().guid().required(),
+  certificateChallenge: JOI_CERTIFICATE_CHALLENGE,
+  expires: Joi.date().required(),
+  macAddress: Joi.string().required(),
+  name: Joi.string().required(),
+  publicKey: Joi.string().required(),
+  uniqueId: Joi.string().required(),
+});
+
+export class Enrolment extends LindormEntity<EnrolmentAttributes> {
+  public readonly accountId: string;
+  public readonly certificateChallenge: string;
+  public readonly expires: Date;
+  public readonly macAddress: string;
+  public readonly name: string;
+  public readonly publicKey: string;
+  public readonly uniqueId: string;
+
+  public constructor(options: EnrolmentOptions) {
     super(options);
 
     this.accountId = options.accountId;
@@ -43,5 +57,27 @@ export class Enrolment extends EntityBase implements IEnrolment {
 
   public create(): void {
     /* intentionally left empty */
+  }
+
+  public getKey(): string {
+    return this.id;
+  }
+
+  public async schemaValidation(): Promise<void> {
+    await schema.validateAsync(this.toJSON());
+  }
+
+  public toJSON(): EnrolmentAttributes {
+    return {
+      ...this.defaultJSON(),
+
+      accountId: this.accountId,
+      certificateChallenge: this.certificateChallenge,
+      expires: this.expires,
+      macAddress: this.macAddress,
+      name: this.name,
+      publicKey: this.publicKey,
+      uniqueId: this.uniqueId,
+    };
   }
 }

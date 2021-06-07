@@ -1,10 +1,17 @@
+import { CryptoLayered, CryptoSecret } from "@lindorm-io/crypto";
 import { Device } from "../../entity";
+import { config } from "../../config";
 import { getTestKeyPairRSA } from "./test-key-pair";
-import { DeviceHandler } from "../../handler";
-import { context } from "./test-context";
 
-// @ts-ignore
-const handler = new DeviceHandler(context);
+const cryptoLayered = new CryptoLayered({
+  aes: { secret: config.CRYPTO_AES_SECRET },
+  sha: { secret: config.CRYPTO_SHA_SECRET },
+});
+
+const cryptoSecret = new CryptoSecret({
+  aes: { secret: config.CRYPTO_AES_SECRET },
+  sha: { secret: config.CRYPTO_SHA_SECRET },
+});
 
 export const getTestDevice = async ({
   id = "d9b9adec-81fa-4ea0-8cf3-44ccd4fe5162",
@@ -21,20 +28,29 @@ export const getTestDevice = async ({
   accountId?: string;
   macAddress?: string;
   name?: string;
-  pin?: string;
   publicKey?: string;
-  recoveryKey?: string;
-  secret?: string;
   uniqueId?: string;
+  pin?: string | null;
+  recoveryKey?: string | null;
+  secret?: string | null;
 }): Promise<Device> =>
   new Device({
     id,
     accountId,
     macAddress,
     name,
-    pin: pin ? { signature: await handler.encryptPin(pin), updated: new Date() } : null,
     publicKey,
-    recoveryKey: recoveryKey ? { signature: await handler.encryptRecoveryKey(recoveryKey), updated: new Date() } : null,
-    secret: secret ? { signature: await handler.encryptSecret(secret), updated: new Date() } : null,
     uniqueId,
+    pin: {
+      signature: pin === null ? null : await cryptoLayered.encrypt(pin),
+      updated: new Date(),
+    },
+    recoveryKey: {
+      signature: recoveryKey === null ? null : await cryptoSecret.encrypt(recoveryKey),
+      updated: new Date(),
+    },
+    secret: {
+      signature: secret === null ? null : await cryptoLayered.encrypt(secret),
+      updated: new Date(),
+    },
   });

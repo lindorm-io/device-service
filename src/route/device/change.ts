@@ -1,56 +1,47 @@
-import { AuthTokenHandler, DeviceHandler } from "../../handler";
+import { DeviceContext } from "../../typing";
 import { DeviceController } from "../../controller";
-import { HttpStatus } from "@lindorm-io/core";
-import { IKoaDeviceContext } from "../../typing";
-import { Router, controllerMiddleware, handlerMiddleware } from "@lindorm-io/koa";
-import { tokenValidationMiddleware } from "../../middleware";
+import { HttpStatus } from "@lindorm-io/koa";
+import { Router, controllerMiddleware } from "@lindorm-io/koa";
+import { challengeConfirmationTokenMiddleware } from "../../middleware";
 
-export const router = new Router();
+export const router = new Router<unknown, DeviceContext>();
 
-router.use(tokenValidationMiddleware);
-router.use(handlerMiddleware(AuthTokenHandler));
-router.use(handlerMiddleware(DeviceHandler));
+router.use(challengeConfirmationTokenMiddleware);
+// router.use(deviceEntityMiddleware);
 router.use(controllerMiddleware(DeviceController));
 
-router.patch(
-  "/pin",
-  async (ctx: IKoaDeviceContext): Promise<void> => {
-    const {
-      controller: { deviceController },
-    } = ctx;
+router.patch("/pin", async (ctx): Promise<void> => {
+  const {
+    controller: { deviceController },
+  } = ctx;
 
-    const { pin } = ctx.request.body;
+  const { deviceId, pin } = ctx.request.body;
 
-    await deviceController.updatePin({ pin });
+  await deviceController.updatePin({ deviceId, pin });
 
-    ctx.status = HttpStatus.Success.ACCEPTED;
-  },
-);
+  ctx.status = HttpStatus.Success.ACCEPTED;
+});
 
-router.patch(
-  "/recovery-key",
-  async (ctx: IKoaDeviceContext): Promise<void> => {
-    const {
-      controller: { deviceController },
-    } = ctx;
+router.patch("/recovery-key", async (ctx): Promise<void> => {
+  const {
+    controller: { deviceController },
+  } = ctx;
 
-    ctx.body = await deviceController.generateRecoveryKey();
+  const { deviceId } = ctx.request.body;
 
-    ctx.status = HttpStatus.Success.OK;
-  },
-);
+  ctx.body = await deviceController.generateRecoveryKey({ deviceId });
 
-router.patch(
-  "/secret",
-  async (ctx: IKoaDeviceContext): Promise<void> => {
-    const {
-      controller: { deviceController },
-    } = ctx;
+  ctx.status = HttpStatus.Success.OK;
+});
 
-    const { secret } = ctx.request.body;
+router.patch("/secret", async (ctx): Promise<void> => {
+  const {
+    controller: { deviceController },
+  } = ctx;
 
-    await deviceController.updateSecret({ secret });
+  const { deviceId, secret } = ctx.request.body;
 
-    ctx.status = HttpStatus.Success.ACCEPTED;
-  },
-);
+  await deviceController.updateSecret({ deviceId, secret });
+
+  ctx.status = HttpStatus.Success.ACCEPTED;
+});

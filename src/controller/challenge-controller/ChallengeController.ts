@@ -1,4 +1,4 @@
-import { KoaDeviceContextAware } from "../../class";
+import { DeviceContextAware } from "../../class";
 import {
   IInitialiseChallengeData,
   IInitialiseChallengeOptions,
@@ -17,7 +17,7 @@ import {
   schemaVerifySecret,
 } from "./schema";
 
-export class ChallengeController extends KoaDeviceContextAware {
+export class ChallengeController extends DeviceContextAware {
   public async initialise(options: IInitialiseChallengeOptions): Promise<IInitialiseChallengeData> {
     const {
       entity: { device },
