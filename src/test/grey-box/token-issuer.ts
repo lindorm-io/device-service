@@ -10,7 +10,7 @@ export const generateAccessToken = ({
   deviceId?: string;
 }): string => {
   const { token } = TEST_AUTH_TOKEN_ISSUER.sign({
-    audience: Audience.ACCESS,
+    audience: "access",
     clientId,
     deviceId,
     expiry: "2 minutes",
