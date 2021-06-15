@@ -1,7 +1,5 @@
-import { AccountController, ChallengeController, DeviceController, EnrolmentController } from "../controller";
-import { AuthTokenHandler, ChallengeHandler, DeviceHandler, EnrolmentHandler } from "../handler";
-import { Challenge, Device } from "../entity";
-import { DeviceRepository, ChallengeCache, EnrolmentCache } from "../infrastructure";
+import { ChallengeSession, Device, EnrolmentSession } from "../entity";
+import { DeviceRepository, ChallengeSessionCache, EnrolmentSessionCache } from "../infrastructure";
 import { IssuerVerifyData, TokenIssuer } from "@lindorm-io/jwt";
 import { KeyPair, Keystore } from "@lindorm-io/key-pair";
 import { KeyPairCache, KeyPairRepository } from "@lindorm-io/koa-keystore";
@@ -11,29 +9,18 @@ import { RedisConnection } from "@lindorm-io/redis";
 
 export interface DeviceContext<Body = Record<string, any>> extends KoaContext<Body> {
   cache: {
-    challengeCache: ChallengeCache;
-    enrolmentCache: EnrolmentCache;
+    challengeSessionCache: ChallengeSessionCache;
+    enrolmentSessionCache: EnrolmentSessionCache;
     keyPairCache: KeyPairCache;
   };
   client: {
     mongo: MongoConnection;
     redis: RedisConnection;
   };
-  controller: {
-    accountController: AccountController;
-    challengeController: ChallengeController;
-    deviceController: DeviceController;
-    enrolmentController: EnrolmentController;
-  };
   entity: {
-    challenge: Challenge;
+    challengeSession: ChallengeSession;
     device: Device;
-  };
-  handler: {
-    authTokenHandler: AuthTokenHandler;
-    challengeHandler: ChallengeHandler;
-    deviceHandler: DeviceHandler;
-    enrolmentHandler: EnrolmentHandler;
+    enrolmentSession: EnrolmentSession;
   };
   jwt: TokenIssuer;
   keys: Array<KeyPair>;
@@ -43,7 +30,9 @@ export interface DeviceContext<Body = Record<string, any>> extends KoaContext<Bo
     keyPairRepository: KeyPairRepository;
   };
   token: {
-    bearer: IssuerVerifyData<unknown>;
-    challengeConfirmation: IssuerVerifyData<unknown>;
+    bearerToken: IssuerVerifyData<unknown>;
+    challengeSessionToken: IssuerVerifyData<unknown>;
+    challengeConfirmationToken: IssuerVerifyData<unknown>;
+    enrolmentSessionToken: IssuerVerifyData<unknown>;
   };
 }

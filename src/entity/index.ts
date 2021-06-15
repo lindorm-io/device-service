@@ -1,3 +1,3 @@
-export * from "./Challenge";
+export * from "./ChallengeSession";
 export * from "./Device";
-export * from "./Enrolment";
+export * from "./EnrolmentSession";

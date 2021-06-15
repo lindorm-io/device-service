@@ -1,8 +1,12 @@
-import { Challenge, Device } from "../entity";
-import { ChallengeCache, DeviceRepository } from "../infrastructure";
+import { ChallengeSession, Device, EnrolmentSession } from "../entity";
+import { ChallengeSessionCache, DeviceRepository, EnrolmentSessionCache } from "../infrastructure";
 import { cacheEntityMiddleware } from "@lindorm-io/koa-redis";
 import { repositoryEntityMiddleware } from "@lindorm-io/koa-mongo";
 
-export const challengeEntityMiddleware = cacheEntityMiddleware("request.body.challengeId", Challenge, ChallengeCache);
+export const challengeSessionEntityMiddleware = (path: string) =>
+  cacheEntityMiddleware(path, ChallengeSession, ChallengeSessionCache);
 
-export const deviceEntityMiddleware = repositoryEntityMiddleware("request.body.deviceId", Device, DeviceRepository);
+export const deviceEntityMiddleware = (path: string) => repositoryEntityMiddleware(path, Device, DeviceRepository);
+
+export const enrolmentSessionEntityMiddleware = (path: string) =>
+  cacheEntityMiddleware(path, EnrolmentSession, EnrolmentSessionCache);

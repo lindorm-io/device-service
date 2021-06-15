@@ -42,10 +42,10 @@ const schema = Joi.object({
   accountId: Joi.string().guid().required(),
   macAddress: Joi.string().required(),
   name: Joi.string().required(),
-  pin: JOI_SIGNATURE,
+  pin: JOI_SIGNATURE.required(),
   publicKey: Joi.string().required(),
-  recoveryKey: JOI_SIGNATURE,
-  secret: JOI_SIGNATURE,
+  recoveryKey: JOI_SIGNATURE.required(),
+  secret: JOI_SIGNATURE.required(),
   uniqueId: Joi.string().required(),
 });
 

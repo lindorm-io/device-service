@@ -1,7 +1,7 @@
-import { Enrolment } from "../entity";
+import { EnrolmentSession } from "../entity";
 
 export interface ICreateDeviceFromEnrolmentOptions {
-  enrolment: Enrolment;
+  enrolment: EnrolmentSession;
   pin: string;
   recoveryKey: string;
   secret?: string;

@@ -1,12 +1,12 @@
-import { ChallengeCache, EnrolmentCache } from "../infrastructure";
+import { ChallengeSessionCache, EnrolmentSessionCache } from "../infrastructure";
 import { cacheMiddleware } from "@lindorm-io/koa-redis";
 import { stringToSeconds } from "@lindorm-io/core";
 import { config } from "../config";
 
-export const challengeCacheMiddleware = cacheMiddleware(ChallengeCache, {
-  expiresInSeconds: stringToSeconds(config.CHALLENGE_EXPIRY),
+export const challengeSessionCacheMiddleware = cacheMiddleware(ChallengeSessionCache, {
+  expiresInSeconds: stringToSeconds(config.CHALLENGE_SESSION_EXPIRY),
 });
 
-export const enrolmentCacheMiddleware = cacheMiddleware(EnrolmentCache, {
-  expiresInSeconds: stringToSeconds(config.ENROLMENT_EXPIRY),
+export const enrolmentSessionCacheMiddleware = cacheMiddleware(EnrolmentSessionCache, {
+  expiresInSeconds: stringToSeconds(config.ENROLMENT_SESSION_EXPIRY),
 });

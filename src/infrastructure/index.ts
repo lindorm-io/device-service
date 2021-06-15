@@ -1,3 +1,3 @@
-export * from "./ChallengeCache";
+export * from "./ChallengeSessionCache";
 export * from "./DeviceRepository";
-export * from "./EnrolmentCache";
+export * from "./EnrolmentSessionCache";

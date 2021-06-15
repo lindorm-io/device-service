@@ -20,9 +20,10 @@ export interface Configuration extends DefaultConfiguration {
   DEVICE_JWT_ISSUER: string;
 
   // Expiry
-  ENROLMENT_EXPIRY: string;
-  CHALLENGE_EXPIRY: string;
+  ENROLMENT_CONFIRMATION_EXPIRY: string;
+  ENROLMENT_SESSION_EXPIRY: string;
   CHALLENGE_CONFIRMATION_EXPIRY: string;
+  CHALLENGE_SESSION_EXPIRY: string;
 
   // Infrastructure
   REDIS_PORT: number;

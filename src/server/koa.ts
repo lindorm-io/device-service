@@ -1,14 +1,13 @@
-import { AuthTokenHandler, ChallengeHandler, DeviceHandler, EnrolmentHandler } from "../handler";
+import { KoaApp } from "@lindorm-io/koa";
 import { accountRoute, challengeRoute, deviceRoute, enrolmentRoute, wellKnownRoute } from "../route";
 import { authJwksCacheWorker, keyPairCacheWorker, keyPairCleanupWorker } from "../worker";
 import { cacheKeysMiddleware, keystoreMiddleware } from "@lindorm-io/koa-keystore";
 import { config, IS_TEST } from "../config";
-import { handlerMiddleware, KoaApp } from "@lindorm-io/koa";
 import { winston } from "../logger";
 import {
-  challengeCacheMiddleware,
+  challengeSessionCacheMiddleware,
   deviceRepositoryMiddleware,
-  enrolmentCacheMiddleware,
+  enrolmentSessionCacheMiddleware,
   keyPairCacheMiddleware,
   keyPairRepositoryMiddleware,
   mongoMiddleware,
@@ -28,20 +27,14 @@ koa.addMiddleware(keyPairRepositoryMiddleware);
 
 // redis
 koa.addMiddleware(redisMiddleware);
-koa.addMiddleware(challengeCacheMiddleware);
-koa.addMiddleware(enrolmentCacheMiddleware);
+koa.addMiddleware(challengeSessionCacheMiddleware);
+koa.addMiddleware(enrolmentSessionCacheMiddleware);
 koa.addMiddleware(keyPairCacheMiddleware);
 
 // jwt
 koa.addMiddleware(cacheKeysMiddleware);
 koa.addMiddleware(keystoreMiddleware);
 koa.addMiddleware(tokenIssuerMiddleware);
-
-// handlers
-koa.addMiddleware(handlerMiddleware(AuthTokenHandler));
-koa.addMiddleware(handlerMiddleware(ChallengeHandler));
-koa.addMiddleware(handlerMiddleware(DeviceHandler));
-koa.addMiddleware(handlerMiddleware(EnrolmentHandler));
 
 // routes
 koa.addRoute("/account", accountRoute);

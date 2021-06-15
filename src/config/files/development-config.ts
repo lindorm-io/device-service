@@ -16,9 +16,10 @@ export const developmentConfig: Configuration = {
   CRYPTO_AES_SECRET: "secret",
   CRYPTO_SHA_SECRET: "secret",
 
-  ENROLMENT_EXPIRY: "5 minutes",
-  CHALLENGE_EXPIRY: "15 minutes",
+  ENROLMENT_CONFIRMATION_EXPIRY: "10 minutes",
+  ENROLMENT_SESSION_EXPIRY: "5 minutes",
   CHALLENGE_CONFIRMATION_EXPIRY: "10 minutes",
+  CHALLENGE_SESSION_EXPIRY: "5 minutes",
 
   REDIS_PORT: 6379,
 

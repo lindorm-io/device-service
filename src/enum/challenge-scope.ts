@@ -1,5 +1,6 @@
 export enum ChallengeScope {
   CHANGE = "change",
-  SIGN_IN = "sign_in",
+  ENROLMENT = "enrolment",
   RECOVERY = "recovery",
+  SIGN_IN = "sign_in",
 }
