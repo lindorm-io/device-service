@@ -7,7 +7,7 @@ export const getTestDevice = async ({
   accountId = "51cc7c03-3f86-44ae-8be2-5fcf5536c08b",
   macAddress = "0025:96FF:FE12:3456",
   name = "My iPhone 12",
-  pin = "123456",
+  pincode = "123456",
   publicKey = getTestKeyPairRSA().publicKey,
   recoveryKey = "YAIBD-XMLJ6-DPTFH-AYXYU-FKBI8-O19Q1",
   secret = "test_device_secret",
@@ -18,7 +18,7 @@ export const getTestDevice = async ({
   name?: string;
   publicKey?: string;
   uniqueId?: string;
-  pin?: string | null;
+  pincode?: string | null;
   recoveryKey?: string | null;
   secret?: string | null;
 }): Promise<Device> => {
@@ -33,8 +33,8 @@ export const getTestDevice = async ({
     name,
     publicKey,
     uniqueId,
-    pin: {
-      signature: pin === null ? null : await cryptoLayered.encrypt(pin),
+    pincode: {
+      signature: pincode === null ? null : await cryptoLayered.encrypt(pincode),
       updated: new Date(),
     },
     recoveryKey: {

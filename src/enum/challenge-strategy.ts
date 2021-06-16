@@ -1,6 +1,6 @@
 export enum ChallengeStrategy {
   IMPLICIT = "implicit",
-  PIN = "pin",
+  PINCODE = "pincode",
   RECOVERY = "recovery",
   SECRET = "secret",
 }

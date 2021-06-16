@@ -29,7 +29,7 @@ export const JOI_SIGNATURE = Joi.object({
 
 export const JOI_STRATEGY = Joi.string().valid(
   ChallengeStrategy.IMPLICIT,
-  ChallengeStrategy.PIN,
+  ChallengeStrategy.PINCODE,
   ChallengeStrategy.RECOVERY,
   ChallengeStrategy.SECRET,
 );

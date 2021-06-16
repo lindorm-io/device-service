@@ -15,7 +15,7 @@ import { stringComparison } from "@lindorm-io/core";
 interface RequestBody {
   certificateVerifier: string;
   enrolmentSessionToken: string;
-  pin: string;
+  pincode: string;
   secret: string;
 }
 
@@ -30,7 +30,7 @@ interface ResponseBody {
 export const enrolmentVerifySchema = Joi.object({
   certificateVerifier: Joi.string().base64().required(),
   enrolmentSessionToken: JOI_JWT.required(),
-  pin: JOI_PINCODE.required(),
+  pincode: JOI_PINCODE.required(),
   secret: JOI_SECRET,
 });
 
@@ -45,7 +45,7 @@ export const enrolmentVerify: Controller<DeviceContext<RequestBody>> = async (
     metadata: { clientId },
     repository: { deviceRepository },
     request: {
-      body: { certificateVerifier, pin, secret },
+      body: { certificateVerifier, pincode, secret },
     },
     token: { bearerToken },
   } = ctx;
@@ -97,7 +97,7 @@ export const enrolmentVerify: Controller<DeviceContext<RequestBody>> = async (
       accountId: bearerToken.subject,
       macAddress: enrolmentSession.macAddress,
       name: enrolmentSession.name,
-      pin: { signature: await cryptoLayered.encrypt(pin), updated: new Date() },
+      pincode: { signature: await cryptoLayered.encrypt(pincode), updated: new Date() },
       publicKey: enrolmentSession.publicKey,
       recoveryKey: { signature: await cryptoLayered.encrypt(recoveryKey), updated: new Date() },
       secret: secret ? { signature: await cryptoLayered.encrypt(secret), updated: new Date() } : null,

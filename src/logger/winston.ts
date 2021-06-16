@@ -24,8 +24,8 @@ if (NODE_ENVIRONMENT === NodeEnvironment.PRODUCTION) {
 
   winston.addFilter("request.header.authorization", sanitiseToken);
 
-  winston.addFilter("request.body.pin");
-  winston.addFilter("pin");
+  winston.addFilter("request.body.pincode");
+  winston.addFilter("pincode");
 
   winston.addFilter("request.body.publicKey");
   winston.addFilter("publicKey");

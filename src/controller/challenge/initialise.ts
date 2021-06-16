@@ -62,8 +62,8 @@ export const challengeInitialise: Controller<DeviceContext<RequestBody>> = async
 
   const strategies: Array<ChallengeStrategy> = [ChallengeStrategy.IMPLICIT, ChallengeStrategy.RECOVERY];
 
-  if (device.pin.signature) {
-    strategies.push(ChallengeStrategy.PIN);
+  if (device.pincode.signature) {
+    strategies.push(ChallengeStrategy.PINCODE);
   }
 
   if (device.secret.signature) {

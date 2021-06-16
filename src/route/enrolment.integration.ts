@@ -53,7 +53,7 @@ describe("/enrolment", () => {
       .send({
         certificate_verifier: certificateVerifier,
         enrolment_session_token: enrolmentSessionToken,
-        pin: (await getRandomNumber(6)).toString(),
+        pincode: (await getRandomNumber(6)).toString(),
         secret: getRandomValue(128),
       })
       .expect(201);

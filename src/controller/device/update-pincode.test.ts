@@ -64,7 +64,7 @@ describe("deviceUpdatePincode", () => {
     expect(ctx.repository.deviceRepository.update).toHaveBeenCalledWith(
       expect.objectContaining({
         id: "deviceId",
-        pin: {
+        pincode: {
           signature: "new-pincode",
           updated: expect.any(Date),
         },

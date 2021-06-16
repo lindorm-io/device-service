@@ -65,7 +65,7 @@ describe("enrolmentVerify", () => {
       request: {
         body: {
           certificateVerifier: "certificateVerifier",
-          pin: "pin",
+          pincode: "pincode",
           secret: "secret",
         },
       },
@@ -97,7 +97,7 @@ describe("enrolmentVerify", () => {
         accountId: "accountId",
         macAddress: "macAddress",
         name: "name",
-        pin: { signature: "pin", updated: expect.any(Date) },
+        pincode: { signature: "pincode", updated: expect.any(Date) },
         publicKey: "publicKey",
         recoveryKey: { signature: "recoveryKey", updated: expect.any(Date) },
         secret: { signature: "secret", updated: expect.any(Date) },

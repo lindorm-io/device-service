@@ -13,7 +13,7 @@ import { includes } from "lodash";
 interface RequestBody {
   certificateVerifier: string;
   challengeSessionToken: string;
-  pin: string;
+  pincode: string;
   recoveryKey: string;
   secret: string;
   strategy: ChallengeStrategy;
@@ -30,8 +30,8 @@ export const challengeVerifySchema = Joi.object({
   challengeSessionToken: JOI_JWT.required(),
   strategy: JOI_STRATEGY.required(),
 
-  pin: Joi.when("strategy", {
-    is: ChallengeStrategy.PIN,
+  pincode: Joi.when("strategy", {
+    is: ChallengeStrategy.PINCODE,
     then: JOI_PINCODE.required(),
     otherwise: Joi.forbidden(),
   }),
@@ -57,7 +57,7 @@ export const challengeVerify: Controller<DeviceContext<RequestBody>> = async (
     logger,
     metadata: { clientId },
     request: {
-      body: { certificateVerifier, pin, recoveryKey, secret, strategy },
+      body: { certificateVerifier, pincode, recoveryKey, secret, strategy },
     },
   } = ctx;
 
@@ -65,7 +65,7 @@ export const challengeVerify: Controller<DeviceContext<RequestBody>> = async (
     id: challengeSession.id,
     clientId,
     deviceId: device.id,
-    pin,
+    pincode,
     recoveryKey,
     scope: challengeSession.scope,
     secret,
@@ -110,8 +110,8 @@ export const challengeVerify: Controller<DeviceContext<RequestBody>> = async (
     case ChallengeStrategy.IMPLICIT:
       break;
 
-    case ChallengeStrategy.PIN:
-      await cryptoLayered.assert(pin, device.pin.signature);
+    case ChallengeStrategy.PINCODE:
+      await cryptoLayered.assert(pincode, device.pincode.signature);
       break;
 
     case ChallengeStrategy.RECOVERY:

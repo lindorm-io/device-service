@@ -33,7 +33,7 @@ describe("/challenge", () => {
       challenge_session_token: expect.any(String),
       expires: expect.any(Number),
       expires_in: expect.any(Number),
-      strategies: ["implicit", "recovery", "pin", "secret"],
+      strategies: ["implicit", "recovery", "pincode", "secret"],
     });
 
     const {
@@ -84,7 +84,7 @@ describe("/challenge", () => {
       challenge_session_token: expect.any(String),
       expires: expect.any(Number),
       expires_in: expect.any(Number),
-      strategies: ["implicit", "recovery", "pin", "secret"],
+      strategies: ["implicit", "recovery", "pincode", "secret"],
     });
 
     const {
@@ -116,7 +116,7 @@ describe("/challenge", () => {
     const pincode = (await getRandomNumber(6)).toString();
     const device = await TEST_DEVICE_REPOSITORY.create(
       await getTestDevice({
-        pin: pincode,
+        pincode: pincode,
       }),
     );
 
@@ -136,7 +136,7 @@ describe("/challenge", () => {
       challenge_session_token: expect.any(String),
       expires: expect.any(Number),
       expires_in: expect.any(Number),
-      strategies: ["implicit", "recovery", "pin", "secret"],
+      strategies: ["implicit", "recovery", "pincode", "secret"],
     });
 
     const {
@@ -152,8 +152,8 @@ describe("/challenge", () => {
       .send({
         certificate_verifier: certificateVerifier,
         challenge_session_token: challengeSessionToken,
-        strategy: ChallengeStrategy.PIN,
-        pin: pincode,
+        strategy: ChallengeStrategy.PINCODE,
+        pincode: pincode,
       })
       .expect(200);
 
@@ -188,7 +188,7 @@ describe("/challenge", () => {
       challenge_session_token: expect.any(String),
       expires: expect.any(Number),
       expires_in: expect.any(Number),
-      strategies: ["implicit", "recovery", "pin", "secret"],
+      strategies: ["implicit", "recovery", "pincode", "secret"],
     });
 
     const {

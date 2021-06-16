@@ -1,6 +1,6 @@
 import { Audience, ChallengeScope } from "../enum";
 import { Permission, Scope } from "@lindorm-io/jwt";
-import { TEST_AUTH_TOKEN_ISSUER, TEST_DEVICE_TOKEN_ISSUER } from "./setup-integration";
+import { getTestAuthIssuer, getTestDeviceIssuer } from "./test-issuer";
 
 export const generateAccessToken = ({
   accountId = "51cc7c03-3f86-44ae-8be2-5fcf5536c08b",
@@ -11,7 +11,7 @@ export const generateAccessToken = ({
   clientId?: string;
   deviceId?: string;
 }): string => {
-  const { token } = TEST_AUTH_TOKEN_ISSUER.sign({
+  const { token } = getTestAuthIssuer().sign({
     audience: "access",
     clientId,
     deviceId,
@@ -32,7 +32,7 @@ export const generateChallengeConfirmationToken = ({
   clientId?: string;
   deviceId?: string;
 }): string => {
-  const { token } = TEST_DEVICE_TOKEN_ISSUER.sign({
+  const { token } = getTestDeviceIssuer().sign({
     audience: Audience.CHALLENGE_CONFIRMATION,
     clientId,
     deviceId,

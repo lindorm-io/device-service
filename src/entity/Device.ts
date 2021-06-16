@@ -18,7 +18,7 @@ export interface DeviceAttributes extends EntityAttributes {
   accountId: string;
   macAddress: string;
   name: string;
-  pin: Signature;
+  pincode: Signature;
   publicKey: string;
   recoveryKey: Signature;
   secret: Signature;
@@ -29,7 +29,7 @@ export interface DeviceOptions extends EntityOptions {
   accountId: string;
   macAddress: string;
   name: string;
-  pin?: Signature;
+  pincode?: Signature;
   publicKey: string;
   recoveryKey?: Signature;
   secret?: Signature;
@@ -42,7 +42,7 @@ const schema = Joi.object({
   accountId: Joi.string().guid().required(),
   macAddress: Joi.string().required(),
   name: Joi.string().required(),
-  pin: JOI_SIGNATURE.required(),
+  pincode: JOI_SIGNATURE.required(),
   publicKey: Joi.string().required(),
   recoveryKey: JOI_SIGNATURE.required(),
   secret: JOI_SIGNATURE.required(),
@@ -55,7 +55,7 @@ export class Device extends LindormEntity<DeviceAttributes> {
   public readonly publicKey: string;
   public readonly uniqueId: string;
   private _name: string;
-  private _pin: Signature;
+  private _pincode: Signature;
   private _recoveryKey: Signature;
   private _secret: Signature;
 
@@ -68,9 +68,9 @@ export class Device extends LindormEntity<DeviceAttributes> {
     this.uniqueId = options.uniqueId;
 
     this._name = options.name;
-    this._pin = {
-      signature: options.pin?.signature || null,
-      updated: options.pin?.updated || null,
+    this._pincode = {
+      signature: options.pincode?.signature || null,
+      updated: options.pincode?.updated || null,
     };
     this._recoveryKey = {
       signature: options.recoveryKey?.signature || null,
@@ -90,12 +90,12 @@ export class Device extends LindormEntity<DeviceAttributes> {
     this.addEvent(DeviceEvent.NAME_CHANGED, { name: this._name });
   }
 
-  public get pin(): Signature {
-    return this._pin;
+  public get pincode(): Signature {
+    return this._pincode;
   }
-  public set pin(pin: Signature) {
-    this._pin = pin;
-    this.addEvent(DeviceEvent.PIN_CHANGED, { pin: this._pin });
+  public set pincode(pin: Signature) {
+    this._pincode = pin;
+    this.addEvent(DeviceEvent.PIN_CHANGED, { pin: this._pincode });
   }
 
   public get recoveryKey(): Signature {
@@ -139,7 +139,7 @@ export class Device extends LindormEntity<DeviceAttributes> {
       accountId: this.accountId,
       macAddress: this.macAddress,
       name: this.name,
-      pin: this.pin,
+      pincode: this.pincode,
       publicKey: this.publicKey,
       recoveryKey: this.recoveryKey,
       secret: this.secret,

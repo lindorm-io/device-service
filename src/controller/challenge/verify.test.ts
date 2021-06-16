@@ -42,7 +42,7 @@ describe("challengeVerify", () => {
           scope: "scope",
           strategies: [
             ChallengeStrategy.IMPLICIT,
-            ChallengeStrategy.PIN,
+            ChallengeStrategy.PINCODE,
             ChallengeStrategy.RECOVERY,
             ChallengeStrategy.SECRET,
           ],
@@ -50,7 +50,7 @@ describe("challengeVerify", () => {
         device: {
           id: "deviceId",
           accountId: "accountId",
-          pin: { signature: "pin-signature" },
+          pincode: { signature: "pin-signature" },
           publicKey: "publicKey",
           recoveryKey: { signature: "recovery-key-signature" },
           secret: { signature: "secret-signature" },
@@ -69,7 +69,7 @@ describe("challengeVerify", () => {
       request: {
         body: {
           certificateVerifier: "certificateVerifier",
-          pin: "pin",
+          pincode: "pincode",
           recoveryKey: "recoveryKey",
           secret: "secret",
           strategy: ChallengeStrategy.IMPLICIT,
@@ -107,8 +107,8 @@ describe("challengeVerify", () => {
     );
   });
 
-  test("should resolve challenge session with pin strategy", async () => {
-    ctx.request.body.strategy = ChallengeStrategy.PIN;
+  test("should resolve challenge session with pincode strategy", async () => {
+    ctx.request.body.strategy = ChallengeStrategy.PINCODE;
 
     await expect(challengeVerify(ctx)).resolves.toStrictEqual({
       body: {
@@ -119,7 +119,7 @@ describe("challengeVerify", () => {
       status: 200,
     });
 
-    expect(strategyAssert).toHaveBeenCalledWith("pin", "pin-signature");
+    expect(strategyAssert).toHaveBeenCalledWith("pincode", "pin-signature");
   });
 
   test("should resolve challenge session with recovery strategy", async () => {
@@ -154,7 +154,7 @@ describe("challengeVerify", () => {
 
   test("should throw on invalid strategy", async () => {
     ctx.entity.challengeSession.strategies = [ChallengeStrategy.IMPLICIT];
-    ctx.request.body.strategy = ChallengeStrategy.PIN;
+    ctx.request.body.strategy = ChallengeStrategy.PINCODE;
 
     await expect(challengeVerify(ctx)).rejects.toThrow(ClientError);
   });

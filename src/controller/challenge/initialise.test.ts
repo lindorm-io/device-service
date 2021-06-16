@@ -27,7 +27,7 @@ describe("challengeInitialise", () => {
         device: {
           id: "deviceId",
           accountId: "accountId",
-          pin: { signature: "signature" },
+          pincode: { signature: "signature" },
           secret: { signature: "signature" },
         },
       },
@@ -57,7 +57,7 @@ describe("challengeInitialise", () => {
         challengeSessionToken: "jwt.jwt.jwt",
         expires: 600,
         expiresIn: 60,
-        strategies: ["implicit", "recovery", "pin", "secret"],
+        strategies: ["implicit", "recovery", "pincode", "secret"],
       },
       status: 200,
     });
@@ -75,7 +75,7 @@ describe("challengeInitialise", () => {
         certificateChallenge: "random-value",
         deviceId: "deviceId",
         scope: "sign_in",
-        strategies: ["implicit", "recovery", "pin", "secret"],
+        strategies: ["implicit", "recovery", "pincode", "secret"],
       }),
       60,
     );
