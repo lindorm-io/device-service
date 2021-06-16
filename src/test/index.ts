@@ -8,4 +8,3 @@ export * from "./test-logger";
 export * from "./test-mongo";
 export * from "./test-redis";
 export * from "./test-repository";
-export * from "./token-issuer";
