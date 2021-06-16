@@ -1,4 +1,4 @@
-import { Audience, ChallengeScope } from "../enum";
+import { Audience } from "../enum";
 import { Permission, Scope } from "@lindorm-io/jwt";
 import { getTestAuthIssuer, getTestDeviceIssuer } from "./test-issuer";
 
@@ -37,7 +37,7 @@ export const generateChallengeConfirmationToken = ({
     clientId,
     deviceId,
     expiry: "2 minutes",
-    scope: [ChallengeScope.CHANGE],
+    scope: ["change"],
     subject: accountId,
   });
   return token;

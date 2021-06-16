@@ -39,7 +39,7 @@ describe("challengeVerify", () => {
         challengeSession: {
           id: "challengeSessionId",
           certificateChallenge: "certificateChallenge",
-          scope: "scope",
+          scope: ["scope"],
           strategies: [
             ChallengeStrategy.IMPLICIT,
             ChallengeStrategy.PINCODE,

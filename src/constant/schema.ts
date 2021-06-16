@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { ChallengeScope, ChallengeStrategy } from "../enum";
+import { ChallengeStrategy } from "../enum";
 
 export const JOI_CERTIFICATE_CHALLENGE = Joi.string().base64().length(64);
 
@@ -12,13 +12,6 @@ export const JOI_PINCODE = Joi.string()
   .pattern(/[0-9]+/);
 
 export const JOI_RECOVERY_KEY = Joi.string().length(35);
-
-export const JOI_SCOPE = Joi.string().valid(
-  ChallengeScope.ENROLMENT,
-  ChallengeScope.CHANGE,
-  ChallengeScope.RECOVERY,
-  ChallengeScope.SIGN_IN,
-);
 
 export const JOI_SECRET = Joi.string().base64().length(128);
 

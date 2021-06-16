@@ -1,6 +1,6 @@
 import MockDate from "mockdate";
 import request from "supertest";
-import { ChallengeScope, ChallengeStrategy } from "../enum";
+import { ChallengeStrategy } from "../enum";
 import { TEST_DEVICE_REPOSITORY, TEST_CRYPTO_KEY_PAIR, getTestDevice, setupIntegration, resetAll } from "../test";
 import { baseHash, getRandomNumber, getRandomValue } from "@lindorm-io/core";
 import { koa } from "../server/koa";
@@ -24,7 +24,7 @@ describe("/challenge", () => {
       .send({
         account_id: device.accountId,
         device_id: device.id,
-        scope: ChallengeScope.SIGN_IN,
+        scope: "sign_in",
       })
       .expect(200);
 
@@ -75,7 +75,7 @@ describe("/challenge", () => {
       .send({
         account_id: device.accountId,
         device_id: device.id,
-        scope: ChallengeScope.SIGN_IN,
+        scope: "sign_in",
       })
       .expect(200);
 
@@ -127,7 +127,7 @@ describe("/challenge", () => {
       .send({
         account_id: device.accountId,
         device_id: device.id,
-        scope: ChallengeScope.SIGN_IN,
+        scope: "sign_in",
       })
       .expect(200);
 
@@ -179,7 +179,7 @@ describe("/challenge", () => {
       .send({
         account_id: device.accountId,
         device_id: device.id,
-        scope: ChallengeScope.SIGN_IN,
+        scope: "sign_in",
       })
       .expect(200);
 

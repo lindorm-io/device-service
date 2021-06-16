@@ -1,17 +1,17 @@
 import Joi from "joi";
-import { Audience, ChallengeScope, ChallengeStrategy } from "../../enum";
+import { Audience, ChallengeStrategy } from "../../enum";
 import { ChallengeSession } from "../../entity";
 import { ClientError } from "@lindorm-io/errors";
 import { Controller, ControllerResponse, HttpStatus } from "@lindorm-io/koa";
 import { DeviceContext } from "../../typing";
-import { JOI_GUID, JOI_SCOPE } from "../../constant";
+import { JOI_GUID } from "../../constant";
 import { config } from "../../config";
 import { getRandomValue, stringComparison } from "@lindorm-io/core";
 
 interface RequestBody {
   accountId: string;
   deviceId: string;
-  scope: ChallengeScope;
+  scope: string;
 }
 
 interface ResponseBody {
@@ -25,7 +25,7 @@ interface ResponseBody {
 export const challengeInitialiseSchema = Joi.object({
   accountId: JOI_GUID.required(),
   deviceId: JOI_GUID.required(),
-  scope: JOI_SCOPE.required(),
+  scope: Joi.string().required(),
 });
 
 export const challengeInitialise: Controller<DeviceContext<RequestBody>> = async (
@@ -83,7 +83,7 @@ export const challengeInitialise: Controller<DeviceContext<RequestBody>> = async
       id,
       certificateChallenge: getRandomValue(64),
       deviceId: device.id,
-      scope: scope,
+      scope: scope.split(" "),
       strategies,
     }),
     expiresIn,

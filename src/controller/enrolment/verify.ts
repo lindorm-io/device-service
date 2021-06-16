@@ -1,6 +1,6 @@
 import Joi from "joi";
 import { Algorithm } from "@lindorm-io/key-pair";
-import { Audience, ChallengeScope, ChallengeStrategy } from "../../enum";
+import { Audience, ChallengeStrategy } from "../../enum";
 import { ClientError } from "@lindorm-io/errors";
 import { Controller, ControllerResponse, HttpStatus } from "@lindorm-io/koa";
 import { CryptoError, CryptoKeyPair } from "@lindorm-io/crypto";
@@ -111,7 +111,7 @@ export const enrolmentVerify: Controller<DeviceContext<RequestBody>> = async (
     clientId,
     deviceId: device.id,
     expiry: config.CHALLENGE_CONFIRMATION_EXPIRY,
-    scope: [ChallengeScope.ENROLMENT],
+    scope: ["enrolment"],
     subject: bearerToken.subject,
   });
 
@@ -122,7 +122,7 @@ export const enrolmentVerify: Controller<DeviceContext<RequestBody>> = async (
     accountId: bearerToken.subject,
     clientId,
     deviceId: device.id,
-    scope: ChallengeScope.ENROLMENT,
+    scope: "enrolment",
     strategy: ChallengeStrategy.IMPLICIT,
   });
 

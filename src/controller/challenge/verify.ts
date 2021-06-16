@@ -134,7 +134,7 @@ export const challengeVerify: Controller<DeviceContext<RequestBody>> = async (
     clientId,
     deviceId: device.id,
     expiry: config.CHALLENGE_CONFIRMATION_EXPIRY,
-    scope: [challengeSession.scope],
+    scope: challengeSession.scope,
     subject: device.accountId,
   });
 

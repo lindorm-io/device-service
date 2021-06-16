@@ -1,4 +1,3 @@
-import { ChallengeScope } from "../enum";
 import { ClientError } from "@lindorm-io/errors";
 import { Device } from "../entity";
 import { IssuerVerifyData } from "@lindorm-io/jwt";
@@ -9,7 +8,7 @@ export const assertChallengeConfirmationToDevice = (
   challengeConfirmationToken: IssuerVerifyData<unknown>,
   device: Device,
 ): void => {
-  if (!includes(challengeConfirmationToken.scope, ChallengeScope.CHANGE)) {
+  if (!includes(challengeConfirmationToken.scope, "change")) {
     throw new ClientError("Forbidden", {
       debug: { challengeConfirmationToken },
       statusCode: ClientError.StatusCode.FORBIDDEN,

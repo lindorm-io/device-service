@@ -1,19 +1,19 @@
 import Joi from "joi";
-import { ChallengeScope, ChallengeStrategy } from "../enum";
+import { ChallengeStrategy } from "../enum";
 import { EntityAttributes, LindormEntity, EntityOptions, JOI_ENTITY_BASE } from "@lindorm-io/entity";
-import { JOI_CERTIFICATE_CHALLENGE, JOI_SCOPE, JOI_STRATEGY } from "../constant";
+import { JOI_CERTIFICATE_CHALLENGE, JOI_STRATEGY } from "../constant";
 
 export interface ChallengeSessionAttributes extends EntityAttributes {
   certificateChallenge: string;
   deviceId: string;
-  scope: ChallengeScope;
+  scope: Array<string>;
   strategies: Array<ChallengeStrategy>;
 }
 
 export interface ChallengeSessionOptions extends EntityOptions {
   certificateChallenge: string;
   deviceId: string;
-  scope: ChallengeScope;
+  scope: Array<string>;
   strategies: Array<ChallengeStrategy>;
 }
 
@@ -22,14 +22,14 @@ const schema = Joi.object({
 
   certificateChallenge: JOI_CERTIFICATE_CHALLENGE.required(),
   deviceId: Joi.string().guid().required(),
-  scope: JOI_SCOPE.required(),
+  scope: Joi.array().items(Joi.string()).required(),
   strategies: Joi.array().items(JOI_STRATEGY).required(),
 });
 
 export class ChallengeSession extends LindormEntity<ChallengeSessionAttributes> {
   public readonly certificateChallenge: string;
   public readonly deviceId: string;
-  public readonly scope: ChallengeScope;
+  public readonly scope: Array<string>;
   public readonly strategies: Array<ChallengeStrategy>;
 
   public constructor(options: ChallengeSessionOptions) {

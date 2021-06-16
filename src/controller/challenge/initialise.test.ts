@@ -1,5 +1,4 @@
 import MockDate from "mockdate";
-import { ChallengeScope } from "../../enum";
 import { ClientError } from "@lindorm-io/errors";
 import { challengeInitialise } from "./initialise";
 import { logger } from "../../test";
@@ -44,7 +43,7 @@ describe("challengeInitialise", () => {
       request: {
         body: {
           accountId: "accountId",
-          scope: ChallengeScope.SIGN_IN,
+          scope: "sign_in",
         },
       },
     };
@@ -74,7 +73,7 @@ describe("challengeInitialise", () => {
         id: "tokenId",
         certificateChallenge: "random-value",
         deviceId: "deviceId",
-        scope: "sign_in",
+        scope: ["sign_in"],
         strategies: ["implicit", "recovery", "pincode", "secret"],
       }),
       60,
