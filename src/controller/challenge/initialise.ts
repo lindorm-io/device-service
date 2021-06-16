@@ -11,6 +11,7 @@ import { getRandomValue, stringComparison } from "@lindorm-io/core";
 interface RequestBody {
   accountId: string;
   deviceId: string;
+  payload: Record<string, any>;
   scope: string;
 }
 
@@ -25,6 +26,7 @@ interface ResponseBody {
 export const challengeInitialiseSchema = Joi.object({
   accountId: JOI_GUID.required(),
   deviceId: JOI_GUID.required(),
+  payload: Joi.object().required(),
   scope: Joi.string().required(),
 });
 
@@ -38,7 +40,7 @@ export const challengeInitialise: Controller<DeviceContext<RequestBody>> = async
     logger,
     metadata: { clientId },
     request: {
-      body: { accountId, scope },
+      body: { accountId, payload, scope },
     },
   } = ctx;
 
@@ -46,6 +48,7 @@ export const challengeInitialise: Controller<DeviceContext<RequestBody>> = async
     accountId,
     clientId,
     deviceId: device.id,
+    payload,
     scope,
   });
 
@@ -83,6 +86,7 @@ export const challengeInitialise: Controller<DeviceContext<RequestBody>> = async
       id,
       certificateChallenge: getRandomValue(64),
       deviceId: device.id,
+      payload,
       scope: scope.split(" "),
       strategies,
     }),

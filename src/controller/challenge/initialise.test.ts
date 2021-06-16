@@ -43,6 +43,7 @@ describe("challengeInitialise", () => {
       request: {
         body: {
           accountId: "accountId",
+          payload: { data: true },
           scope: "sign_in",
         },
       },
@@ -73,6 +74,7 @@ describe("challengeInitialise", () => {
         id: "tokenId",
         certificateChallenge: "random-value",
         deviceId: "deviceId",
+        payload: { data: true },
         scope: ["sign_in"],
         strategies: ["implicit", "recovery", "pincode", "secret"],
       }),

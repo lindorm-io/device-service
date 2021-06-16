@@ -24,6 +24,7 @@ describe("/challenge", () => {
       .send({
         account_id: device.accountId,
         device_id: device.id,
+        payload: {},
         scope: "sign_in",
       })
       .expect(200);
@@ -75,6 +76,7 @@ describe("/challenge", () => {
       .send({
         account_id: device.accountId,
         device_id: device.id,
+        payload: {},
         scope: "sign_in",
       })
       .expect(200);
@@ -127,6 +129,7 @@ describe("/challenge", () => {
       .send({
         account_id: device.accountId,
         device_id: device.id,
+        payload: {},
         scope: "sign_in",
       })
       .expect(200);
@@ -179,6 +182,7 @@ describe("/challenge", () => {
       .send({
         account_id: device.accountId,
         device_id: device.id,
+        payload: {},
         scope: "sign_in",
       })
       .expect(200);

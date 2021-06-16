@@ -6,6 +6,7 @@ import { JOI_CERTIFICATE_CHALLENGE, JOI_STRATEGY } from "../constant";
 export interface ChallengeSessionAttributes extends EntityAttributes {
   certificateChallenge: string;
   deviceId: string;
+  payload: Record<string, any>;
   scope: Array<string>;
   strategies: Array<ChallengeStrategy>;
 }
@@ -13,6 +14,7 @@ export interface ChallengeSessionAttributes extends EntityAttributes {
 export interface ChallengeSessionOptions extends EntityOptions {
   certificateChallenge: string;
   deviceId: string;
+  payload: Record<string, any>;
   scope: Array<string>;
   strategies: Array<ChallengeStrategy>;
 }
@@ -22,6 +24,7 @@ const schema = Joi.object({
 
   certificateChallenge: JOI_CERTIFICATE_CHALLENGE.required(),
   deviceId: Joi.string().guid().required(),
+  payload: Joi.object().required(),
   scope: Joi.array().items(Joi.string()).required(),
   strategies: Joi.array().items(JOI_STRATEGY).required(),
 });
@@ -29,6 +32,7 @@ const schema = Joi.object({
 export class ChallengeSession extends LindormEntity<ChallengeSessionAttributes> {
   public readonly certificateChallenge: string;
   public readonly deviceId: string;
+  public readonly payload: Record<string, any>;
   public readonly scope: Array<string>;
   public readonly strategies: Array<ChallengeStrategy>;
 
@@ -37,6 +41,7 @@ export class ChallengeSession extends LindormEntity<ChallengeSessionAttributes> 
 
     this.certificateChallenge = options.certificateChallenge;
     this.deviceId = options.deviceId;
+    this.payload = options.payload;
     this.scope = options.scope;
     this.strategies = options.strategies;
   }
@@ -59,6 +64,7 @@ export class ChallengeSession extends LindormEntity<ChallengeSessionAttributes> 
 
       certificateChallenge: this.certificateChallenge,
       deviceId: this.deviceId,
+      payload: this.payload,
       scope: this.scope,
       strategies: this.strategies,
     };
