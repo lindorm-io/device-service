@@ -37,10 +37,7 @@ export const deviceUpdatePincode: Controller<DeviceContext<RequestBody>> = async
   assertBearerToDevice(bearerToken, device);
   assertChallengeConfirmationToDevice(challengeConfirmationToken, device);
 
-  device.pincode = {
-    signature: await cryptoLayered.encrypt(pincode),
-    updated: new Date(),
-  };
+  device.pincode = await cryptoLayered.encrypt(pincode);
 
   await deviceRepository.update(device);
 

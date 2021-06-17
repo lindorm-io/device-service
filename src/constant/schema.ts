@@ -15,10 +15,7 @@ export const JOI_RECOVERY_KEY = Joi.string().length(35);
 
 export const JOI_SECRET = Joi.string().base64().length(128);
 
-export const JOI_SIGNATURE = Joi.object({
-  signature: Joi.string().base64().allow(null).required(),
-  updated: Joi.date().allow(null).required(),
-});
+export const JOI_SIGNATURE = Joi.string().base64();
 
 export const JOI_STRATEGY = Joi.string().valid(
   ChallengeStrategy.IMPLICIT,

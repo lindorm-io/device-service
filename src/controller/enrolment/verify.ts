@@ -97,10 +97,10 @@ export const enrolmentVerify: Controller<DeviceContext<RequestBody>> = async (
       accountId: bearerToken.subject,
       macAddress: enrolmentSession.macAddress,
       name: enrolmentSession.name,
-      pincode: { signature: await cryptoLayered.encrypt(pincode), updated: new Date() },
+      pincode: await cryptoLayered.encrypt(pincode),
       publicKey: enrolmentSession.publicKey,
-      recoveryKey: { signature: await cryptoLayered.encrypt(recoveryKey), updated: new Date() },
-      secret: secret ? { signature: await cryptoLayered.encrypt(secret), updated: new Date() } : null,
+      recoveryKey: await cryptoLayered.encrypt(recoveryKey),
+      secret: secret ? await cryptoLayered.encrypt(secret) : null,
       uniqueId: enrolmentSession.uniqueId,
     }),
   );

@@ -9,19 +9,14 @@ import {
   LindormEntity,
 } from "@lindorm-io/entity";
 
-export interface Signature {
-  signature: string | null;
-  updated: Date | null;
-}
-
 export interface DeviceAttributes extends EntityAttributes {
   accountId: string;
   macAddress: string;
   name: string;
-  pincode: Signature;
+  pincode: string;
   publicKey: string;
-  recoveryKey: Signature;
-  secret: Signature;
+  recoveryKey: string;
+  secret: string | null;
   uniqueId: string;
 }
 
@@ -29,10 +24,10 @@ export interface DeviceOptions extends EntityOptions {
   accountId: string;
   macAddress: string;
   name: string;
-  pincode?: Signature;
+  pincode: string;
   publicKey: string;
-  recoveryKey?: Signature;
-  secret?: Signature;
+  recoveryKey: string;
+  secret?: string;
   uniqueId: string;
 }
 
@@ -45,7 +40,7 @@ const schema = Joi.object({
   pincode: JOI_SIGNATURE.required(),
   publicKey: Joi.string().required(),
   recoveryKey: JOI_SIGNATURE.required(),
-  secret: JOI_SIGNATURE.required(),
+  secret: JOI_SIGNATURE.allow(null).required(),
   uniqueId: Joi.string().required(),
 });
 
@@ -55,9 +50,9 @@ export class Device extends LindormEntity<DeviceAttributes> {
   public readonly publicKey: string;
   public readonly uniqueId: string;
   private _name: string;
-  private _pincode: Signature;
-  private _recoveryKey: Signature;
-  private _secret: Signature;
+  private _pincode: string;
+  private _recoveryKey: string;
+  private _secret: string;
 
   public constructor(options: DeviceOptions) {
     super(options);
@@ -68,18 +63,9 @@ export class Device extends LindormEntity<DeviceAttributes> {
     this.uniqueId = options.uniqueId;
 
     this._name = options.name;
-    this._pincode = {
-      signature: options.pincode?.signature || null,
-      updated: options.pincode?.updated || null,
-    };
-    this._recoveryKey = {
-      signature: options.recoveryKey?.signature || null,
-      updated: options.recoveryKey?.updated || null,
-    };
-    this._secret = {
-      signature: options.secret?.signature || null,
-      updated: options.secret?.updated || null,
-    };
+    this._pincode = options.pincode;
+    this._recoveryKey = options.recoveryKey;
+    this._secret = options.secret || null;
   }
 
   public get name(): string {
@@ -90,26 +76,26 @@ export class Device extends LindormEntity<DeviceAttributes> {
     this.addEvent(DeviceEvent.NAME_CHANGED, { name: this._name });
   }
 
-  public get pincode(): Signature {
+  public get pincode(): string {
     return this._pincode;
   }
-  public set pincode(pin: Signature) {
+  public set pincode(pin: string) {
     this._pincode = pin;
     this.addEvent(DeviceEvent.PIN_CHANGED, { pin: this._pincode });
   }
 
-  public get recoveryKey(): Signature {
+  public get recoveryKey(): string {
     return this._recoveryKey;
   }
-  public set recoveryKey(recoveryKey: Signature) {
+  public set recoveryKey(recoveryKey: string) {
     this._recoveryKey = recoveryKey;
     this.addEvent(DeviceEvent.RECOVERY_KEY_CHANGED, { recoveryKey: this._recoveryKey });
   }
 
-  public get secret(): Signature {
+  public get secret(): string | null {
     return this._secret;
   }
-  public set secret(secret: Signature) {
+  public set secret(secret: string | null) {
     this._secret = secret;
     this.addEvent(DeviceEvent.SECRET_CHANGED, { secret: this._secret });
   }

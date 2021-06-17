@@ -33,17 +33,8 @@ export const getTestDevice = async ({
     name,
     publicKey,
     uniqueId,
-    pincode: {
-      signature: pincode === null ? null : await cryptoLayered.encrypt(pincode),
-      updated: new Date(),
-    },
-    recoveryKey: {
-      signature: recoveryKey === null ? null : await cryptoLayered.encrypt(recoveryKey),
-      updated: new Date(),
-    },
-    secret: {
-      signature: secret === null ? null : await cryptoLayered.encrypt(secret),
-      updated: new Date(),
-    },
+    pincode: pincode === null ? null : await cryptoLayered.encrypt(pincode),
+    recoveryKey: recoveryKey === null ? null : await cryptoLayered.encrypt(recoveryKey),
+    secret: secret === null ? null : await cryptoLayered.encrypt(secret),
   });
 };

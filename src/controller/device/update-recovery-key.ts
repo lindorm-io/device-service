@@ -37,10 +37,7 @@ export const deviceUpdateRecoveryKey: Controller<DeviceContext<RequestBody>> = a
 
   const recoveryKey = generateRecoveryKey();
 
-  device.recoveryKey = {
-    signature: await cryptoLayered.encrypt(recoveryKey),
-    updated: new Date(),
-  };
+  device.recoveryKey = await cryptoLayered.encrypt(recoveryKey);
 
   await deviceRepository.update(device);
 

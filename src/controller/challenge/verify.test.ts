@@ -50,10 +50,10 @@ describe("challengeVerify", () => {
         device: {
           id: "deviceId",
           accountId: "accountId",
-          pincode: { signature: "pin-signature" },
+          pincode: "pin-signature",
           publicKey: "publicKey",
-          recoveryKey: { signature: "recovery-key-signature" },
-          secret: { signature: "secret-signature" },
+          recoveryKey: "recovery-key-signature",
+          secret: "secret-signature",
         },
       },
       jwt: {

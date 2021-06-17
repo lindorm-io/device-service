@@ -26,8 +26,8 @@ describe("challengeInitialise", () => {
         device: {
           id: "deviceId",
           accountId: "accountId",
-          pincode: { signature: "signature" },
-          secret: { signature: "signature" },
+          pincode: "pincode-signature",
+          secret: "secret-signature",
         },
       },
       jwt: {

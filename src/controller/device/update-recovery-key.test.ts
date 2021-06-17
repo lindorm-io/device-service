@@ -10,13 +10,13 @@ MockDate.set("2021-01-01T08:00:00.000Z");
 
 jest.mock("../../crypto", () => ({
   cryptoLayered: {
-    encrypt: (arg: any) => arg,
+    encrypt: (arg: any) => `${arg}-signature`,
   },
 }));
 jest.mock("../../util", () => ({
   assertBearerToDevice: jest.fn(),
   assertChallengeConfirmationToDevice: jest.fn(),
-  generateRecoveryKey: () => "generatedRecoveryKey",
+  generateRecoveryKey: () => "recovery-key",
 }));
 
 const assertBearerToDevice = _assertBearerToDevice as unknown as jest.Mock;
@@ -44,7 +44,7 @@ describe("deviceUpdateRecoveryKey", () => {
   test("should resolve and remove device", async () => {
     await expect(deviceUpdateRecoveryKey(ctx)).resolves.toStrictEqual({
       body: {
-        recoveryKey: "generatedRecoveryKey",
+        recoveryKey: "recovery-key",
       },
       status: 200,
     });
@@ -64,10 +64,7 @@ describe("deviceUpdateRecoveryKey", () => {
     expect(ctx.repository.deviceRepository.update).toHaveBeenCalledWith(
       expect.objectContaining({
         id: "deviceId",
-        recoveryKey: {
-          signature: "generatedRecoveryKey",
-          updated: expect.any(Date),
-        },
+        recoveryKey: "recovery-key-signature",
       }),
     );
   });

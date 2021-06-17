@@ -10,7 +10,7 @@ MockDate.set("2021-01-01T08:00:00.000Z");
 
 jest.mock("../../crypto", () => ({
   cryptoLayered: {
-    encrypt: (arg: any) => arg,
+    encrypt: (arg: any) => `${arg}-signature`,
   },
 }));
 jest.mock("../../util", () => ({
@@ -64,10 +64,7 @@ describe("deviceUpdateSecret", () => {
     expect(ctx.repository.deviceRepository.update).toHaveBeenCalledWith(
       expect.objectContaining({
         id: "deviceId",
-        secret: {
-          signature: "new-secret",
-          updated: expect.any(Date),
-        },
+        secret: "new-secret-signature",
       }),
     );
   });

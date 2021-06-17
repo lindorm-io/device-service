@@ -37,10 +37,7 @@ export const deviceUpdateSecret: Controller<DeviceContext<RequestBody>> = async 
   assertBearerToDevice(bearerToken, device);
   assertChallengeConfirmationToDevice(challengeConfirmationToken, device);
 
-  device.secret = {
-    signature: await cryptoLayered.encrypt(secret),
-    updated: new Date(),
-  };
+  device.secret = await cryptoLayered.encrypt(secret);
 
   await deviceRepository.update(device);
 

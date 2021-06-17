@@ -8,11 +8,11 @@ const deviceAssert = jest.fn();
 
 jest.mock("../../crypto", () => ({
   cryptoLayered: {
-    encrypt: (arg: any) => arg,
+    encrypt: (arg: any) => `${arg}-signature`,
   },
 }));
 jest.mock("../../util", () => ({
-  generateRecoveryKey: () => "recoveryKey",
+  generateRecoveryKey: () => "recovery-key",
 }));
 jest.mock("@lindorm-io/crypto", () => ({
   CryptoError: class CryptoError {},
@@ -86,7 +86,7 @@ describe("enrolmentVerify", () => {
         deviceId: "deviceId",
         expires: 600,
         expiresIn: 60,
-        recoveryKey: "recoveryKey",
+        recoveryKey: "recovery-key",
       },
       status: 201,
     });
@@ -97,10 +97,10 @@ describe("enrolmentVerify", () => {
         accountId: "accountId",
         macAddress: "macAddress",
         name: "name",
-        pincode: { signature: "pincode", updated: expect.any(Date) },
+        pincode: "pincode-signature",
         publicKey: "publicKey",
-        recoveryKey: { signature: "recoveryKey", updated: expect.any(Date) },
-        secret: { signature: "secret", updated: expect.any(Date) },
+        recoveryKey: "recovery-key-signature",
+        secret: "secret-signature",
         uniqueId: "uniqueId",
       }),
     );

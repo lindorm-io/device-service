@@ -111,15 +111,15 @@ export const challengeVerify: Controller<DeviceContext<RequestBody>> = async (
       break;
 
     case ChallengeStrategy.PINCODE:
-      await cryptoLayered.assert(pincode, device.pincode.signature);
+      await cryptoLayered.assert(pincode, device.pincode);
       break;
 
     case ChallengeStrategy.RECOVERY:
-      await cryptoLayered.assert(recoveryKey, device.recoveryKey.signature);
+      await cryptoLayered.assert(recoveryKey, device.recoveryKey);
       break;
 
     case ChallengeStrategy.SECRET:
-      await cryptoLayered.assert(secret, device.secret.signature);
+      await cryptoLayered.assert(secret, device.secret);
       break;
 
     default:
