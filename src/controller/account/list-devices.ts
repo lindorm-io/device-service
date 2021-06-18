@@ -1,7 +1,7 @@
 import { ClientError } from "@lindorm-io/errors";
 import { Controller, ControllerResponse, HttpStatus } from "@lindorm-io/koa";
 import { DeviceContext } from "../../typing";
-import { Scope } from "@lindorm-io/jwt";
+import { Scope } from "../../enum";
 import { includes } from "lodash";
 
 interface DeviceInfo {

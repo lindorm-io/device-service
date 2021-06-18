@@ -1,5 +1,6 @@
 import { DeviceContext } from "../typing";
 import { Router, schemaMiddleware } from "@lindorm-io/koa";
+import { Scope } from "../enum";
 import { bearerAuthMiddleware, challengeConfirmationTokenMiddleware, deviceEntityMiddleware } from "../middleware";
 import { createController } from "@lindorm-io/koa";
 import {
@@ -17,7 +18,7 @@ import {
 
 export const router = new Router<unknown, DeviceContext>();
 
-router.use(bearerAuthMiddleware);
+router.use(bearerAuthMiddleware([Scope.DEFAULT, Scope.EDIT]));
 
 router.delete(
   "/",

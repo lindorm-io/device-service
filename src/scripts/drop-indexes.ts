@@ -4,7 +4,7 @@ import { MONGO_CONNECTION_OPTIONS } from "../config";
 import { mongoQuery } from "@lindorm-io/mongo";
 import { winston } from "../logger";
 
-(async () => {
+(async (): Promise<void> => {
   try {
     await mongoQuery(
       { logger: winston, mongoOptions: MONGO_CONNECTION_OPTIONS },

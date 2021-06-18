@@ -1,6 +1,7 @@
 import { ClientError } from "@lindorm-io/errors";
 import { Device } from "../entity";
-import { IssuerVerifyData, Scope } from "@lindorm-io/jwt";
+import { IssuerVerifyData } from "@lindorm-io/jwt";
+import { Scope } from "../enum";
 import { includes } from "lodash";
 import { stringComparison } from "@lindorm-io/core";
 

@@ -1,7 +1,8 @@
 import { Audience } from "../enum";
-import { Permission, Scope, TokenIssuer } from "@lindorm-io/jwt";
-import { config } from "../config";
 import { Keystore } from "@lindorm-io/key-pair";
+import { Scope } from "../enum";
+import { TokenIssuer } from "@lindorm-io/jwt";
+import { config } from "../config";
 import { getTestKeyPairEC } from "./test-key-pair";
 import { logger } from "./test-logger";
 
@@ -24,7 +25,7 @@ export const generateAccessToken = ({
     clientId,
     deviceId,
     expiry: "2 minutes",
-    permission: Permission.USER,
+    permission: "user",
     scope: [Scope.DEFAULT, Scope.EDIT],
     subject: accountId,
   });

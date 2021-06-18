@@ -1,6 +1,6 @@
 import MockDate from "mockdate";
 import { ClientError } from "@lindorm-io/errors";
-import { Scope } from "@lindorm-io/jwt";
+import { Scope } from "../../enum";
 import { accountListDevices } from "./list-devices";
 import { logger } from "../../test";
 
