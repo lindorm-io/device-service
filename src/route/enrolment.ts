@@ -17,7 +17,7 @@ router.post(
 router.post(
   "/verify",
   schemaMiddleware("request.body", enrolmentVerifySchema),
-  enrolmentSessionTokenMiddleware,
+  enrolmentSessionTokenMiddleware("request.body.enrolmentSessionToken"),
   enrolmentSessionEntityMiddleware("token.enrolmentSessionToken.id"),
   createController(enrolmentVerify),
 );

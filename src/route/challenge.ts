@@ -23,7 +23,7 @@ router.post(
 router.post(
   "/verify",
   schemaMiddleware("request.body", challengeVerifySchema),
-  challengeSessionTokenMiddleware,
+  challengeSessionTokenMiddleware("request.body.challengeSessionToken"),
   challengeSessionEntityMiddleware("token.challengeSessionToken.id"),
   deviceEntityMiddleware("token.challengeSessionToken.deviceId"),
   createController(challengeVerify),
