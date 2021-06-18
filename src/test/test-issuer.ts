@@ -51,7 +51,7 @@ export const generateChallengeConfirmationToken = ({
     clientId,
     deviceId,
     expiry: "2 minutes",
-    scope: ["change"],
+    scope: ["edit"],
     subject: accountId,
   });
   return token;

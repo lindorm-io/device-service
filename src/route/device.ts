@@ -37,7 +37,7 @@ router.patch(
 router.patch(
   "/pincode",
   schemaMiddleware("request.body", deviceUpdatePincodeSchema),
-  challengeConfirmationTokenMiddleware("request.body.challengeConfirmationToken", ["change"]),
+  challengeConfirmationTokenMiddleware("request.body.challengeConfirmationToken", ["edit"]),
   deviceEntityMiddleware("token.challengeConfirmationToken.deviceId"),
   createController(deviceUpdatePincode),
 );
@@ -45,7 +45,7 @@ router.patch(
 router.patch(
   "/recovery-key",
   schemaMiddleware("request.body", deviceUpdateRecoveryKeySchema),
-  challengeConfirmationTokenMiddleware("request.body.challengeConfirmationToken", ["change"]),
+  challengeConfirmationTokenMiddleware("request.body.challengeConfirmationToken", ["edit"]),
   deviceEntityMiddleware("token.challengeConfirmationToken.deviceId"),
   createController(deviceUpdateRecoveryKey),
 );
@@ -53,7 +53,7 @@ router.patch(
 router.patch(
   "/secret",
   schemaMiddleware("request.body", deviceUpdateSecretSchema),
-  challengeConfirmationTokenMiddleware("request.body.challengeConfirmationToken", ["change"]),
+  challengeConfirmationTokenMiddleware("request.body.challengeConfirmationToken", ["edit"]),
   deviceEntityMiddleware("token.challengeConfirmationToken.deviceId"),
   createController(deviceUpdateSecret),
 );
