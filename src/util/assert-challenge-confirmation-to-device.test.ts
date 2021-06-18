@@ -6,7 +6,6 @@ describe("assertChallengeConfirmationToDevice", () => {
 
   beforeEach(() => {
     challengeConfirmationToken = {
-      scope: ["change"],
       subject: "accountId",
     };
     device = {

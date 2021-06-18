@@ -6,7 +6,6 @@ describe("assertBearerToDevice", () => {
 
   beforeEach(() => {
     bearerToken = {
-      scope: ["default"],
       subject: "accountId",
     };
     device = {
