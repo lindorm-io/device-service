@@ -38,7 +38,7 @@ export const challengeInitialise: Controller<DeviceContext<RequestBody>> = async
     entity: { device },
     jwt,
     logger,
-    metadata: { clientId },
+    metadata: { clientId, deviceId },
     request: {
       body: { accountId, payload, scope },
     },
@@ -52,8 +52,18 @@ export const challengeInitialise: Controller<DeviceContext<RequestBody>> = async
     scope,
   });
 
+  if (!stringComparison(device.id, deviceId)) {
+    throw new ClientError("Device Conflict", {
+      debug: {
+        expect: device.id,
+        actual: deviceId,
+      },
+      description: "Invalid device id",
+      statusCode: ClientError.StatusCode.CONFLICT,
+    });
+  }
   if (!stringComparison(device.accountId, accountId)) {
-    throw new ClientError("Conflicting values", {
+    throw new ClientError("Device Conflict", {
       debug: {
         expect: device.accountId,
         actual: accountId,

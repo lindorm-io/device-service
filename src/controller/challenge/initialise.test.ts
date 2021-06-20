@@ -39,7 +39,7 @@ describe("challengeInitialise", () => {
         })),
       },
       logger,
-      metadata: { clientId: "clientId" },
+      metadata: { clientId: "clientId", deviceId: "deviceId" },
       request: {
         body: {
           accountId: "accountId",
