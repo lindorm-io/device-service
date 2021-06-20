@@ -1,12 +1,11 @@
-import Joi from "joi";
 import { Audience, ChallengeStrategy } from "../../enum";
 import { ChallengeSession } from "../../entity";
 import { ClientError } from "@lindorm-io/errors";
 import { Controller, ControllerResponse, HttpStatus } from "@lindorm-io/koa";
 import { DeviceContext } from "../../typing";
-import { JOI_GUID } from "../../constant";
 import { config } from "../../config";
 import { getRandomValue, stringComparison } from "@lindorm-io/core";
+import { sortedUniq } from "lodash";
 
 interface RequestBody {
   accountId: string;
@@ -18,17 +17,9 @@ interface RequestBody {
 interface ResponseBody {
   certificateChallenge: string;
   challengeSessionToken: string;
-  expires: number;
   expiresIn: number;
   strategies: Array<ChallengeStrategy>;
 }
-
-export const challengeInitialiseSchema = Joi.object({
-  accountId: JOI_GUID.required(),
-  deviceId: JOI_GUID.required(),
-  payload: Joi.object().required(),
-  scope: Joi.string().required(),
-});
 
 export const challengeInitialise: Controller<DeviceContext<RequestBody>> = async (
   ctx,
@@ -73,17 +64,17 @@ export const challengeInitialise: Controller<DeviceContext<RequestBody>> = async
     });
   }
 
-  const strategies: Array<ChallengeStrategy> = [ChallengeStrategy.IMPLICIT, ChallengeStrategy.RECOVERY];
+  const strategies: Array<ChallengeStrategy> = [
+    ChallengeStrategy.IMPLICIT,
+    ChallengeStrategy.RECOVERY,
+    ChallengeStrategy.PINCODE,
+  ];
 
-  if (device.pincode) {
-    strategies.push(ChallengeStrategy.PINCODE);
+  if (device.biometry) {
+    strategies.push(ChallengeStrategy.BIOMETRY);
   }
 
-  if (device.secret) {
-    strategies.push(ChallengeStrategy.SECRET);
-  }
-
-  const { id, expires, expiresIn, token } = jwt.sign({
+  const { id, expiresIn, token } = jwt.sign({
     audience: Audience.CHALLENGE_SESSION,
     clientId,
     deviceId: device.id,
@@ -109,9 +100,8 @@ export const challengeInitialise: Controller<DeviceContext<RequestBody>> = async
     body: {
       certificateChallenge: challengeSession.certificateChallenge,
       challengeSessionToken: token,
-      expires,
       expiresIn,
-      strategies,
+      strategies: sortedUniq(strategies),
     },
     status: HttpStatus.Success.OK,
   };

@@ -44,7 +44,7 @@ describe("challengeVerify", () => {
             ChallengeStrategy.IMPLICIT,
             ChallengeStrategy.PINCODE,
             ChallengeStrategy.RECOVERY,
-            ChallengeStrategy.SECRET,
+            ChallengeStrategy.BIOMETRY,
           ],
         },
         device: {
@@ -53,13 +53,12 @@ describe("challengeVerify", () => {
           pincode: "pin-signature",
           publicKey: "publicKey",
           recoveryKey: "recovery-key-signature",
-          secret: "secret-signature",
+          biometry: "biometry-signature",
         },
       },
       jwt: {
         sign: jest.fn().mockImplementation(() => ({
           id: "tokenId",
-          expires: 600,
           expiresIn: 60,
           token: "jwt.jwt.jwt",
         })),
@@ -71,7 +70,7 @@ describe("challengeVerify", () => {
           certificateVerifier: "certificateVerifier",
           pincode: "pincode",
           recoveryKey: "recoveryKey",
-          secret: "secret",
+          biometry: "biometry",
           strategy: ChallengeStrategy.IMPLICIT,
         },
       },
@@ -84,7 +83,6 @@ describe("challengeVerify", () => {
     await expect(challengeVerify(ctx)).resolves.toStrictEqual({
       body: {
         challengeConfirmationToken: "jwt.jwt.jwt",
-        expires: 600,
         expiresIn: 60,
       },
       status: 200,
@@ -113,7 +111,6 @@ describe("challengeVerify", () => {
     await expect(challengeVerify(ctx)).resolves.toStrictEqual({
       body: {
         challengeConfirmationToken: "jwt.jwt.jwt",
-        expires: 600,
         expiresIn: 60,
       },
       status: 200,
@@ -128,7 +125,6 @@ describe("challengeVerify", () => {
     await expect(challengeVerify(ctx)).resolves.toStrictEqual({
       body: {
         challengeConfirmationToken: "jwt.jwt.jwt",
-        expires: 600,
         expiresIn: 60,
       },
       status: 200,
@@ -137,19 +133,18 @@ describe("challengeVerify", () => {
     expect(strategyAssert).toHaveBeenCalledWith("recoveryKey", "recovery-key-signature");
   });
 
-  test("should resolve challenge session with secret strategy", async () => {
-    ctx.request.body.strategy = ChallengeStrategy.SECRET;
+  test("should resolve challenge session with biometry strategy", async () => {
+    ctx.request.body.strategy = ChallengeStrategy.BIOMETRY;
 
     await expect(challengeVerify(ctx)).resolves.toStrictEqual({
       body: {
         challengeConfirmationToken: "jwt.jwt.jwt",
-        expires: 600,
         expiresIn: 60,
       },
       status: 200,
     });
 
-    expect(strategyAssert).toHaveBeenCalledWith("secret", "secret-signature");
+    expect(strategyAssert).toHaveBeenCalledWith("biometry", "biometry-signature");
   });
 
   test("should throw on invalid strategy", async () => {

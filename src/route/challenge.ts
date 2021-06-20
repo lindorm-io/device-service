@@ -1,6 +1,7 @@
 import { DeviceContext } from "../typing";
 import { Router } from "@lindorm-io/koa";
-import { challengeInitialise, challengeInitialiseSchema, challengeVerify, challengeVerifySchema } from "../controller";
+import { challengeInitialise, challengeVerify } from "../controller";
+import { challengeInitialiseSchema, challengeVerifySchema } from "../schema";
 import { createController, schemaMiddleware } from "@lindorm-io/koa";
 import {
   basicAuthMiddleware,

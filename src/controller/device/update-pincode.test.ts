@@ -46,7 +46,7 @@ describe("deviceUpdatePincode", () => {
   test("should resolve and remove device", async () => {
     await expect(deviceUpdatePincode(ctx)).resolves.toStrictEqual({
       body: {},
-      status: 202,
+      status: 200,
     });
 
     expect(assertBearerToDevice).toHaveBeenCalledWith(

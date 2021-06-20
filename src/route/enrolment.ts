@@ -3,7 +3,8 @@ import { Router } from "@lindorm-io/koa";
 import { Scope } from "../enum";
 import { bearerAuthMiddleware, enrolmentSessionEntityMiddleware, enrolmentSessionTokenMiddleware } from "../middleware";
 import { createController, schemaMiddleware } from "@lindorm-io/koa";
-import { enrolmentInitialise, enrolmentInitialiseSchema, enrolmentVerify, enrolmentVerifySchema } from "../controller";
+import { enrolmentInitialise, enrolmentVerify } from "../controller";
+import { enrolmentInitialiseSchema, enrolmentVerifySchema } from "../schema";
 
 export const router = new Router<unknown, DeviceContext>();
 

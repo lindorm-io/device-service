@@ -1,4 +1,3 @@
-import Joi from "joi";
 import { Algorithm } from "@lindorm-io/key-pair";
 import { Audience, ChallengeStrategy } from "../../enum";
 import { ClientError } from "@lindorm-io/errors";
@@ -6,33 +5,24 @@ import { Controller, ControllerResponse, HttpStatus } from "@lindorm-io/koa";
 import { CryptoError, CryptoKeyPair } from "@lindorm-io/crypto";
 import { Device } from "../../entity";
 import { DeviceContext } from "../../typing";
-import { JOI_JWT, JOI_PINCODE, JOI_SECRET } from "../../constant";
 import { config } from "../../config";
 import { cryptoLayered } from "../../crypto";
 import { generateRecoveryKey } from "../../util";
 import { stringComparison } from "@lindorm-io/core";
 
 interface RequestBody {
+  biometry: string;
   certificateVerifier: string;
   enrolmentSessionToken: string;
   pincode: string;
-  secret: string;
 }
 
 interface ResponseBody {
   challengeConfirmationToken: string;
   deviceId: string;
-  expires: number;
   expiresIn: number;
   recoveryKey: string;
 }
-
-export const enrolmentVerifySchema = Joi.object({
-  certificateVerifier: Joi.string().base64().required(),
-  enrolmentSessionToken: JOI_JWT.required(),
-  pincode: JOI_PINCODE.required(),
-  secret: JOI_SECRET,
-});
 
 export const enrolmentVerify: Controller<DeviceContext<RequestBody>> = async (
   ctx,
@@ -45,7 +35,7 @@ export const enrolmentVerify: Controller<DeviceContext<RequestBody>> = async (
     metadata: { clientId },
     repository: { deviceRepository },
     request: {
-      body: { certificateVerifier, pincode, secret },
+      body: { biometry, certificateVerifier, pincode },
     },
     token: { bearerToken },
   } = ctx;
@@ -95,17 +85,17 @@ export const enrolmentVerify: Controller<DeviceContext<RequestBody>> = async (
   const device = await deviceRepository.create(
     new Device({
       accountId: bearerToken.subject,
+      biometry: biometry ? await cryptoLayered.encrypt(biometry) : null,
       macAddress: enrolmentSession.macAddress,
       name: enrolmentSession.name,
       pincode: await cryptoLayered.encrypt(pincode),
       publicKey: enrolmentSession.publicKey,
       recoveryKey: await cryptoLayered.encrypt(recoveryKey),
-      secret: secret ? await cryptoLayered.encrypt(secret) : null,
       uniqueId: enrolmentSession.uniqueId,
     }),
   );
 
-  const { id, expires, expiresIn, token } = jwt.sign({
+  const { id, expiresIn, token } = jwt.sign({
     id: enrolmentSession.id,
     audience: Audience.CHALLENGE_CONFIRMATION,
     clientId,
@@ -130,7 +120,6 @@ export const enrolmentVerify: Controller<DeviceContext<RequestBody>> = async (
     body: {
       challengeConfirmationToken: token,
       deviceId: device.id,
-      expires,
       expiresIn,
       recoveryKey,
     },

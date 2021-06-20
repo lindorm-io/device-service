@@ -1,11 +1,9 @@
-import Joi from "joi";
 import { Algorithm } from "@lindorm-io/key-pair";
 import { Audience, ChallengeStrategy } from "../../enum";
 import { ClientError } from "@lindorm-io/errors";
 import { Controller, ControllerResponse, HttpStatus } from "@lindorm-io/koa";
 import { CryptoError, CryptoKeyPair } from "@lindorm-io/crypto";
 import { DeviceContext } from "../../typing";
-import { JOI_JWT, JOI_PINCODE, JOI_RECOVERY_KEY, JOI_SECRET, JOI_STRATEGY } from "../../constant";
 import { config } from "../../config";
 import { cryptoLayered } from "../../crypto";
 import { includes } from "lodash";
@@ -15,37 +13,14 @@ interface RequestBody {
   challengeSessionToken: string;
   pincode: string;
   recoveryKey: string;
-  secret: string;
+  biometry: string;
   strategy: ChallengeStrategy;
 }
 
 interface ResponseBody {
   challengeConfirmationToken: string;
-  expires: number;
   expiresIn: number;
 }
-
-export const challengeVerifySchema = Joi.object({
-  certificateVerifier: Joi.string().base64().required(),
-  challengeSessionToken: JOI_JWT.required(),
-  strategy: JOI_STRATEGY.required(),
-
-  pincode: Joi.when("strategy", {
-    is: ChallengeStrategy.PINCODE,
-    then: JOI_PINCODE.required(),
-    otherwise: Joi.forbidden(),
-  }),
-  recoveryKey: Joi.when("strategy", {
-    is: ChallengeStrategy.RECOVERY,
-    then: JOI_RECOVERY_KEY.required(),
-    otherwise: Joi.forbidden(),
-  }),
-  secret: Joi.when("strategy", {
-    is: ChallengeStrategy.SECRET,
-    then: JOI_SECRET.required(),
-    otherwise: Joi.forbidden(),
-  }),
-});
 
 export const challengeVerify: Controller<DeviceContext<RequestBody>> = async (
   ctx,
@@ -57,7 +32,7 @@ export const challengeVerify: Controller<DeviceContext<RequestBody>> = async (
     logger,
     metadata: { clientId },
     request: {
-      body: { certificateVerifier, pincode, recoveryKey, secret, strategy },
+      body: { certificateVerifier, pincode, recoveryKey, biometry, strategy },
     },
   } = ctx;
 
@@ -68,7 +43,7 @@ export const challengeVerify: Controller<DeviceContext<RequestBody>> = async (
     pincode,
     recoveryKey,
     scope: challengeSession.scope,
-    secret,
+    biometry,
     strategy,
   });
 
@@ -118,8 +93,8 @@ export const challengeVerify: Controller<DeviceContext<RequestBody>> = async (
       await cryptoLayered.assert(recoveryKey, device.recoveryKey);
       break;
 
-    case ChallengeStrategy.SECRET:
-      await cryptoLayered.assert(secret, device.secret);
+    case ChallengeStrategy.BIOMETRY:
+      await cryptoLayered.assert(biometry, device.biometry);
       break;
 
     default:
@@ -128,7 +103,7 @@ export const challengeVerify: Controller<DeviceContext<RequestBody>> = async (
       });
   }
 
-  const { expires, expiresIn, token } = jwt.sign({
+  const { expiresIn, token } = jwt.sign({
     id: challengeSession.id,
     audience: Audience.CHALLENGE_CONFIRMATION,
     clientId,
@@ -146,7 +121,6 @@ export const challengeVerify: Controller<DeviceContext<RequestBody>> = async (
   return {
     body: {
       challengeConfirmationToken: token,
-      expires,
       expiresIn,
     },
     status: HttpStatus.Success.OK,

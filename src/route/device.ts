@@ -5,16 +5,18 @@ import { bearerAuthMiddleware, challengeConfirmationTokenMiddleware, deviceEntit
 import { createController } from "@lindorm-io/koa";
 import {
   deviceRemove,
-  deviceRemoveSchema,
+  deviceUpdateBiometry,
   deviceUpdateName,
-  deviceUpdateNameSchema,
   deviceUpdatePincode,
-  deviceUpdatePincodeSchema,
   deviceUpdateRecoveryKey,
-  deviceUpdateRecoveryKeySchema,
-  deviceUpdateSecret,
-  deviceUpdateSecretSchema,
 } from "../controller";
+import {
+  deviceRemoveSchema,
+  deviceUpdateBiometrySchema,
+  deviceUpdateNameSchema,
+  deviceUpdatePincodeSchema,
+  deviceUpdateRecoveryKeySchema,
+} from "../schema";
 
 export const router = new Router<unknown, DeviceContext>();
 
@@ -25,6 +27,14 @@ router.delete(
   schemaMiddleware("request.body", deviceRemoveSchema),
   deviceEntityMiddleware("request.body.deviceId"),
   createController(deviceRemove),
+);
+
+router.patch(
+  "/biometry",
+  schemaMiddleware("request.body", deviceUpdateBiometrySchema),
+  challengeConfirmationTokenMiddleware("request.body.challengeConfirmationToken", ["edit"]),
+  deviceEntityMiddleware("token.challengeConfirmationToken.deviceId"),
+  createController(deviceUpdateBiometry),
 );
 
 router.patch(
@@ -48,12 +58,4 @@ router.patch(
   challengeConfirmationTokenMiddleware("request.body.challengeConfirmationToken", ["edit"]),
   deviceEntityMiddleware("token.challengeConfirmationToken.deviceId"),
   createController(deviceUpdateRecoveryKey),
-);
-
-router.patch(
-  "/secret",
-  schemaMiddleware("request.body", deviceUpdateSecretSchema),
-  challengeConfirmationTokenMiddleware("request.body.challengeConfirmationToken", ["edit"]),
-  deviceEntityMiddleware("token.challengeConfirmationToken.deviceId"),
-  createController(deviceUpdateSecret),
 );

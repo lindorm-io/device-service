@@ -1,4 +1,3 @@
-import Joi from "joi";
 import { Audience } from "../../enum";
 import { Controller, ControllerResponse, HttpStatus } from "@lindorm-io/koa";
 import { DeviceContext } from "../../typing";
@@ -16,16 +15,8 @@ interface RequestBody {
 interface ResponseBody {
   certificateChallenge: string;
   enrolmentSessionToken: string;
-  expires: number;
   expiresIn: number;
 }
-
-export const enrolmentInitialiseSchema = Joi.object({
-  macAddress: Joi.string().required(),
-  name: Joi.string().required(),
-  publicKey: Joi.string().required(),
-  uniqueId: Joi.string().required(),
-});
 
 export const enrolmentInitialise: Controller<DeviceContext<RequestBody>> = async (
   ctx,
@@ -48,7 +39,7 @@ export const enrolmentInitialise: Controller<DeviceContext<RequestBody>> = async
     uniqueId,
   });
 
-  const { id, expires, expiresIn, token } = jwt.sign({
+  const { id, expiresIn, token } = jwt.sign({
     audience: Audience.ENROLMENT_SESSION,
     clientId,
     expiry: config.ENROLMENT_SESSION_EXPIRY,
@@ -80,7 +71,6 @@ export const enrolmentInitialise: Controller<DeviceContext<RequestBody>> = async
     body: {
       certificateChallenge: enrolmentSession.certificateChallenge,
       enrolmentSessionToken: token,
-      expires,
       expiresIn,
     },
     status: HttpStatus.Success.OK,

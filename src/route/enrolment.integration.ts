@@ -36,7 +36,6 @@ describe("/enrolment", () => {
     expect(initialiseResponse.body).toStrictEqual({
       certificate_challenge: expect.any(String),
       enrolment_session_token: expect.any(String),
-      expires: expect.any(Number),
       expires_in: expect.any(Number),
     });
 
@@ -51,17 +50,16 @@ describe("/enrolment", () => {
       .set("Authorization", `Bearer ${accessToken}`)
       .set("X-Client-ID", "5c63ca22-6617-45eb-9005-7c897a25d375")
       .send({
+        biometry: getRandomValue(128),
         certificate_verifier: certificateVerifier,
         enrolment_session_token: enrolmentSessionToken,
         pincode: (await getRandomNumber(6)).toString(),
-        secret: getRandomValue(128),
       })
       .expect(201);
 
     expect(verifyResponse.body).toStrictEqual({
       challenge_confirmation_token: expect.any(String),
       device_id: expect.any(String),
-      expires: expect.any(Number),
       expires_in: expect.any(Number),
       recovery_key: expect.any(String),
     });

@@ -1,16 +1,10 @@
-import Joi from "joi";
 import { Controller, ControllerResponse, HttpStatus } from "@lindorm-io/koa";
 import { DeviceContext } from "../../typing";
-import { JOI_GUID } from "../../constant";
 import { assertBearerToDevice } from "../../util";
 
 interface RequestBody {
   deviceId: string;
 }
-
-export const deviceRemoveSchema = Joi.object({
-  deviceId: JOI_GUID.required(),
-});
 
 export const deviceRemove: Controller<DeviceContext<RequestBody>> = async (
   ctx,
@@ -35,6 +29,6 @@ export const deviceRemove: Controller<DeviceContext<RequestBody>> = async (
 
   return {
     body: {},
-    status: HttpStatus.Success.ACCEPTED,
+    status: HttpStatus.Success.OK,
   };
 };

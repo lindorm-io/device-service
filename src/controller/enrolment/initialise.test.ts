@@ -24,7 +24,6 @@ describe("enrolmentInitialise", () => {
       jwt: {
         sign: jest.fn().mockImplementation(() => ({
           id: "tokenId",
-          expires: 600,
           expiresIn: 60,
           token: "jwt.jwt.jwt",
         })),
@@ -52,7 +51,6 @@ describe("enrolmentInitialise", () => {
       body: {
         certificateChallenge: "certificateChallenge",
         enrolmentSessionToken: "jwt.jwt.jwt",
-        expires: 600,
         expiresIn: 60,
       },
       status: 200,

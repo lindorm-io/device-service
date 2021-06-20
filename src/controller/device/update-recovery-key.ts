@@ -1,7 +1,5 @@
-import Joi from "joi";
 import { Controller, ControllerResponse, HttpStatus } from "@lindorm-io/koa";
 import { DeviceContext } from "../../typing";
-import { JOI_JWT } from "../../constant";
 import { assertBearerToDevice, assertChallengeConfirmationToDevice, generateRecoveryKey } from "../../util";
 import { cryptoLayered } from "../../crypto";
 
@@ -12,10 +10,6 @@ interface RequestBody {
 interface ResponseBody {
   recoveryKey: string;
 }
-
-export const deviceUpdateRecoveryKeySchema = Joi.object({
-  challengeConfirmationToken: JOI_JWT.required(),
-});
 
 export const deviceUpdateRecoveryKey: Controller<DeviceContext<RequestBody>> = async (
   ctx,

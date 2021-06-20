@@ -35,7 +35,7 @@ describe("deviceUpdateName", () => {
   test("should resolve and remove device", async () => {
     await expect(deviceUpdateName(ctx)).resolves.toStrictEqual({
       body: {},
-      status: 202,
+      status: 200,
     });
 
     expect(assertBearerToDevice).toHaveBeenCalledWith(

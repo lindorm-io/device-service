@@ -32,9 +32,8 @@ describe("/challenge", () => {
     expect(initialiseResponse.body).toStrictEqual({
       certificate_challenge: expect.any(String),
       challenge_session_token: expect.any(String),
-      expires: expect.any(Number),
       expires_in: expect.any(Number),
-      strategies: ["implicit", "recovery", "pincode", "secret"],
+      strategies: ["implicit", "recovery", "pincode", "biometry"],
     });
 
     const {
@@ -56,7 +55,6 @@ describe("/challenge", () => {
 
     expect(verifyResponse.body).toStrictEqual({
       challenge_confirmation_token: expect.any(String),
-      expires: 1609488600,
       expires_in: 600,
     });
   });
@@ -84,9 +82,8 @@ describe("/challenge", () => {
     expect(initialiseResponse.body).toStrictEqual({
       certificate_challenge: expect.any(String),
       challenge_session_token: expect.any(String),
-      expires: expect.any(Number),
       expires_in: expect.any(Number),
-      strategies: ["implicit", "recovery", "pincode", "secret"],
+      strategies: ["implicit", "recovery", "pincode", "biometry"],
     });
 
     const {
@@ -109,7 +106,6 @@ describe("/challenge", () => {
 
     expect(verifyResponse.body).toStrictEqual({
       challenge_confirmation_token: expect.any(String),
-      expires: 1609488600,
       expires_in: 600,
     });
   });
@@ -137,9 +133,8 @@ describe("/challenge", () => {
     expect(initialiseResponse.body).toStrictEqual({
       certificate_challenge: expect.any(String),
       challenge_session_token: expect.any(String),
-      expires: expect.any(Number),
       expires_in: expect.any(Number),
-      strategies: ["implicit", "recovery", "pincode", "secret"],
+      strategies: ["implicit", "recovery", "pincode", "biometry"],
     });
 
     const {
@@ -162,16 +157,15 @@ describe("/challenge", () => {
 
     expect(verifyResponse.body).toStrictEqual({
       challenge_confirmation_token: expect.any(String),
-      expires: 1609488600,
       expires_in: 600,
     });
   });
 
   test("POST /initialise & /verify - SECRET", async () => {
-    const secret = getRandomValue(128);
+    const biometry = getRandomValue(128);
     const device = await TEST_DEVICE_REPOSITORY.create(
       await getTestDevice({
-        secret,
+        biometry,
       }),
     );
 
@@ -190,9 +184,8 @@ describe("/challenge", () => {
     expect(initialiseResponse.body).toStrictEqual({
       certificate_challenge: expect.any(String),
       challenge_session_token: expect.any(String),
-      expires: expect.any(Number),
       expires_in: expect.any(Number),
-      strategies: ["implicit", "recovery", "pincode", "secret"],
+      strategies: ["implicit", "recovery", "pincode", "biometry"],
     });
 
     const {
@@ -206,16 +199,15 @@ describe("/challenge", () => {
       .set("Authorization", `Basic ${basicAuth}`)
       .set("X-Device-ID", device.id)
       .send({
+        biometry,
         certificate_verifier: certificateVerifier,
         challenge_session_token: challengeSessionToken,
-        strategy: ChallengeStrategy.SECRET,
-        secret,
+        strategy: ChallengeStrategy.BIOMETRY,
       })
       .expect(200);
 
     expect(verifyResponse.body).toStrictEqual({
       challenge_confirmation_token: expect.any(String),
-      expires: 1609488600,
       expires_in: 600,
     });
   });

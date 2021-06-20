@@ -1,7 +1,5 @@
-import Joi from "joi";
 import { Controller, ControllerResponse, HttpStatus } from "@lindorm-io/koa";
 import { DeviceContext } from "../../typing";
-import { JOI_JWT, JOI_PINCODE } from "../../constant";
 import { assertBearerToDevice, assertChallengeConfirmationToDevice } from "../../util";
 import { cryptoLayered } from "../../crypto";
 
@@ -9,11 +7,6 @@ interface RequestBody {
   challengeConfirmationToken: string;
   pincode: string;
 }
-
-export const deviceUpdatePincodeSchema = Joi.object({
-  challengeConfirmationToken: JOI_JWT.required(),
-  pincode: JOI_PINCODE.required(),
-});
 
 export const deviceUpdatePincode: Controller<DeviceContext<RequestBody>> = async (
   ctx,
@@ -45,6 +38,6 @@ export const deviceUpdatePincode: Controller<DeviceContext<RequestBody>> = async
 
   return {
     body: {},
-    status: HttpStatus.Success.ACCEPTED,
+    status: HttpStatus.Success.OK,
   };
 };

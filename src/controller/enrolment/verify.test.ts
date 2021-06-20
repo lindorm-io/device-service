@@ -48,7 +48,6 @@ describe("enrolmentVerify", () => {
       jwt: {
         sign: jest.fn().mockImplementation(() => ({
           id: "tokenId",
-          expires: 600,
           expiresIn: 60,
           token: "jwt.jwt.jwt",
         })),
@@ -64,9 +63,9 @@ describe("enrolmentVerify", () => {
       },
       request: {
         body: {
+          biometry: "biometry",
           certificateVerifier: "certificateVerifier",
           pincode: "pincode",
-          secret: "secret",
         },
       },
       token: {
@@ -84,7 +83,6 @@ describe("enrolmentVerify", () => {
       body: {
         challengeConfirmationToken: "jwt.jwt.jwt",
         deviceId: "deviceId",
-        expires: 600,
         expiresIn: 60,
         recoveryKey: "recovery-key",
       },
@@ -95,21 +93,21 @@ describe("enrolmentVerify", () => {
     expect(ctx.repository.deviceRepository.create).toHaveBeenCalledWith(
       expect.objectContaining({
         accountId: "accountId",
+        biometry: "biometry-signature",
         macAddress: "macAddress",
         name: "name",
         pincode: "pincode-signature",
         publicKey: "publicKey",
         recoveryKey: "recovery-key-signature",
-        secret: "secret-signature",
         uniqueId: "uniqueId",
       }),
     );
     expect(ctx.jwt.sign).toHaveBeenCalledWith({
+      id: "enrolmentSessionId",
       audience: "challenge_confirmation",
       clientId: "clientId",
       deviceId: "deviceId",
       expiry: "10 minutes",
-      id: "enrolmentSessionId",
       scope: ["enrolment"],
       subject: "accountId",
     });

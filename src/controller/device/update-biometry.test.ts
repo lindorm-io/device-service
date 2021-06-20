@@ -1,6 +1,6 @@
 import MockDate from "mockdate";
 import { logger } from "../../test";
-import { deviceUpdateSecret } from "./update-secret";
+import { deviceUpdateBiometry } from "./update-biometry";
 import {
   assertBearerToDevice as _assertBearerToDevice,
   assertChallengeConfirmationToDevice as _assertChallengeConfirmationToDevice,
@@ -21,7 +21,7 @@ jest.mock("../../util", () => ({
 const assertBearerToDevice = _assertBearerToDevice as unknown as jest.Mock;
 const assertChallengeConfirmationToDevice = _assertChallengeConfirmationToDevice as unknown as jest.Mock;
 
-describe("deviceUpdateSecret", () => {
+describe("deviceUpdateBiometry", () => {
   let ctx: any;
 
   beforeEach(async () => {
@@ -34,7 +34,7 @@ describe("deviceUpdateSecret", () => {
         deviceRepository: { update: jest.fn() },
       },
       request: {
-        body: { secret: "new-secret" },
+        body: { biometry: "new-biometry" },
       },
       token: {
         bearerToken: "bearerToken",
@@ -44,9 +44,9 @@ describe("deviceUpdateSecret", () => {
   });
 
   test("should resolve and remove device", async () => {
-    await expect(deviceUpdateSecret(ctx)).resolves.toStrictEqual({
+    await expect(deviceUpdateBiometry(ctx)).resolves.toStrictEqual({
       body: {},
-      status: 202,
+      status: 200,
     });
 
     expect(assertBearerToDevice).toHaveBeenCalledWith(
@@ -64,7 +64,7 @@ describe("deviceUpdateSecret", () => {
     expect(ctx.repository.deviceRepository.update).toHaveBeenCalledWith(
       expect.objectContaining({
         id: "deviceId",
-        secret: "new-secret-signature",
+        biometry: "new-biometry-signature",
       }),
     );
   });

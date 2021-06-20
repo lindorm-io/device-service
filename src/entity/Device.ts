@@ -11,23 +11,23 @@ import {
 
 export interface DeviceAttributes extends EntityAttributes {
   accountId: string;
+  biometry: string;
   macAddress: string;
   name: string;
   pincode: string;
   publicKey: string;
   recoveryKey: string;
-  secret: string | null;
   uniqueId: string;
 }
 
 export interface DeviceOptions extends EntityOptions {
   accountId: string;
+  biometry?: string;
   macAddress: string;
   name: string;
   pincode: string;
   publicKey: string;
   recoveryKey: string;
-  secret?: string;
   uniqueId: string;
 }
 
@@ -35,12 +35,12 @@ const schema = Joi.object({
   ...JOI_ENTITY_BASE,
 
   accountId: Joi.string().guid().required(),
+  biometry: JOI_SIGNATURE.allow(null).required(),
   macAddress: Joi.string().required(),
   name: Joi.string().required(),
   pincode: JOI_SIGNATURE.required(),
   publicKey: Joi.string().required(),
   recoveryKey: JOI_SIGNATURE.required(),
-  secret: JOI_SIGNATURE.allow(null).required(),
   uniqueId: Joi.string().required(),
 });
 
@@ -49,10 +49,10 @@ export class Device extends LindormEntity<DeviceAttributes> {
   public readonly macAddress: string;
   public readonly publicKey: string;
   public readonly uniqueId: string;
+  private _biometry: string;
   private _name: string;
   private _pincode: string;
   private _recoveryKey: string;
-  private _secret: string;
 
   public constructor(options: DeviceOptions) {
     super(options);
@@ -62,10 +62,18 @@ export class Device extends LindormEntity<DeviceAttributes> {
     this.publicKey = options.publicKey;
     this.uniqueId = options.uniqueId;
 
+    this._biometry = options.biometry || null;
     this._name = options.name;
     this._pincode = options.pincode;
     this._recoveryKey = options.recoveryKey;
-    this._secret = options.secret || null;
+  }
+
+  public get biometry(): string | null {
+    return this._biometry;
+  }
+  public set biometry(biometry: string | null) {
+    this._biometry = biometry;
+    this.addEvent(DeviceEvent.BIOMETRY_CHANGED, { biometry: this._biometry });
   }
 
   public get name(): string {
@@ -92,14 +100,6 @@ export class Device extends LindormEntity<DeviceAttributes> {
     this.addEvent(DeviceEvent.RECOVERY_KEY_CHANGED, { recoveryKey: this._recoveryKey });
   }
 
-  public get secret(): string | null {
-    return this._secret;
-  }
-  public set secret(secret: string | null) {
-    this._secret = secret;
-    this.addEvent(DeviceEvent.SECRET_CHANGED, { secret: this._secret });
-  }
-
   public create(): void {
     for (const evt of this.events) {
       if (evt.name !== DeviceEvent.CREATED) continue;
@@ -123,12 +123,12 @@ export class Device extends LindormEntity<DeviceAttributes> {
       ...this.defaultJSON(),
 
       accountId: this.accountId,
+      biometry: this.biometry,
       macAddress: this.macAddress,
       name: this.name,
       pincode: this.pincode,
       publicKey: this.publicKey,
       recoveryKey: this.recoveryKey,
-      secret: this.secret,
       uniqueId: this.uniqueId,
     };
   }

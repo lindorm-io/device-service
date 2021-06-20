@@ -27,13 +27,12 @@ describe("challengeInitialise", () => {
           id: "deviceId",
           accountId: "accountId",
           pincode: "pincode-signature",
-          secret: "secret-signature",
+          biometry: "biometry-signature",
         },
       },
       jwt: {
         sign: jest.fn().mockImplementation(() => ({
           id: "tokenId",
-          expires: 600,
           expiresIn: 60,
           token: "jwt.jwt.jwt",
         })),
@@ -55,9 +54,8 @@ describe("challengeInitialise", () => {
       body: {
         certificateChallenge: "certificateChallenge",
         challengeSessionToken: "jwt.jwt.jwt",
-        expires: 600,
         expiresIn: 60,
-        strategies: ["implicit", "recovery", "pincode", "secret"],
+        strategies: ["implicit", "recovery", "pincode", "biometry"],
       },
       status: 200,
     });
@@ -76,7 +74,7 @@ describe("challengeInitialise", () => {
         deviceId: "deviceId",
         payload: { data: true },
         scope: ["sign_in"],
-        strategies: ["implicit", "recovery", "pincode", "secret"],
+        strategies: ["implicit", "recovery", "pincode", "biometry"],
       }),
       60,
     );
