@@ -1,8 +1,8 @@
 import { MONGO_CONNECTION_OPTIONS } from "../config";
-import { keyPairCleanupWorker as _keyPairCleanupWorker } from "@lindorm-io/koa-keystore";
+import { keyPairRotationWorker as _keyPairRotationWorker } from "@lindorm-io/koa-keystore";
 import { winston } from "../logger";
 
-export const keyPairCleanupWorker = _keyPairCleanupWorker({
+export const keyPairRotationWorker = _keyPairRotationWorker({
   mongoConnectionOptions: MONGO_CONNECTION_OPTIONS,
   winston,
 });
