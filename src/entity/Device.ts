@@ -1,71 +1,76 @@
 import Joi from "joi";
-import { DeviceEvent } from "../enum";
-import { JOI_SIGNATURE } from "../constant";
+import { CertificateMethod, DeviceEvent } from "../enum";
+import { JOI_CERTIFICATE_METHOD, JOI_GUID, JOI_SIGNATURE } from "../constant";
 import {
   EntityAttributes,
   EntityCreationError,
-  EntityOptions,
+  EntityKeys,
   JOI_ENTITY_BASE,
   LindormEntity,
+  Optional,
 } from "@lindorm-io/entity";
 
 export interface DeviceAttributes extends EntityAttributes {
-  accountId: string;
-  biometry: string;
+  biometry: string | null;
+  certificateMethod: CertificateMethod;
+  identityId: string;
+  installationId: string;
   macAddress: string;
   name: string;
-  pincode: string;
+  os: string;
+  pincode: string | null;
+  platform: string;
   publicKey: string;
-  recoveryKey: string;
   uniqueId: string;
 }
 
-export interface DeviceOptions extends EntityOptions {
-  accountId: string;
-  biometry?: string;
-  macAddress: string;
-  name: string;
-  pincode: string;
-  publicKey: string;
-  recoveryKey: string;
-  uniqueId: string;
-}
+export type DeviceOptions = Optional<DeviceAttributes, EntityKeys>;
 
-const schema = Joi.object({
+const schema = Joi.object<DeviceAttributes>({
   ...JOI_ENTITY_BASE,
 
-  accountId: Joi.string().guid().required(),
   biometry: JOI_SIGNATURE.allow(null).required(),
+  certificateMethod: JOI_CERTIFICATE_METHOD.required(),
+  identityId: JOI_GUID.required(),
+  installationId: JOI_GUID.required(),
   macAddress: Joi.string().required(),
   name: Joi.string().required(),
-  pincode: JOI_SIGNATURE.required(),
+  os: Joi.string().required(),
+  pincode: JOI_SIGNATURE.allow(null).required(),
+  platform: Joi.string().required(),
   publicKey: Joi.string().required(),
-  recoveryKey: JOI_SIGNATURE.required(),
   uniqueId: Joi.string().required(),
 });
 
 export class Device extends LindormEntity<DeviceAttributes> {
-  public readonly accountId: string;
+  public readonly certificateMethod: CertificateMethod;
+  public readonly identityId: string;
+  public readonly installationId: string;
   public readonly macAddress: string;
+  public readonly platform: string;
   public readonly publicKey: string;
   public readonly uniqueId: string;
-  private _biometry: string;
+
+  private _biometry: string | null;
   private _name: string;
-  private _pincode: string;
-  private _recoveryKey: string;
+  private _os: string;
+  private _pincode: string | null;
 
   public constructor(options: DeviceOptions) {
     super(options);
 
-    this.accountId = options.accountId;
+    this.certificateMethod = options.certificateMethod;
+    this.identityId = options.identityId;
+    this.installationId = options.installationId;
     this.macAddress = options.macAddress;
+    this.platform = options.platform;
     this.publicKey = options.publicKey;
     this.uniqueId = options.uniqueId;
 
     this._biometry = options.biometry || null;
     this._name = options.name;
-    this._pincode = options.pincode;
-    this._recoveryKey = options.recoveryKey;
+    this._os = options.os;
+    this._pincode = options.pincode || null;
   }
 
   public get biometry(): string | null {
@@ -73,7 +78,7 @@ export class Device extends LindormEntity<DeviceAttributes> {
   }
   public set biometry(biometry: string | null) {
     this._biometry = biometry;
-    this.addEvent(DeviceEvent.BIOMETRY_CHANGED, { biometry: this._biometry });
+    this.addEvent(DeviceEvent.BIOMETRY_CHANGED, { biometry });
   }
 
   public get name(): string {
@@ -81,23 +86,23 @@ export class Device extends LindormEntity<DeviceAttributes> {
   }
   public set name(name: string) {
     this._name = name;
-    this.addEvent(DeviceEvent.NAME_CHANGED, { name: this._name });
+    this.addEvent(DeviceEvent.NAME_CHANGED, { name });
   }
 
-  public get pincode(): string {
+  public get os(): string {
+    return this._os;
+  }
+  public set os(os: string) {
+    this._os = os;
+    this.addEvent(DeviceEvent.OS_CHANGED, { os });
+  }
+
+  public get pincode(): string | null {
     return this._pincode;
   }
-  public set pincode(pin: string) {
-    this._pincode = pin;
-    this.addEvent(DeviceEvent.PIN_CHANGED, { pin: this._pincode });
-  }
-
-  public get recoveryKey(): string {
-    return this._recoveryKey;
-  }
-  public set recoveryKey(recoveryKey: string) {
-    this._recoveryKey = recoveryKey;
-    this.addEvent(DeviceEvent.RECOVERY_KEY_CHANGED, { recoveryKey: this._recoveryKey });
+  public set pincode(pincode: string | null) {
+    this._pincode = pincode;
+    this.addEvent(DeviceEvent.PINCODE_CHANGED, { pincode });
   }
 
   public create(): void {
@@ -110,10 +115,6 @@ export class Device extends LindormEntity<DeviceAttributes> {
     this.addEvent(DeviceEvent.CREATED, rest);
   }
 
-  public getKey(): string {
-    return this.id;
-  }
-
   public async schemaValidation(): Promise<void> {
     await schema.validateAsync(this.toJSON());
   }
@@ -122,13 +123,16 @@ export class Device extends LindormEntity<DeviceAttributes> {
     return {
       ...this.defaultJSON(),
 
-      accountId: this.accountId,
       biometry: this.biometry,
+      certificateMethod: this.certificateMethod,
+      identityId: this.identityId,
+      installationId: this.installationId,
       macAddress: this.macAddress,
       name: this.name,
+      os: this.os,
       pincode: this.pincode,
+      platform: this.platform,
       publicKey: this.publicKey,
-      recoveryKey: this.recoveryKey,
       uniqueId: this.uniqueId,
     };
   }

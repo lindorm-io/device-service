@@ -1,43 +1,47 @@
-import { Controller, ControllerResponse, HttpStatus } from "@lindorm-io/koa";
-import { DeviceContext } from "../../typing";
-import { assertBearerToDevice, assertChallengeConfirmationToDevice } from "../../util";
-import { cryptoLayered } from "../../crypto";
+import Joi from "joi";
+import { Context } from "../../typing";
+import { Controller, ControllerResponse } from "@lindorm-io/koa";
+import { JOI_GUID, JOI_JWT, JOI_PINCODE } from "../../constant";
+import { cryptoLayered } from "../../instance";
 
-interface RequestBody {
+interface RequestData {
+  id: string;
   challengeConfirmationToken: string;
   pincode: string;
 }
 
-export const deviceUpdatePincode: Controller<DeviceContext<RequestBody>> = async (
+export const deviceUpdatePincodeSchema = Joi.object<RequestData>({
+  id: JOI_GUID.required(),
+  challengeConfirmationToken: JOI_JWT.required(),
+  pincode: JOI_PINCODE.required(),
+});
+
+export const deviceUpdatePincodeController: Controller<Context<RequestData>> = async (
   ctx,
-): Promise<ControllerResponse<Record<string, never>>> => {
+): ControllerResponse => {
   const {
+    data: { pincode },
     entity: { device },
-    logger,
-    repository: { deviceRepository },
-    request: {
-      body: { pincode },
+    metadata: {
+      agent: { os },
+      device: { name },
     },
-    token: { bearerToken, challengeConfirmationToken },
+    repository: { deviceRepository },
   } = ctx;
-
-  logger.debug("device pincode change requested", {
-    id: device.id,
-    accountId: device.accountId,
-    pincode,
-  });
-
-  assertBearerToDevice(bearerToken, device);
-  assertChallengeConfirmationToDevice(challengeConfirmationToken, device);
 
   device.pincode = await cryptoLayered.encrypt(pincode);
 
+  if (name && name !== device.name) {
+    device.name = name;
+  }
+
+  if (os && os !== device.os) {
+    device.os = os;
+  }
+
   await deviceRepository.update(device);
 
-  logger.info("device pincode change concluded");
-
   return {
-    body: {},
-    status: HttpStatus.Success.OK,
+    data: {},
   };
 };

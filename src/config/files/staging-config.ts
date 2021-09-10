@@ -1,31 +1,35 @@
-import { Configuration } from "../ConfigHandler";
+import { Configuration } from "../interface";
 
 export const stagingConfig: Configuration = {
   NODE_ENVIRONMENT: process.env.NODE_ENV,
-  SERVER_PORT: 3001,
-  HOST: "https://staging.device.lindorm.io",
+  SERVER_PORT: 3000,
+  HOST: "https://device.staging.api.lindorm.io",
 
+  // Auth
   BASIC_AUTH_USERNAME: null,
   BASIC_AUTH_PASSWORD: null,
 
-  AUTH_JWT_ISSUER: "https://staging.authentication.lindorm.io/",
-  AUTH_WEB_KEY_HOST: "https://staging.authentication.lindorm.io",
+  // Bearer Auth
+  BEARER_TOKEN_ISSUER: "https://oauth.staging.api.lindorm.io",
 
-  DEVICE_JWT_ISSUER: "https://staging.device.lindorm.io",
-
+  // Crypto
   CRYPTO_AES_SECRET: null,
   CRYPTO_SHA_SECRET: null,
 
-  ENROLMENT_CONFIRMATION_EXPIRY: "10 minutes",
-  ENROLMENT_SESSION_EXPIRY: "5 minutes",
-  CHALLENGE_CONFIRMATION_EXPIRY: "10 minutes",
-  CHALLENGE_SESSION_EXPIRY: "5 minutes",
+  // Expiry
+  EXPIRY_CHALLENGE_CONFIRMATION_TOKEN: "10 minutes",
+  EXPIRY_CHALLENGE_SESSION: "3 minutes",
+  EXPIRY_ENROLMENT_SESSION: "5 minutes",
 
+  // Redis
+  REDIS_HOST: null,
   REDIS_PORT: null,
+  REDIS_PASSWORD: null,
 
-  MONGO_INITDB_ROOT_USERNAME: null,
-  MONGO_INITDB_ROOT_PASSWORD: null,
+  // Mongo
   MONGO_HOST: null,
-  MONGO_EXPOSE_PORT: null,
+  MONGO_PORT: null,
   MONGO_DB_NAME: "device",
+  MONGO_USERNAME: null,
+  MONGO_PASSWORD: null,
 };

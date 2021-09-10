@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { Configuration } from "../ConfigHandler";
+import { Configuration } from "../interface";
 
 dotenv.config();
 
@@ -8,27 +8,31 @@ export const environmentConfig: Configuration = {
   SERVER_PORT: process.env.SERVER_PORT ? parseInt(process.env.SERVER_PORT, 10) : null,
   HOST: process.env.HOST,
 
+  // Auth
   BASIC_AUTH_USERNAME: process.env.BASIC_AUTH_USERNAME,
   BASIC_AUTH_PASSWORD: process.env.BASIC_AUTH_PASSWORD,
 
-  AUTH_JWT_ISSUER: process.env.AUTH_JWT_ISSUER,
-  AUTH_WEB_KEY_HOST: process.env.AUTH_WEB_KEY_HOST,
+  // Bearer Auth
+  BEARER_TOKEN_ISSUER: process.env.BEARER_TOKEN_ISSUER,
 
-  DEVICE_JWT_ISSUER: process.env.DEVICE_JWT_ISSUER,
-
+  // Crypto
   CRYPTO_AES_SECRET: process.env.CRYPTO_AES_SECRET,
   CRYPTO_SHA_SECRET: process.env.CRYPTO_SHA_SECRET,
 
-  ENROLMENT_CONFIRMATION_EXPIRY: process.env.ENROLMENT_EXPIRY,
-  ENROLMENT_SESSION_EXPIRY: process.env.ENROLMENT_EXPIRY,
-  CHALLENGE_CONFIRMATION_EXPIRY: process.env.CHALLENGE_CONFIRMATION_EXPIRY,
-  CHALLENGE_SESSION_EXPIRY: process.env.CHALLENGE_EXPIRY,
+  // Expiry
+  EXPIRY_CHALLENGE_CONFIRMATION_TOKEN: process.env.EXPIRY_CHALLENGE_CONFIRMATION_TOKEN,
+  EXPIRY_CHALLENGE_SESSION: process.env.EXPIRY_CHALLENGE_SESSION,
+  EXPIRY_ENROLMENT_SESSION: process.env.EXPIRY_ENROLMENT_SESSION,
 
+  // Redis
+  REDIS_HOST: process.env.REDIS_HOST,
   REDIS_PORT: process.env.REDIS_PORT ? parseInt(process.env.REDIS_PORT, 10) : null,
+  REDIS_PASSWORD: process.env.REDIS_PASSWORD,
 
-  MONGO_INITDB_ROOT_USERNAME: process.env.MONGO_INITDB_ROOT_USERNAME,
-  MONGO_INITDB_ROOT_PASSWORD: process.env.MONGO_INITDB_ROOT_PASSWORD,
+  // Mongo
   MONGO_HOST: process.env.MONGO_HOST,
-  MONGO_EXPOSE_PORT: process.env.MONGO_EXPOSE_PORT ? parseInt(process.env.MONGO_EXPOSE_PORT, 10) : null,
+  MONGO_PORT: process.env.MONGO_PORT ? parseInt(process.env.MONGO_PORT, 10) : null,
   MONGO_DB_NAME: process.env.MONGO_DB_NAME,
+  MONGO_USERNAME: process.env.MONGO_USERNAME,
+  MONGO_PASSWORD: process.env.MONGO_PASSWORD,
 };

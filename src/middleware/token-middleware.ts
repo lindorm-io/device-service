@@ -1,21 +1,21 @@
-import { Audience } from "../enum";
+import { TokenType } from "../enum";
 import { tokenValidationMiddleware } from "@lindorm-io/koa-jwt";
 import { config } from "../config";
 
 export const challengeConfirmationTokenMiddleware = tokenValidationMiddleware({
-  audience: Audience.CHALLENGE_CONFIRMATION,
-  issuer: config.DEVICE_JWT_ISSUER,
+  issuer: config.HOST,
   key: "challengeConfirmationToken",
+  types: [TokenType.CHALLENGE_CONFIRMATION_TOKEN],
 });
 
 export const challengeSessionTokenMiddleware = tokenValidationMiddleware({
-  audience: Audience.CHALLENGE_SESSION,
-  issuer: config.DEVICE_JWT_ISSUER,
+  issuer: config.HOST,
   key: "challengeSessionToken",
+  types: [TokenType.CHALLENGE_SESSION_TOKEN],
 });
 
 export const enrolmentSessionTokenMiddleware = tokenValidationMiddleware({
-  audience: Audience.ENROLMENT_SESSION,
-  issuer: config.DEVICE_JWT_ISSUER,
+  issuer: config.HOST,
   key: "enrolmentSessionToken",
+  types: [TokenType.ENROLMENT_SESSION_TOKEN],
 });

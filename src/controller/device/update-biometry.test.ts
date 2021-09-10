@@ -1,70 +1,74 @@
 import MockDate from "mockdate";
-import { logger } from "../../test";
-import { deviceUpdateBiometry } from "./update-biometry";
-import {
-  assertBearerToDevice as _assertBearerToDevice,
-  assertChallengeConfirmationToDevice as _assertChallengeConfirmationToDevice,
-} from "../../util";
+import { deviceUpdateBiometryController } from "./update-biometry";
+import { getTestDevice } from "../../test";
 
 MockDate.set("2021-01-01T08:00:00.000Z");
 
-jest.mock("../../crypto", () => ({
+jest.mock("../../instance", () => ({
   cryptoLayered: {
     encrypt: (arg: any) => `${arg}-signature`,
   },
 }));
-jest.mock("../../util", () => ({
-  assertBearerToDevice: jest.fn(),
-  assertChallengeConfirmationToDevice: jest.fn(),
-}));
 
-const assertBearerToDevice = _assertBearerToDevice as unknown as jest.Mock;
-const assertChallengeConfirmationToDevice = _assertChallengeConfirmationToDevice as unknown as jest.Mock;
-
-describe("deviceUpdateBiometry", () => {
+describe("deviceUpdateBiometryController", () => {
   let ctx: any;
 
   beforeEach(async () => {
     ctx = {
+      data: {
+        biometry: "new-biometry",
+      },
       entity: {
-        device: { id: "deviceId", accountId: "accountId" },
+        device: await getTestDevice(),
       },
-      logger,
+      metadata: {
+        agent: { os: null },
+        device: { name: null },
+      },
       repository: {
-        deviceRepository: { update: jest.fn() },
-      },
-      request: {
-        body: { biometry: "new-biometry" },
-      },
-      token: {
-        bearerToken: "bearerToken",
-        challengeConfirmationToken: "challengeConfirmationToken",
+        deviceRepository: {
+          update: jest.fn(),
+        },
       },
     };
   });
 
-  test("should resolve and remove device", async () => {
-    await expect(deviceUpdateBiometry(ctx)).resolves.toStrictEqual({
-      body: {},
-      status: 200,
+  test("should resolve and update device biometry", async () => {
+    await expect(deviceUpdateBiometryController(ctx)).resolves.toStrictEqual({
+      data: {},
     });
 
-    expect(assertBearerToDevice).toHaveBeenCalledWith(
-      "bearerToken",
-      expect.objectContaining({
-        id: "deviceId",
-      }),
-    );
-    expect(assertChallengeConfirmationToDevice).toHaveBeenCalledWith(
-      "challengeConfirmationToken",
-      expect.objectContaining({
-        id: "deviceId",
-      }),
-    );
     expect(ctx.repository.deviceRepository.update).toHaveBeenCalledWith(
       expect.objectContaining({
-        id: "deviceId",
         biometry: "new-biometry-signature",
+      }),
+    );
+  });
+
+  test("should resolve and update with agent os", async () => {
+    ctx.metadata.agent.os = "os";
+
+    await expect(deviceUpdateBiometryController(ctx)).resolves.toStrictEqual({
+      data: {},
+    });
+
+    expect(ctx.repository.deviceRepository.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        os: "os",
+      }),
+    );
+  });
+
+  test("should resolve and update with device name", async () => {
+    ctx.metadata.device.name = "name";
+
+    await expect(deviceUpdateBiometryController(ctx)).resolves.toStrictEqual({
+      data: {},
+    });
+
+    expect(ctx.repository.deviceRepository.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        name: "name",
       }),
     );
   });

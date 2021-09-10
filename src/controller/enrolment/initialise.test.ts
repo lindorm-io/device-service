@@ -1,6 +1,5 @@
 import MockDate from "mockdate";
-import { enrolmentInitialise } from "./initialise";
-import { logger } from "../../test";
+import { enrolmentInitialiseController } from "./initialise";
 
 MockDate.set("2021-01-01T08:00:00.000Z");
 
@@ -9,70 +8,73 @@ jest.mock("@lindorm-io/core", () => ({
   getRandomValue: () => "random-value",
 }));
 
-describe("enrolmentInitialise", () => {
+describe("enrolmentInitialiseController", () => {
   let ctx: any;
 
   beforeEach(async () => {
     ctx = {
       cache: {
         enrolmentSessionCache: {
-          create: jest.fn().mockImplementation(() => ({
-            certificateChallenge: "certificateChallenge",
-          })),
+          create: jest.fn().mockImplementation(async (arg: any) => arg),
         },
+      },
+      data: {
+        certificateMethod: "certificateMethod",
+        macAddress: "macAddress",
+        publicKey: "publicKey",
       },
       jwt: {
         sign: jest.fn().mockImplementation(() => ({
-          id: "tokenId",
-          expiresIn: 60,
           token: "jwt.jwt.jwt",
         })),
       },
-      logger,
-      metadata: { clientId: "clientId" },
-      request: {
-        body: {
-          macAddress: "macAddress",
+      metadata: {
+        agent: {
+          os: "os",
+          platform: "platform",
+        },
+        client: {
+          id: "clientId",
+        },
+        device: {
+          installationId: "installationId",
           name: "name",
-          publicKey: "publicKey",
           uniqueId: "uniqueId",
         },
       },
       token: {
         bearerToken: {
-          subject: "accountId",
+          subject: "identityId",
         },
       },
     };
   });
 
   test("should resolve enrolment session", async () => {
-    await expect(enrolmentInitialise(ctx)).resolves.toStrictEqual({
-      body: {
-        certificateChallenge: "certificateChallenge",
+    await expect(enrolmentInitialiseController(ctx)).resolves.toStrictEqual({
+      data: {
+        certificateChallenge: "random-value",
         enrolmentSessionToken: "jwt.jwt.jwt",
-        expiresIn: 60,
+        expiresIn: 180,
       },
-      status: 200,
     });
 
-    expect(ctx.jwt.sign).toHaveBeenCalledWith({
-      audience: "enrolment_session",
-      clientId: "clientId",
-      expiry: "5 minutes",
-      subject: "accountId",
-    });
     expect(ctx.cache.enrolmentSessionCache.create).toHaveBeenCalledWith(
       expect.objectContaining({
-        accountId: "accountId",
         certificateChallenge: "random-value",
-        id: "tokenId",
+        certificateMethod: "certificateMethod",
+        identityId: "identityId",
+        installationId: "installationId",
         macAddress: "macAddress",
         name: "name",
+        os: "os",
+        platform: "platform",
         publicKey: "publicKey",
         uniqueId: "uniqueId",
       }),
-      60,
+      180,
     );
+
+    expect(ctx.jwt.sign).toHaveBeenCalled();
   });
 });

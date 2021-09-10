@@ -1,70 +1,74 @@
 import MockDate from "mockdate";
-import { logger } from "../../test";
-import { deviceUpdatePincode } from "./update-pincode";
-import {
-  assertBearerToDevice as _assertBearerToDevice,
-  assertChallengeConfirmationToDevice as _assertChallengeConfirmationToDevice,
-} from "../../util";
+import { deviceUpdatePincodeController } from "./update-pincode";
+import { getTestDevice } from "../../test";
 
 MockDate.set("2021-01-01T08:00:00.000Z");
 
-jest.mock("../../crypto", () => ({
+jest.mock("../../instance", () => ({
   cryptoLayered: {
     encrypt: (arg: any) => `${arg}-signature`,
   },
 }));
-jest.mock("../../util", () => ({
-  assertBearerToDevice: jest.fn(),
-  assertChallengeConfirmationToDevice: jest.fn(),
-}));
 
-const assertBearerToDevice = _assertBearerToDevice as unknown as jest.Mock;
-const assertChallengeConfirmationToDevice = _assertChallengeConfirmationToDevice as unknown as jest.Mock;
-
-describe("deviceUpdatePincode", () => {
+describe("deviceUpdatePincodeController", () => {
   let ctx: any;
 
   beforeEach(async () => {
     ctx = {
+      data: {
+        pincode: "new-pincode",
+      },
       entity: {
-        device: { id: "deviceId", accountId: "accountId" },
+        device: await getTestDevice(),
       },
-      logger,
+      metadata: {
+        agent: { os: null },
+        device: { name: null },
+      },
       repository: {
-        deviceRepository: { update: jest.fn() },
-      },
-      request: {
-        body: { pincode: "new-pincode" },
-      },
-      token: {
-        bearerToken: "bearerToken",
-        challengeConfirmationToken: "challengeConfirmationToken",
+        deviceRepository: {
+          update: jest.fn(),
+        },
       },
     };
   });
 
-  test("should resolve and remove device", async () => {
-    await expect(deviceUpdatePincode(ctx)).resolves.toStrictEqual({
-      body: {},
-      status: 200,
+  test("should resolve and update device pincode", async () => {
+    await expect(deviceUpdatePincodeController(ctx)).resolves.toStrictEqual({
+      data: {},
     });
 
-    expect(assertBearerToDevice).toHaveBeenCalledWith(
-      "bearerToken",
-      expect.objectContaining({
-        id: "deviceId",
-      }),
-    );
-    expect(assertChallengeConfirmationToDevice).toHaveBeenCalledWith(
-      "challengeConfirmationToken",
-      expect.objectContaining({
-        id: "deviceId",
-      }),
-    );
     expect(ctx.repository.deviceRepository.update).toHaveBeenCalledWith(
       expect.objectContaining({
-        id: "deviceId",
         pincode: "new-pincode-signature",
+      }),
+    );
+  });
+
+  test("should resolve and update with agent os", async () => {
+    ctx.metadata.agent.os = "os";
+
+    await expect(deviceUpdatePincodeController(ctx)).resolves.toStrictEqual({
+      data: {},
+    });
+
+    expect(ctx.repository.deviceRepository.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        os: "os",
+      }),
+    );
+  });
+
+  test("should resolve and update with device name", async () => {
+    ctx.metadata.device.name = "name";
+
+    await expect(deviceUpdatePincodeController(ctx)).resolves.toStrictEqual({
+      data: {},
+    });
+
+    expect(ctx.repository.deviceRepository.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        name: "name",
       }),
     );
   });

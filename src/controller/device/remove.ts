@@ -1,34 +1,27 @@
-import { Controller, ControllerResponse, HttpStatus } from "@lindorm-io/koa";
-import { DeviceContext } from "../../typing";
-import { assertBearerToDevice } from "../../util";
+import Joi from "joi";
+import { Context } from "../../typing";
+import { Controller, ControllerResponse } from "@lindorm-io/koa";
+import { JOI_GUID } from "../../constant";
 
-interface RequestBody {
-  deviceId: string;
+interface RequestData {
+  id: string;
 }
 
-export const deviceRemove: Controller<DeviceContext<RequestBody>> = async (
+export const deviceRemoveSchema = Joi.object<RequestData>({
+  id: JOI_GUID.required(),
+});
+
+export const deviceRemoveController: Controller<Context<RequestData>> = async (
   ctx,
-): Promise<ControllerResponse<Record<string, never>>> => {
+): ControllerResponse => {
   const {
     entity: { device },
-    logger,
     repository: { deviceRepository },
-    token: { bearerToken },
   } = ctx;
-
-  logger.debug("device removal requested", {
-    id: device.id,
-    accountId: device.accountId,
-  });
-
-  assertBearerToDevice(bearerToken, device);
 
   await deviceRepository.remove(device);
 
-  logger.info("device removal successful");
-
   return {
-    body: {},
-    status: HttpStatus.Success.OK,
+    data: {},
   };
 };

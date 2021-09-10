@@ -1,13 +1,17 @@
 import { ChallengeSession, Device, EnrolmentSession } from "../entity";
-import { DeviceRepository, ChallengeSessionCache, EnrolmentSessionCache } from "../infrastructure";
 import { IssuerVerifyData, TokenIssuer } from "@lindorm-io/jwt";
 import { KeyPair, Keystore } from "@lindorm-io/key-pair";
 import { KeyPairCache, KeyPairRepository } from "@lindorm-io/koa-keystore";
 import { KoaContext } from "@lindorm-io/koa";
 import { MongoConnection } from "@lindorm-io/mongo";
 import { RedisConnection } from "@lindorm-io/redis";
+import {
+  ChallengeSessionCache,
+  DeviceRepository,
+  EnrolmentSessionCache,
+} from "../infrastructure";
 
-export interface DeviceContext<Body = Record<string, any>> extends KoaContext<Body> {
+export interface Context<Body = Record<string, any>> extends KoaContext<Body> {
   cache: {
     challengeSessionCache: ChallengeSessionCache;
     enrolmentSessionCache: EnrolmentSessionCache;
@@ -30,9 +34,9 @@ export interface DeviceContext<Body = Record<string, any>> extends KoaContext<Bo
     keyPairRepository: KeyPairRepository;
   };
   token: {
-    bearerToken: IssuerVerifyData<unknown>;
-    challengeSessionToken: IssuerVerifyData<unknown>;
-    challengeConfirmationToken: IssuerVerifyData<unknown>;
-    enrolmentSessionToken: IssuerVerifyData<unknown>;
+    bearerToken: IssuerVerifyData<never, never>;
+    challengeSessionToken: IssuerVerifyData<unknown, unknown>;
+    challengeConfirmationToken: IssuerVerifyData<unknown, unknown>;
+    enrolmentSessionToken: IssuerVerifyData<unknown, unknown>;
   };
 }

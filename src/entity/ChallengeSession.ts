@@ -1,39 +1,42 @@
 import Joi from "joi";
 import { ChallengeStrategy } from "../enum";
-import { EntityAttributes, LindormEntity, EntityOptions, JOI_ENTITY_BASE } from "@lindorm-io/entity";
 import { JOI_CERTIFICATE_CHALLENGE, JOI_STRATEGY } from "../constant";
+import {
+  EntityAttributes,
+  EntityKeys,
+  JOI_ENTITY_BASE,
+  LindormEntity,
+  Optional,
+} from "@lindorm-io/entity";
 
 export interface ChallengeSessionAttributes extends EntityAttributes {
   certificateChallenge: string;
   deviceId: string;
+  nonce: string;
   payload: Record<string, any>;
-  scope: Array<string>;
+  scopes: Array<string>;
   strategies: Array<ChallengeStrategy>;
 }
 
-export interface ChallengeSessionOptions extends EntityOptions {
-  certificateChallenge: string;
-  deviceId: string;
-  payload: Record<string, any>;
-  scope: Array<string>;
-  strategies: Array<ChallengeStrategy>;
-}
+export type ChallengeSessionOptions = Optional<ChallengeSessionAttributes, EntityKeys>;
 
-const schema = Joi.object({
+const schema = Joi.object<ChallengeSessionAttributes>({
   ...JOI_ENTITY_BASE,
 
   certificateChallenge: JOI_CERTIFICATE_CHALLENGE.required(),
   deviceId: Joi.string().guid().required(),
+  nonce: Joi.string().required(),
   payload: Joi.object().required(),
-  scope: Joi.array().items(Joi.string()).required(),
+  scopes: Joi.array().items(Joi.string()).required(),
   strategies: Joi.array().items(JOI_STRATEGY).required(),
 });
 
 export class ChallengeSession extends LindormEntity<ChallengeSessionAttributes> {
   public readonly certificateChallenge: string;
   public readonly deviceId: string;
+  public readonly nonce: string;
   public readonly payload: Record<string, any>;
-  public readonly scope: Array<string>;
+  public readonly scopes: Array<string>;
   public readonly strategies: Array<ChallengeStrategy>;
 
   public constructor(options: ChallengeSessionOptions) {
@@ -41,17 +44,14 @@ export class ChallengeSession extends LindormEntity<ChallengeSessionAttributes> 
 
     this.certificateChallenge = options.certificateChallenge;
     this.deviceId = options.deviceId;
+    this.nonce = options.nonce;
     this.payload = options.payload;
-    this.scope = options.scope;
+    this.scopes = options.scopes;
     this.strategies = options.strategies;
   }
 
   public create(): void {
     /* intentionally left empty */
-  }
-
-  public getKey(): string {
-    return this.id;
   }
 
   public async schemaValidation(): Promise<void> {
@@ -64,8 +64,9 @@ export class ChallengeSession extends LindormEntity<ChallengeSessionAttributes> 
 
       certificateChallenge: this.certificateChallenge,
       deviceId: this.deviceId,
+      nonce: this.nonce,
       payload: this.payload,
-      scope: this.scope,
+      scopes: this.scopes,
       strategies: this.strategies,
     };
   }

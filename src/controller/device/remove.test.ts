@@ -1,50 +1,30 @@
 import MockDate from "mockdate";
-import { logger } from "../../test";
-import { deviceRemove } from "./remove";
-import { assertBearerToDevice as _assertBearerToDevice } from "../../util";
+import { deviceRemoveController } from "./remove";
+import { getTestDevice } from "../../test";
 
 MockDate.set("2021-01-01T08:00:00.000Z");
 
-jest.mock("../../util", () => ({
-  assertBearerToDevice: jest.fn(),
-}));
-
-const assertBearerToDevice = _assertBearerToDevice as unknown as jest.Mock;
-
-describe("deviceRemove", () => {
+describe("deviceRemoveController", () => {
   let ctx: any;
 
   beforeEach(async () => {
     ctx = {
       entity: {
-        device: { id: "deviceId", accountId: "accountId" },
+        device: await getTestDevice(),
       },
-      logger,
       repository: {
-        deviceRepository: { remove: jest.fn() },
-      },
-      token: {
-        bearerToken: "bearerToken",
+        deviceRepository: {
+          remove: jest.fn(),
+        },
       },
     };
   });
 
   test("should resolve and remove device", async () => {
-    await expect(deviceRemove(ctx)).resolves.toStrictEqual({
-      body: {},
-      status: 200,
+    await expect(deviceRemoveController(ctx)).resolves.toStrictEqual({
+      data: {},
     });
 
-    expect(assertBearerToDevice).toHaveBeenCalledWith(
-      "bearerToken",
-      expect.objectContaining({
-        id: "deviceId",
-      }),
-    );
-    expect(ctx.repository.deviceRepository.remove).toHaveBeenCalledWith(
-      expect.objectContaining({
-        id: "deviceId",
-      }),
-    );
+    expect(ctx.repository.deviceRepository.remove).toHaveBeenCalled();
   });
 });

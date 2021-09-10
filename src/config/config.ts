@@ -1,11 +1,14 @@
-import dotenv from "dotenv";
 import { ConfigHandler } from "./ConfigHandler";
-import { MongoConnectionType } from "@lindorm-io/mongo";
+import { MongoConnectionOptions, MongoConnectionType } from "@lindorm-io/mongo";
 import { NodeEnvironment } from "@lindorm-io/koa-config";
-import { RedisConnectionType } from "@lindorm-io/redis";
-import { developmentConfig, environmentConfig, productionConfig, stagingConfig, testConfig } from "./files";
-
-if (!process.env.NODE_ENV) dotenv.config();
+import { RedisConnectionOptions, RedisConnectionType } from "@lindorm-io/redis";
+import {
+  developmentConfig,
+  environmentConfig,
+  productionConfig,
+  stagingConfig,
+  testConfig,
+} from "./files";
 
 const handler = new ConfigHandler({
   productionConfig,
@@ -17,24 +20,28 @@ const handler = new ConfigHandler({
 
 export const { NODE_ENVIRONMENT } = environmentConfig;
 export const IS_TEST = NODE_ENVIRONMENT === NodeEnvironment.TEST;
-export const config = handler.get(process.env.NODE_ENV);
+export const config = handler.get(NODE_ENVIRONMENT);
 
 export const BASIC_AUTH_CLIENTS = {
-  clients: [{ username: config.BASIC_AUTH_USERNAME, password: config.BASIC_AUTH_PASSWORD }],
+  clients: [
+    { username: config.BASIC_AUTH_USERNAME, password: config.BASIC_AUTH_PASSWORD },
+  ],
 };
 
-export const REDIS_CONNECTION_OPTIONS = {
-  type: RedisConnectionType.CACHE,
+export const REDIS_CONNECTION_OPTIONS: RedisConnectionOptions = {
+  host: config.REDIS_HOST,
+  password: config.REDIS_PASSWORD,
   port: config.REDIS_PORT,
+  type: RedisConnectionType.CACHE,
 };
 
-export const MONGO_CONNECTION_OPTIONS = {
+export const MONGO_CONNECTION_OPTIONS: MongoConnectionOptions = {
   auth: {
-    user: config.MONGO_INITDB_ROOT_USERNAME,
-    password: config.MONGO_INITDB_ROOT_PASSWORD,
+    user: config.MONGO_USERNAME,
+    password: config.MONGO_PASSWORD,
   },
   databaseName: config.MONGO_DB_NAME,
   hostname: config.MONGO_HOST,
-  port: config.MONGO_EXPOSE_PORT,
+  port: config.MONGO_PORT,
   type: MongoConnectionType.STORAGE,
 };

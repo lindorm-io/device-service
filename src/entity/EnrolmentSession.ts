@@ -1,61 +1,73 @@
 import Joi from "joi";
-import { EntityAttributes, LindormEntity, EntityOptions, JOI_ENTITY_BASE } from "@lindorm-io/entity";
-import { JOI_CERTIFICATE_CHALLENGE } from "../constant";
+import { CertificateMethod } from "../enum";
+import { JOI_CERTIFICATE_CHALLENGE, JOI_CERTIFICATE_METHOD } from "../constant";
+import {
+  EntityAttributes,
+  LindormEntity,
+  JOI_ENTITY_BASE,
+  Optional,
+  EntityKeys,
+} from "@lindorm-io/entity";
 
 export interface EnrolmentSessionAttributes extends EntityAttributes {
-  accountId: string;
   certificateChallenge: string;
+  certificateMethod: CertificateMethod;
+  identityId: string;
+  installationId: string;
   macAddress: string;
   name: string;
+  os: string;
+  platform: string;
   publicKey: string;
   uniqueId: string;
 }
 
-export interface EnrolmentSessionOptions extends EntityOptions {
-  accountId: string;
-  certificateChallenge: string;
-  macAddress: string;
-  name: string;
-  publicKey: string;
-  uniqueId: string;
-}
+export type EnrolmentSessionOptions = Optional<EnrolmentSessionAttributes, EntityKeys>;
 
 const schema = Joi.object({
   ...JOI_ENTITY_BASE,
 
-  accountId: Joi.string().guid().required(),
-  certificateChallenge: JOI_CERTIFICATE_CHALLENGE,
+  certificateChallenge: JOI_CERTIFICATE_CHALLENGE.required(),
+  certificateMethod: JOI_CERTIFICATE_METHOD.required(),
+  identityId: Joi.string().guid().required(),
+  installationId: Joi.string().guid().required(),
   macAddress: Joi.string().required(),
   name: Joi.string().required(),
+  os: Joi.string().required(),
+  platform: Joi.string().required(),
   publicKey: Joi.string().required(),
   uniqueId: Joi.string().required(),
 });
 
 export class EnrolmentSession extends LindormEntity<EnrolmentSessionAttributes> {
-  public readonly accountId: string;
   public readonly certificateChallenge: string;
+  public readonly certificateMethod: CertificateMethod;
+  public readonly identityId: string;
+  public readonly installationId: string;
   public readonly macAddress: string;
   public readonly name: string;
+  public readonly os: string;
+  public readonly platform: string;
   public readonly publicKey: string;
   public readonly uniqueId: string;
 
   public constructor(options: EnrolmentSessionOptions) {
     super(options);
 
-    this.accountId = options.accountId;
     this.certificateChallenge = options.certificateChallenge;
+    this.certificateMethod = options.certificateMethod;
+    this.identityId = options.identityId;
+    this.installationId = options.installationId;
     this.macAddress = options.macAddress;
     this.name = options.name;
+    this.os = options.os;
+    this.platform = options.platform;
     this.publicKey = options.publicKey;
     this.uniqueId = options.uniqueId;
   }
 
   public create(): void {
     /* intentionally left empty */
-  }
-
-  public getKey(): string {
-    return this.id;
   }
 
   public async schemaValidation(): Promise<void> {
@@ -66,10 +78,14 @@ export class EnrolmentSession extends LindormEntity<EnrolmentSessionAttributes> 
     return {
       ...this.defaultJSON(),
 
-      accountId: this.accountId,
       certificateChallenge: this.certificateChallenge,
+      certificateMethod: this.certificateMethod,
+      identityId: this.identityId,
+      installationId: this.installationId,
       macAddress: this.macAddress,
       name: this.name,
+      os: this.os,
+      platform: this.platform,
       publicKey: this.publicKey,
       uniqueId: this.uniqueId,
     };

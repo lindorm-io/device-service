@@ -1,108 +1,91 @@
-import { Audience, ChallengeStrategy } from "../../enum";
+import Joi from "joi";
 import { ChallengeSession } from "../../entity";
-import { ClientError } from "@lindorm-io/errors";
-import { Controller, ControllerResponse, HttpStatus } from "@lindorm-io/koa";
-import { DeviceContext } from "../../typing";
+import { ChallengeStrategy, TokenType } from "../../enum";
+import { Context } from "../../typing";
+import { Controller, ControllerResponse } from "@lindorm-io/koa";
+import { JOI_GUID } from "../../constant";
 import { config } from "../../config";
-import { getRandomValue, stringComparison } from "@lindorm-io/core";
+import { getRandomValue, stringToSeconds } from "@lindorm-io/core";
 import { sortedUniq } from "lodash";
 
-interface RequestBody {
-  accountId: string;
+interface RequestData {
   deviceId: string;
+  identityId: string;
+  nonce: string;
   payload: Record<string, any>;
   scope: string;
 }
 
-interface ResponseBody {
+interface ResponseData {
   certificateChallenge: string;
   challengeSessionToken: string;
   expiresIn: number;
   strategies: Array<ChallengeStrategy>;
 }
 
-export const challengeInitialise: Controller<DeviceContext<RequestBody>> = async (
+export const challengeInitialiseSchema = Joi.object<RequestData>({
+  deviceId: JOI_GUID.required(),
+  identityId: JOI_GUID.required(),
+  nonce: Joi.string().required(),
+  payload: Joi.object().required(),
+  scope: Joi.string().required(),
+});
+
+export const challengeInitialiseController: Controller<Context<RequestData>> = async (
   ctx,
-): Promise<ControllerResponse<ResponseBody>> => {
+): ControllerResponse<ResponseData> => {
   const {
     cache: { challengeSessionCache },
+    data: { nonce, payload, scope },
     entity: { device },
     jwt,
-    logger,
-    metadata: { clientId, deviceId },
-    request: {
-      body: { accountId, payload, scope },
+    metadata: {
+      client: { id: clientId },
     },
   } = ctx;
 
-  logger.debug("challenge session initialisation requested", {
-    accountId,
-    clientId,
-    deviceId: device.id,
-    payload,
-    scope,
-  });
+  const scopes = scope.split(" ");
 
-  if (!stringComparison(device.id, deviceId)) {
-    throw new ClientError("Device Conflict", {
-      debug: {
-        expect: device.id,
-        actual: deviceId,
-      },
-      description: "Invalid device id",
-      statusCode: ClientError.StatusCode.CONFLICT,
-    });
-  }
-  if (!stringComparison(device.accountId, accountId)) {
-    throw new ClientError("Device Conflict", {
-      debug: {
-        expect: device.accountId,
-        actual: accountId,
-      },
-      description: "Invalid account id",
-      statusCode: ClientError.StatusCode.CONFLICT,
-    });
-  }
-
-  const strategies: Array<ChallengeStrategy> = [
-    ChallengeStrategy.IMPLICIT,
-    ChallengeStrategy.RECOVERY,
-    ChallengeStrategy.PINCODE,
-  ];
+  const strategies: Array<ChallengeStrategy> = [ChallengeStrategy.IMPLICIT];
 
   if (device.biometry) {
     strategies.push(ChallengeStrategy.BIOMETRY);
   }
 
-  const { id, expiresIn, token } = jwt.sign({
-    audience: Audience.CHALLENGE_SESSION,
-    clientId,
-    deviceId: device.id,
-    expiry: config.CHALLENGE_SESSION_EXPIRY,
-    subject: device.accountId,
-  });
+  if (device.pincode) {
+    strategies.push(ChallengeStrategy.PINCODE);
+  }
 
-  const challengeSession = await challengeSessionCache.create(
+  const certificateChallenge = getRandomValue(128);
+  const expiresIn = stringToSeconds(config.EXPIRY_CHALLENGE_SESSION);
+
+  const session = await challengeSessionCache.create(
     new ChallengeSession({
-      id,
-      certificateChallenge: getRandomValue(64),
+      certificateChallenge,
       deviceId: device.id,
+      nonce,
       payload,
-      scope: scope.split(" "),
+      scopes,
       strategies,
     }),
     expiresIn,
   );
 
-  logger.info("challenge session initialised");
+  const { token } = jwt.sign({
+    audiences: [clientId],
+    expiry: config.EXPIRY_CHALLENGE_SESSION,
+    sessionId: session.id,
+    subject: device.identityId,
+    subjectHint: "identity",
+    type: TokenType.CHALLENGE_SESSION_TOKEN,
+  });
 
   return {
-    body: {
-      certificateChallenge: challengeSession.certificateChallenge,
+    data: {
+      certificateChallenge,
       challengeSessionToken: token,
       expiresIn,
       strategies: sortedUniq(strategies),
     },
-    status: HttpStatus.Success.OK,
   };
 };

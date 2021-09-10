@@ -1,43 +1,47 @@
-import { Controller, ControllerResponse, HttpStatus } from "@lindorm-io/koa";
-import { DeviceContext } from "../../typing";
-import { assertBearerToDevice, assertChallengeConfirmationToDevice } from "../../util";
-import { cryptoLayered } from "../../crypto";
+import Joi from "joi";
+import { Context } from "../../typing";
+import { Controller, ControllerResponse } from "@lindorm-io/koa";
+import { JOI_BIOMETRY, JOI_GUID, JOI_JWT } from "../../constant";
+import { cryptoLayered } from "../../instance";
 
-interface RequestBody {
-  biometry: string;
+interface RequestData {
+  id: string;
   challengeConfirmationToken: string;
+  biometry: string;
 }
 
-export const deviceUpdateBiometry: Controller<DeviceContext<RequestBody>> = async (
+export const deviceUpdateBiometrySchema = Joi.object<RequestData>({
+  id: JOI_GUID.required(),
+  challengeConfirmationToken: JOI_JWT.required(),
+  biometry: JOI_BIOMETRY.required(),
+});
+
+export const deviceUpdateBiometryController: Controller<Context<RequestData>> = async (
   ctx,
-): Promise<ControllerResponse<Record<string, never>>> => {
+): ControllerResponse => {
   const {
+    data: { biometry },
     entity: { device },
-    logger,
-    repository: { deviceRepository },
-    request: {
-      body: { biometry },
+    metadata: {
+      agent: { os },
+      device: { name },
     },
-    token: { bearerToken, challengeConfirmationToken },
+    repository: { deviceRepository },
   } = ctx;
-
-  logger.debug("device biometry change requested", {
-    id: device.id,
-    accountId: device.accountId,
-    biometry,
-  });
-
-  assertBearerToDevice(bearerToken, device);
-  assertChallengeConfirmationToDevice(challengeConfirmationToken, device);
 
   device.biometry = await cryptoLayered.encrypt(biometry);
 
+  if (name && name !== device.name) {
+    device.name = name;
+  }
+
+  if (os && os !== device.os) {
+    device.os = os;
+  }
+
   await deviceRepository.update(device);
 
-  logger.info("device biometry change concluded");
-
   return {
-    body: {},
-    status: HttpStatus.Success.OK,
+    data: {},
   };
 };

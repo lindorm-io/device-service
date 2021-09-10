@@ -1,31 +1,35 @@
-import { Configuration } from "../ConfigHandler";
+import { Configuration } from "../interface";
 
 export const testConfig: Configuration = {
   NODE_ENVIRONMENT: process.env.NODE_ENV,
-  SERVER_PORT: 3001,
-  HOST: "https://test.device.lindorm.io",
+  SERVER_PORT: 3000,
+  HOST: "https://device.test.api.lindorm.io",
 
+  // Auth
   BASIC_AUTH_USERNAME: "secret",
   BASIC_AUTH_PASSWORD: "secret",
 
-  AUTH_JWT_ISSUER: "https://test.authentication.lindorm.io",
-  AUTH_WEB_KEY_HOST: "https://test.authentication.lindorm.io",
+  // Bearer Auth
+  BEARER_TOKEN_ISSUER: "https://oauth.test.api.lindorm.io",
 
-  DEVICE_JWT_ISSUER: "https://test.device.lindorm.io",
-
+  // Crypto
   CRYPTO_AES_SECRET: "secret",
   CRYPTO_SHA_SECRET: "secret",
 
-  ENROLMENT_CONFIRMATION_EXPIRY: "10 minutes",
-  ENROLMENT_SESSION_EXPIRY: "5 minutes",
-  CHALLENGE_CONFIRMATION_EXPIRY: "10 minutes",
-  CHALLENGE_SESSION_EXPIRY: "5 minutes",
+  // Expiry
+  EXPIRY_CHALLENGE_CONFIRMATION_TOKEN: "10 minutes",
+  EXPIRY_CHALLENGE_SESSION: "3 minutes",
+  EXPIRY_ENROLMENT_SESSION: "5 minutes",
 
+  // Redis
+  REDIS_HOST: "localhost",
   REDIS_PORT: 6379,
+  REDIS_PASSWORD: "secret",
 
-  MONGO_INITDB_ROOT_USERNAME: "root",
-  MONGO_INITDB_ROOT_PASSWORD: "password",
+  // Mongo
   MONGO_HOST: "localhost",
-  MONGO_EXPOSE_PORT: 27017,
+  MONGO_PORT: 27017,
   MONGO_DB_NAME: "device",
+  MONGO_USERNAME: "secret",
+  MONGO_PASSWORD: "secret",
 };

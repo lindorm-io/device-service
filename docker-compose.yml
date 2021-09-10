@@ -13,9 +13,10 @@ services:
 
   redis:
     image: redis
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
     restart: always
     volumes:
-      - ./data/redis:/var/lib/redis
+      - ./data/redis:/data
       - ./redis.conf:/usr/local/etc/redis/redis.conf
     ports:
       - 6379:6379
