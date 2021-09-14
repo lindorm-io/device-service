@@ -27,10 +27,14 @@ export default router;
 router.post(
   "/",
   schemaMiddleware("data", challengeInitialiseSchema),
-  assertionMiddleware("data.deviceId", "metadata.device.id"),
+  assertionMiddleware({
+    fromPath: { expect: "data.deviceId", actual: "metadata.device.id" },
+  }),
 
   deviceEntityMiddleware("data.deviceId"),
-  assertionMiddleware("data.identityId", "entity.device.identityId"),
+  assertionMiddleware({
+    fromPath: { expect: "data.identityId", actual: "entity.device.identityId" },
+  }),
 
   createController(challengeInitialiseController),
 );
@@ -41,15 +45,41 @@ router.post(
   schemaMiddleware("data", challengeConfirmSchema),
 
   challengeSessionTokenMiddleware("data.challengeSessionToken"),
-  assertionMiddleware("data.id", "token.challengeSessionToken.sessionId"),
+  assertionMiddleware({
+    fromPath: {
+      expect: "data.id",
+      actual: "token.challengeSessionToken.sessionId",
+    },
+  }),
 
   challengeSessionEntityMiddleware("data.id"),
-  assertionMiddleware("entity.challengeSession.strategies", "data.strategy", includes),
+  assertionMiddleware({
+    assertion: includes,
+    fromPath: {
+      expect: "entity.challengeSession.strategies",
+      actual: "data.strategy",
+    },
+  }),
 
   deviceEntityMiddleware("entity.challengeSession.deviceId"),
-  assertionMiddleware("entity.device.id", "metadata.device.id"),
-  assertionMiddleware("entity.device.installationId", "metadata.device.installationId"),
-  assertionMiddleware("entity.device.uniqueId", "metadata.device.uniqueId"),
+  assertionMiddleware({
+    fromPath: {
+      expect: "entity.device.id",
+      actual: "metadata.device.id",
+    },
+  }),
+  assertionMiddleware({
+    fromPath: {
+      expect: "entity.device.installationId",
+      actual: "metadata.device.installationId",
+    },
+  }),
+  assertionMiddleware({
+    fromPath: {
+      expect: "entity.device.uniqueId",
+      actual: "metadata.device.uniqueId",
+    },
+  }),
 
   createController(challengeConfirmController),
 );
@@ -60,7 +90,12 @@ router.post(
   schemaMiddleware("data", challengeRejectSchema),
 
   challengeSessionTokenMiddleware("data.challengeSessionToken"),
-  assertionMiddleware("data.id", "token.challengeSessionToken.sessionId"),
+  assertionMiddleware({
+    fromPath: {
+      expect: "data.id",
+      actual: "token.challengeSessionToken.sessionId",
+    },
+  }),
 
   challengeSessionEntityMiddleware("data.id"),
 

@@ -38,7 +38,12 @@ router.post(
   schemaMiddleware("data", enrolmentConfirmSchema),
 
   enrolmentSessionTokenMiddleware("data.enrolmentSessionToken"),
-  assertionMiddleware("data.id", "token.enrolmentSessionToken.sessionId"),
+  assertionMiddleware({
+    fromPath: {
+      expect: "data.id",
+      actual: "token.enrolmentSessionToken.sessionId",
+    },
+  }),
 
   enrolmentSessionEntityMiddleware("data.id"),
 
@@ -57,7 +62,12 @@ router.post(
   schemaMiddleware("data", enrolmentRejectSchema),
 
   enrolmentSessionTokenMiddleware("data.enrolmentSessionToken"),
-  assertionMiddleware("data.id", "token.enrolmentSessionToken.sessionId"),
+  assertionMiddleware({
+    fromPath: {
+      expect: "data.id",
+      actual: "token.enrolmentSessionToken.sessionId",
+    },
+  }),
 
   enrolmentSessionEntityMiddleware("data.id"),
 

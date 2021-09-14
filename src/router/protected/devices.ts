@@ -66,7 +66,12 @@ router.put(
   schemaMiddleware("data", deviceUpdateBiometrySchema),
 
   challengeConfirmationTokenMiddleware("data.challengeConfirmationToken"),
-  assertionMiddleware("data.id", "token.challengeConfirmationToken.claims.deviceId"),
+  assertionMiddleware({
+    fromPath: {
+      expect: "data.id",
+      actual: "token.challengeConfirmationToken.claims.deviceId",
+    },
+  }),
 
   deviceEntityMiddleware("data.id"),
 
@@ -85,7 +90,12 @@ router.put(
   schemaMiddleware("data", deviceUpdatePincodeSchema),
 
   challengeConfirmationTokenMiddleware("data.challengeConfirmationToken"),
-  assertionMiddleware("data.id", "token.challengeConfirmationToken.claims.deviceId"),
+  assertionMiddleware({
+    fromPath: {
+      expect: "data.id",
+      actual: "token.challengeConfirmationToken.claims.deviceId",
+    },
+  }),
 
   deviceEntityMiddleware("data.id"),
 
