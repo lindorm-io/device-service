@@ -1,5 +1,5 @@
-import { getTestChallengeSession } from "../../test";
 import { challengeRejectController } from "./reject";
+import { getTestChallengeSession } from "../../test";
 
 describe("challengeRejectController", () => {
   let ctx: any;
@@ -8,7 +8,7 @@ describe("challengeRejectController", () => {
     ctx = {
       cache: {
         challengeSessionCache: {
-          remove: jest.fn(),
+          destroy: jest.fn(),
         },
       },
       entity: {
@@ -20,6 +20,6 @@ describe("challengeRejectController", () => {
   test("should resolve with removed session", async () => {
     await expect(challengeRejectController(ctx)).resolves.toBeTruthy();
 
-    expect(ctx.cache.challengeSessionCache.remove).toHaveBeenCalled();
+    expect(ctx.cache.challengeSessionCache.destroy).toHaveBeenCalled();
   });
 });

@@ -1,24 +1,15 @@
-import { Db } from "mongodb";
-import { Logger } from "@lindorm-io/winston";
-import { MONGO_CONNECTION_OPTIONS } from "../config";
-import { mongoQuery } from "@lindorm-io/mongo";
+import { mongoQuery, QueryCallback } from "@lindorm-io/mongo";
 import { winston } from "../logger";
+import { mongoConnection } from "../instance";
 
-(async (): Promise<void> => {
-  try {
-    await mongoQuery(
-      { logger: winston, mongoOptions: MONGO_CONNECTION_OPTIONS },
-      async ({ db }: { db: Db; logger: Logger }) => {
-        const collections = await db.collections();
+const callback: QueryCallback = async ({ db }) => {
+  const collections = await db.collections();
 
-        for (const collection of collections) {
-          await collection.dropIndexes();
-        }
-      },
-    );
-  } catch (err) {
-    winston.error("error", err);
-  } finally {
-    process.exit(0);
+  for (const collection of collections) {
+    await collection.dropIndexes();
   }
-})();
+};
+
+mongoQuery(mongoConnection, winston, callback)
+  .then(() => process.exit(0))
+  .catch(() => process.exit(1));

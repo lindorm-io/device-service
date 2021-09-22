@@ -5,7 +5,7 @@ MockDate.set("2021-01-01T08:00:00.000Z");
 
 jest.mock("@lindorm-io/core", () => ({
   ...(jest.requireActual("@lindorm-io/core") as object),
-  getRandomValue: () => "random-value",
+  getRandomString: () => "random-value",
 }));
 
 describe("enrolmentInitialiseController", () => {

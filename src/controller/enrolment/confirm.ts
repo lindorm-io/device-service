@@ -1,13 +1,13 @@
 import Joi from "joi";
+import { ChallengeStrategy, TokenType } from "../../enum";
 import { Context } from "../../typing";
 import { Controller, ControllerResponse } from "@lindorm-io/koa";
 import { Device } from "../../entity";
 import { JOI_BIOMETRY, JOI_GUID, JOI_JWT, JOI_PINCODE } from "../../constant";
-import { ChallengeStrategy, TokenType } from "../../enum";
 import { assertCertificateChallenge } from "../../util";
 import { config } from "../../config";
 import { cryptoLayered } from "../../instance";
-import { getRandomValue } from "@lindorm-io/core";
+import { getRandomString } from "@lindorm-io/core";
 
 interface RequestData {
   id: string;
@@ -78,7 +78,7 @@ export const enrolmentConfirmController: Controller<Context<RequestData>> = asyn
       strategy: ChallengeStrategy.IMPLICIT,
     },
     expiry: config.EXPIRY_CHALLENGE_CONFIRMATION_TOKEN,
-    nonce: getRandomValue(16),
+    nonce: getRandomString(16),
     payload: {},
     scopes: ["enrolment"],
     sessionId: enrolmentSession.id,
@@ -87,7 +87,7 @@ export const enrolmentConfirmController: Controller<Context<RequestData>> = asyn
     type: TokenType.CHALLENGE_CONFIRMATION_TOKEN,
   });
 
-  await enrolmentSessionCache.remove(enrolmentSession);
+  await enrolmentSessionCache.destroy(enrolmentSession);
 
   return {
     data: {

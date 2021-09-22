@@ -102,7 +102,7 @@ export const challengeConfirmController: Controller<Context<RequestData>> = asyn
     type: TokenType.CHALLENGE_CONFIRMATION_TOKEN,
   });
 
-  await challengeSessionCache.remove(challengeSession);
+  await challengeSessionCache.destroy(challengeSession);
 
   return {
     data: {

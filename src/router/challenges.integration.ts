@@ -1,9 +1,8 @@
 import MockDate from "mockdate";
 import request from "supertest";
 import { ChallengeStrategy } from "../enum";
-import { getRandomValue } from "@lindorm-io/core";
+import { getRandomString } from "@lindorm-io/core";
 import { koa } from "../server/koa";
-import { v4 as uuid } from "uuid";
 import {
   TEST_CHALLENGE_SESSION_CACHE,
   TEST_DEVICE_REPOSITORY,
@@ -13,6 +12,7 @@ import {
   setupIntegration,
   signTestChallenge,
 } from "../test";
+import { randomUUID } from "crypto";
 
 MockDate.set("2021-01-01T08:00:00.000Z");
 
@@ -20,11 +20,7 @@ describe("/challenges", () => {
   beforeAll(setupIntegration);
 
   test("POST /", async () => {
-    const device = await TEST_DEVICE_REPOSITORY.create(
-      await getTestDevice({
-        id: uuid(),
-      }),
-    );
+    const device = await TEST_DEVICE_REPOSITORY.create(await getTestDevice());
 
     const response = await request(koa.callback())
       .post("/challenges")
@@ -33,7 +29,7 @@ describe("/challenges", () => {
       .send({
         deviceId: device.id,
         identityId: device.identityId,
-        nonce: getRandomValue(16),
+        nonce: getRandomString(16),
         payload: { integration: true },
         scope: "integration test",
       })
@@ -48,14 +44,10 @@ describe("/challenges", () => {
   });
 
   test("POST /:id/confirm [ IMPLICIT ]", async () => {
-    const device = await TEST_DEVICE_REPOSITORY.create(
-      await getTestDevice({
-        id: uuid(),
-      }),
-    );
+    const device = await TEST_DEVICE_REPOSITORY.create(await getTestDevice());
     const session = await TEST_CHALLENGE_SESSION_CACHE.create(
       getTestChallengeSession({
-        id: uuid(),
+        id: randomUUID(),
         deviceId: device.id,
       }),
     );
@@ -87,14 +79,10 @@ describe("/challenges", () => {
   });
 
   test("POST /:id/confirm [ BIOMETRY ]", async () => {
-    const device = await TEST_DEVICE_REPOSITORY.create(
-      await getTestDevice({
-        id: uuid(),
-      }),
-    );
+    const device = await TEST_DEVICE_REPOSITORY.create(await getTestDevice());
     const session = await TEST_CHALLENGE_SESSION_CACHE.create(
       getTestChallengeSession({
-        id: uuid(),
+        id: randomUUID(),
         deviceId: device.id,
       }),
     );
@@ -128,14 +116,10 @@ describe("/challenges", () => {
   });
 
   test("POST /:id/confirm [ PINCODE ]", async () => {
-    const device = await TEST_DEVICE_REPOSITORY.create(
-      await getTestDevice({
-        id: uuid(),
-      }),
-    );
+    const device = await TEST_DEVICE_REPOSITORY.create(await getTestDevice());
     const session = await TEST_CHALLENGE_SESSION_CACHE.create(
       getTestChallengeSession({
-        id: uuid(),
+        id: randomUUID(),
         deviceId: device.id,
       }),
     );
@@ -168,14 +152,10 @@ describe("/challenges", () => {
   });
 
   test("POST /:id/reject", async () => {
-    const device = await TEST_DEVICE_REPOSITORY.create(
-      await getTestDevice({
-        id: uuid(),
-      }),
-    );
+    const device = await TEST_DEVICE_REPOSITORY.create(await getTestDevice());
     const session = await TEST_CHALLENGE_SESSION_CACHE.create(
       getTestChallengeSession({
-        id: uuid(),
+        id: randomUUID(),
         deviceId: device.id,
       }),
     );

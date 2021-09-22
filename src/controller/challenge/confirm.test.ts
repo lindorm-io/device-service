@@ -32,7 +32,7 @@ describe("challengeConfirmController", () => {
     ctx = {
       cache: {
         challengeSessionCache: {
-          remove: jest.fn(),
+          destroy: jest.fn(),
         },
       },
       data: {
@@ -83,7 +83,7 @@ describe("challengeConfirmController", () => {
 
     expect(ctx.jwt.sign).toHaveBeenCalled();
 
-    expect(ctx.cache.challengeSessionCache.remove).toHaveBeenCalled();
+    expect(ctx.cache.challengeSessionCache.destroy).toHaveBeenCalled();
   });
 
   test("should resolve challenge session with PINCODE", async () => {

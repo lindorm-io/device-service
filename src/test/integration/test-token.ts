@@ -2,7 +2,7 @@ import { IssuerSignOptions } from "@lindorm-io/jwt";
 import { ChallengeStrategy, TokenType } from "../../enum";
 import { getTestDeviceJwt, getTestJwt } from "./test-jwt";
 import { config } from "../../config";
-import { getRandomValue } from "@lindorm-io/core";
+import { getRandomString } from "@lindorm-io/core";
 
 export const getTestAccessToken = (
   options: Partial<IssuerSignOptions<any, any>> = {},
@@ -34,7 +34,7 @@ export const getTestChallengeConfirmationToken = (
       ...(options.claims || {}),
     },
     expiry: config.EXPIRY_CHALLENGE_CONFIRMATION_TOKEN,
-    nonce: getRandomValue(16),
+    nonce: getRandomString(16),
     payload: { generated: true },
     scopes: ["test"],
     sessionId: "id",

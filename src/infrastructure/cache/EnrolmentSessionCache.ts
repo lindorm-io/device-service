@@ -9,6 +9,7 @@ export class EnrolmentSessionCache extends LindormCache<
     super({
       ...options,
       entityName: "EnrolmentSession",
+      indexedAttributes: [],
     });
   }
 

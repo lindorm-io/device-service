@@ -8,7 +8,7 @@ describe("enrolmentRejectController", () => {
     ctx = {
       cache: {
         enrolmentSessionCache: {
-          remove: jest.fn(),
+          destroy: jest.fn(),
         },
       },
       entity: {
@@ -20,6 +20,6 @@ describe("enrolmentRejectController", () => {
   test("should resolve with removed session", async () => {
     await expect(enrolmentRejectController(ctx)).resolves.toBeTruthy();
 
-    expect(ctx.cache.enrolmentSessionCache.remove).toHaveBeenCalled();
+    expect(ctx.cache.enrolmentSessionCache.destroy).toHaveBeenCalled();
   });
 });

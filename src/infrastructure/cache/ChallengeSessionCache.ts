@@ -9,6 +9,7 @@ export class ChallengeSessionCache extends LindormCache<
     super({
       ...options,
       entityName: "ChallengeSession",
+      indexedAttributes: [],
     });
   }
 

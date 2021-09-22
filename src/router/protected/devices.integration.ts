@@ -1,6 +1,7 @@
 import MockDate from "mockdate";
 import request from "supertest";
 import { EntityNotFoundError } from "@lindorm-io/entity";
+import { getRandomNumber, getRandomString } from "@lindorm-io/core";
 import { koa } from "../../server/koa";
 import { randomUUID } from "crypto";
 import {
@@ -10,7 +11,6 @@ import {
   setupIntegration,
   TEST_DEVICE_REPOSITORY,
 } from "../../test";
-import { getRandomNumber, getRandomValue } from "@lindorm-io/core";
 
 MockDate.set("2021-01-01T08:00:00.000Z");
 
@@ -18,14 +18,10 @@ describe("/protected/devices", () => {
   beforeAll(setupIntegration);
 
   test("GET /", async () => {
-    await TEST_DEVICE_REPOSITORY.create(
+    const device = await TEST_DEVICE_REPOSITORY.create(await getTestDevice());
+    const device2 = await TEST_DEVICE_REPOSITORY.create(
       await getTestDevice({
-        id: "8d154126-a800-42e1-98b0-f253070df4f2",
-      }),
-    );
-    await TEST_DEVICE_REPOSITORY.create(
-      await getTestDevice({
-        id: "ca49192c-64f6-4a65-834d-72d3225b9989",
+        identityId: device.identityId,
         macAddress: "E1:9A:09:75:46:93",
         name: "My Xperia 7",
         os: "Android OS 7",
@@ -33,7 +29,9 @@ describe("/protected/devices", () => {
       }),
     );
 
-    const accessToken = getTestAccessToken();
+    const accessToken = getTestAccessToken({
+      subject: device.identityId,
+    });
 
     const response = await request(koa.callback())
       .get("/protected/devices")
@@ -43,12 +41,12 @@ describe("/protected/devices", () => {
     expect(response.body).toStrictEqual({
       devices: [
         {
-          id: "8d154126-a800-42e1-98b0-f253070df4f2",
+          id: device.id,
           name: "Test Person's iPhone",
           platform: "iPhone",
         },
         {
-          id: "ca49192c-64f6-4a65-834d-72d3225b9989",
+          id: device2.id,
           name: "My Xperia 7",
           platform: "Android",
         },
@@ -63,7 +61,9 @@ describe("/protected/devices", () => {
       }),
     );
 
-    const accessToken = getTestAccessToken();
+    const accessToken = getTestAccessToken({
+      subject: device.identityId,
+    });
 
     await request(koa.callback())
       .delete(`/protected/devices/${device.id}`)
@@ -76,13 +76,11 @@ describe("/protected/devices", () => {
   });
 
   test("GET /:id", async () => {
-    const device = await TEST_DEVICE_REPOSITORY.create(
-      await getTestDevice({
-        id: randomUUID(),
-      }),
-    );
+    const device = await TEST_DEVICE_REPOSITORY.create(await getTestDevice());
 
-    const accessToken = getTestAccessToken();
+    const accessToken = getTestAccessToken({
+      subject: device.identityId,
+    });
 
     const response = await request(koa.callback())
       .get(`/protected/devices/${device.id}`)
@@ -91,29 +89,28 @@ describe("/protected/devices", () => {
 
     expect(response.body).toStrictEqual({
       id: device.id,
-      identity_id: "b799b044-16db-495a-b7e1-2cf3175d4b54",
-      installation_id: "12be09f5-fcd4-438f-9b5d-dc1fb11e5e75",
+      identity_id: device.identityId,
+      installation_id: device.installationId,
       mac_address: "0B:ED:A0:D5:5A:2D",
       name: "Test Person's iPhone",
       os: "iPhone OS 13_5_1",
       platform: "iPhone",
-      unique_id: "27a10522a6994bbca0e1fc666804b350",
+      unique_id: device.uniqueId,
     });
   });
 
   test("PUT /:id/biometry", async () => {
-    const device = await TEST_DEVICE_REPOSITORY.create(
-      await getTestDevice({
-        id: randomUUID(),
-      }),
-    );
+    const device = await TEST_DEVICE_REPOSITORY.create(await getTestDevice());
 
-    const accessToken = getTestAccessToken();
+    const accessToken = getTestAccessToken({
+      subject: device.identityId,
+    });
     const challengeConfirmationToken = getTestChallengeConfirmationToken({
       claims: {
         deviceId: device.id,
       },
       sessionId: randomUUID(),
+      subject: device.identityId,
     });
 
     await request(koa.callback())
@@ -121,7 +118,7 @@ describe("/protected/devices", () => {
       .set("Authorization", `Bearer ${accessToken}`)
       .send({
         challengeConfirmationToken,
-        biometry: getRandomValue(128),
+        biometry: getRandomString(128),
       })
       .expect(200);
 
@@ -131,18 +128,17 @@ describe("/protected/devices", () => {
   });
 
   test("PUT /:id/pincode", async () => {
-    const device = await TEST_DEVICE_REPOSITORY.create(
-      await getTestDevice({
-        id: randomUUID(),
-      }),
-    );
+    const device = await TEST_DEVICE_REPOSITORY.create(await getTestDevice());
 
-    const accessToken = getTestAccessToken();
+    const accessToken = getTestAccessToken({
+      subject: device.identityId,
+    });
     const challengeConfirmationToken = getTestChallengeConfirmationToken({
       claims: {
         deviceId: device.id,
       },
       sessionId: randomUUID(),
+      subject: device.identityId,
     });
 
     await request(koa.callback())

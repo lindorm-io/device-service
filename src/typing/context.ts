@@ -17,7 +17,7 @@ export interface Context<Body = Record<string, any>> extends KoaContext<Body> {
     enrolmentSessionCache: EnrolmentSessionCache;
     keyPairCache: KeyPairCache;
   };
-  client: {
+  connection: {
     mongo: MongoConnection;
     redis: RedisConnection;
   };

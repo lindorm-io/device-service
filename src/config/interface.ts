@@ -23,6 +23,7 @@ export interface Configuration extends DefaultConfiguration {
   // Redis
   REDIS_HOST: string;
   REDIS_PORT: number;
+  REDIS_USERNAME: string;
   REDIS_PASSWORD: string;
 
   // Mongo

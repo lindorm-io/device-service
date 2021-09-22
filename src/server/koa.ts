@@ -12,8 +12,8 @@ import {
 
 export const koa = new KoaApp({
   host: config.HOST,
-  logger: winston,
   port: config.SERVER_PORT,
+  logger: winston,
 });
 
 koa.addMiddlewares(serverMiddlewares);

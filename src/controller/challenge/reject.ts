@@ -21,7 +21,7 @@ export const challengeRejectController: Controller<Context<RequestData>> = async
     entity: { challengeSession },
   } = ctx;
 
-  await challengeSessionCache.remove(challengeSession);
+  await challengeSessionCache.destroy(challengeSession);
 
   return {
     data: {},

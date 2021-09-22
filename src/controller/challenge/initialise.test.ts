@@ -6,7 +6,7 @@ MockDate.set("2021-01-01T08:00:00.000Z");
 
 jest.mock("@lindorm-io/core", () => ({
   ...(jest.requireActual("@lindorm-io/core") as object),
-  getRandomValue: () => "random-value",
+  getRandomString: () => "random-value",
 }));
 
 describe("challengeInitialiseController", () => {
@@ -55,7 +55,7 @@ describe("challengeInitialiseController", () => {
     expect(ctx.cache.challengeSessionCache.create).toHaveBeenCalledWith(
       expect.objectContaining({
         certificateChallenge: "random-value",
-        deviceId: "4bfbd305-8296-427e-b212-7f4999181e58",
+        deviceId: expect.any(String),
         nonce: "nonce",
         payload: { test: true },
         scopes: ["test"],

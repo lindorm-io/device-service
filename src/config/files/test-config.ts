@@ -24,12 +24,13 @@ export const testConfig: Configuration = {
   // Redis
   REDIS_HOST: "localhost",
   REDIS_PORT: 6379,
-  REDIS_PASSWORD: "secret",
+  REDIS_USERNAME: null,
+  REDIS_PASSWORD: null,
 
   // Mongo
   MONGO_HOST: "localhost",
   MONGO_PORT: 27017,
   MONGO_DB_NAME: "device",
-  MONGO_USERNAME: "secret",
-  MONGO_PASSWORD: "secret",
+  MONGO_USERNAME: "root",
+  MONGO_PASSWORD: "example",
 };

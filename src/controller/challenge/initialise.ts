@@ -5,7 +5,7 @@ import { Context } from "../../typing";
 import { Controller, ControllerResponse } from "@lindorm-io/koa";
 import { JOI_GUID } from "../../constant";
 import { config } from "../../config";
-import { getRandomValue, stringToSeconds } from "@lindorm-io/core";
+import { getRandomString, stringToSeconds } from "@lindorm-io/core";
 import { sortedUniq } from "lodash";
 
 interface RequestData {
@@ -56,7 +56,7 @@ export const challengeInitialiseController: Controller<Context<RequestData>> = a
     strategies.push(ChallengeStrategy.PINCODE);
   }
 
-  const certificateChallenge = getRandomValue(128);
+  const certificateChallenge = getRandomString(128);
   const expiresIn = stringToSeconds(config.EXPIRY_CHALLENGE_SESSION);
 
   const session = await challengeSessionCache.create(

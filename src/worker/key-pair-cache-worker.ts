@@ -1,4 +1,5 @@
-import { config, MONGO_CONNECTION_OPTIONS, REDIS_CONNECTION_OPTIONS } from "../config";
+import { config } from "../config";
+import { mongoConnection, redisConnection } from "../instance";
 import { winston } from "../logger";
 import {
   keyPairJwksCacheWorker,
@@ -8,12 +9,12 @@ import {
 export const keyPairJwksWorker = keyPairJwksCacheWorker({
   baseUrl: config.BEARER_TOKEN_ISSUER,
   clientName: "BearerTokenIssuer",
-  redisConnectionOptions: REDIS_CONNECTION_OPTIONS,
+  redisConnection,
   winston,
 });
 
 export const keyPairCacheWorker = keyPairMongoCacheWorker({
-  mongoConnectionOptions: MONGO_CONNECTION_OPTIONS,
-  redisConnectionOptions: REDIS_CONNECTION_OPTIONS,
+  mongoConnection,
+  redisConnection,
   winston,
 });

@@ -2,7 +2,6 @@ export * from "./in-memory";
 export * from "./setup-integration";
 export * from "./sign-test-challenge";
 export * from "./test-cache";
-export * from "./test-infrastructure";
 export * from "./test-jwt";
 export * from "./test-key-pair";
 export * from "./test-keystore";

@@ -14,7 +14,7 @@ describe("deviceRemoveController", () => {
       },
       repository: {
         deviceRepository: {
-          remove: jest.fn(),
+          destroy: jest.fn(),
         },
       },
     };
@@ -25,6 +25,6 @@ describe("deviceRemoveController", () => {
       data: {},
     });
 
-    expect(ctx.repository.deviceRepository.remove).toHaveBeenCalled();
+    expect(ctx.repository.deviceRepository.destroy).toHaveBeenCalled();
   });
 });

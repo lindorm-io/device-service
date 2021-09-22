@@ -1,7 +1,7 @@
 import { createSign } from "crypto";
 import { assertCertificateChallenge } from "./assert-certificate-challenge";
 import { CertificateMethod } from "../enum";
-import { getRandomValue } from "@lindorm-io/core";
+import { getRandomString } from "@lindorm-io/core";
 import { ClientError } from "@lindorm-io/errors";
 
 const privateKey =
@@ -44,7 +44,7 @@ describe("assertCertificateChallenge", () => {
   let certificateMethod: CertificateMethod;
 
   beforeAll(() => {
-    certificateChallenge = getRandomValue(32);
+    certificateChallenge = getRandomString(32);
   });
 
   test("should verify a signed challenge for SHA256", async () => {
@@ -91,7 +91,7 @@ describe("assertCertificateChallenge", () => {
 
     expect(() =>
       assertCertificateChallenge({
-        certificateChallenge: getRandomValue(32),
+        certificateChallenge: getRandomString(32),
         certificateMethod,
         certificateVerifier: sign(certificateMethod, certificateChallenge),
         publicKey,
@@ -130,7 +130,7 @@ describe("assertCertificateChallenge", () => {
       assertCertificateChallenge({
         certificateChallenge,
         certificateMethod,
-        certificateVerifier: sign(certificateMethod, getRandomValue(32)),
+        certificateVerifier: sign(certificateMethod, getRandomString(32)),
         publicKey,
       }),
     ).toThrow(ClientError);

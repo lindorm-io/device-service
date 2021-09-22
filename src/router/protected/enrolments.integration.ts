@@ -1,8 +1,8 @@
 import MockDate from "mockdate";
 import request from "supertest";
 import { CertificateMethod } from "../../enum";
+import { getRandomNumber, getRandomString } from "@lindorm-io/core";
 import { koa } from "../../server/koa";
-import { v4 as uuid } from "uuid";
 import {
   getTestAccessToken,
   getTestEnrolmentSession,
@@ -11,7 +11,6 @@ import {
   signTestChallenge,
   TEST_ENROLMENT_SESSION_CACHE,
 } from "../../test";
-import { getRandomNumber, getRandomValue } from "@lindorm-io/core";
 
 MockDate.set("2021-01-01T08:00:00.000Z");
 
@@ -48,19 +47,18 @@ describe("/protected/enrolments", () => {
   });
 
   test("POST /:id/confirm", async () => {
-    const session = await TEST_ENROLMENT_SESSION_CACHE.create(
-      getTestEnrolmentSession({
-        id: uuid(),
-      }),
-    );
+    const session = await TEST_ENROLMENT_SESSION_CACHE.create(getTestEnrolmentSession());
     const certificateVerifier = signTestChallenge(
       session.certificateMethod,
       session.certificateChallenge,
     );
     const enrolmentSessionToken = getTestEnrolmentSessionToken({
       sessionId: session.id,
+      subject: session.identityId,
     });
-    const accessToken = getTestAccessToken();
+    const accessToken = getTestAccessToken({
+      subject: session.identityId,
+    });
 
     const response = await request(koa.callback())
       .post(`/protected/enrolments/${session.id}/confirm`)
@@ -72,7 +70,7 @@ describe("/protected/enrolments", () => {
       .send({
         certificateVerifier,
         enrolmentSessionToken,
-        biometry: getRandomValue(128),
+        biometry: getRandomString(128),
         pincode: (await getRandomNumber(6)).toString(),
       })
       .expect(200);
@@ -85,15 +83,14 @@ describe("/protected/enrolments", () => {
   });
 
   test("POST /:id/reject", async () => {
-    const session = await TEST_ENROLMENT_SESSION_CACHE.create(
-      getTestEnrolmentSession({
-        id: uuid(),
-      }),
-    );
+    const session = await TEST_ENROLMENT_SESSION_CACHE.create(getTestEnrolmentSession());
     const enrolmentSessionToken = getTestEnrolmentSessionToken({
       sessionId: session.id,
+      subject: session.identityId,
     });
-    const accessToken = getTestAccessToken();
+    const accessToken = getTestAccessToken({
+      subject: session.identityId,
+    });
 
     await request(koa.callback())
       .post(`/protected/enrolments/${session.id}/reject`)

@@ -5,7 +5,7 @@ import { Controller, ControllerResponse } from "@lindorm-io/koa";
 import { EnrolmentSession } from "../../entity";
 import { JOI_CERTIFICATE_METHOD } from "../../constant";
 import { config } from "../../config";
-import { getRandomValue, stringToSeconds } from "@lindorm-io/core";
+import { getRandomString, stringToSeconds } from "@lindorm-io/core";
 
 interface RequestData {
   certificateMethod: CertificateMethod;
@@ -42,7 +42,7 @@ export const enrolmentInitialiseController: Controller<Context<RequestData>> = a
     },
   } = ctx;
 
-  const certificateChallenge = getRandomValue(128);
+  const certificateChallenge = getRandomString(128);
   const expiresIn = stringToSeconds(config.EXPIRY_CHALLENGE_SESSION);
 
   const session = await enrolmentSessionCache.create(

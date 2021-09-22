@@ -10,7 +10,12 @@ describe("deviceGetController", () => {
   beforeEach(async () => {
     ctx = {
       entity: {
-        device: await getTestDevice({ id: "ded67066-ba3a-4898-b537-de12d4b7f86d" }),
+        device: await getTestDevice({
+          id: "ded67066-ba3a-4898-b537-de12d4b7f86d",
+          identityId: "b799b044-16db-495a-b7e1-2cf3175d4b54",
+          installationId: "12be09f5-fcd4-438f-9b5d-dc1fb11e5e75",
+          uniqueId: "27a10522a6994bbca0e1fc666804b350",
+        }),
       },
     };
   });

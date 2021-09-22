@@ -24,7 +24,7 @@ describe("enrolmentConfirmController", () => {
     ctx = {
       cache: {
         enrolmentSessionCache: {
-          remove: jest.fn(),
+          destroy: jest.fn(),
         },
       },
       data: {
@@ -83,7 +83,7 @@ describe("enrolmentConfirmController", () => {
         biometry: "biometry-signature",
         certificateMethod: "sha512",
         identityId: "identityId",
-        installationId: "12be09f5-fcd4-438f-9b5d-dc1fb11e5e75",
+        installationId: expect.any(String),
         macAddress: "0B:ED:A0:D5:5A:2D",
         name: "Test Device Name",
         os: "iPhone OS",
@@ -96,6 +96,6 @@ describe("enrolmentConfirmController", () => {
 
     expect(ctx.jwt.sign).toHaveBeenCalled();
 
-    expect(ctx.cache.enrolmentSessionCache.remove).toHaveBeenCalled();
+    expect(ctx.cache.enrolmentSessionCache.destroy).toHaveBeenCalled();
   });
 });
