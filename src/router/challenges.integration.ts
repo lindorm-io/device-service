@@ -3,6 +3,7 @@ import request from "supertest";
 import { ChallengeStrategy } from "../enum";
 import { getRandomString } from "@lindorm-io/core";
 import { koa } from "../server/koa";
+import { randomUUID } from "crypto";
 import {
   TEST_CHALLENGE_SESSION_CACHE,
   TEST_DEVICE_REPOSITORY,
@@ -12,7 +13,6 @@ import {
   setupIntegration,
   signTestChallenge,
 } from "../test";
-import { randomUUID } from "crypto";
 
 MockDate.set("2021-01-01T08:00:00.000Z");
 
