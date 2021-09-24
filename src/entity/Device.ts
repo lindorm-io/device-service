@@ -11,6 +11,7 @@ import {
 } from "@lindorm-io/entity";
 
 export interface DeviceAttributes extends EntityAttributes {
+  active: boolean;
   biometry: string | null;
   certificateMethod: CertificateMethod;
   identityId: string;
@@ -21,14 +22,16 @@ export interface DeviceAttributes extends EntityAttributes {
   pincode: string | null;
   platform: string;
   publicKey: string;
+  trusted: boolean;
   uniqueId: string;
 }
 
-export type DeviceOptions = Optional<DeviceAttributes, EntityKeys>;
+export type DeviceOptions = Optional<DeviceAttributes, EntityKeys | "active" | "trusted">;
 
 const schema = Joi.object<DeviceAttributes>({
   ...JOI_ENTITY_BASE,
 
+  active: Joi.boolean().required(),
   biometry: JOI_SIGNATURE.allow(null).required(),
   certificateMethod: JOI_CERTIFICATE_METHOD.required(),
   identityId: JOI_GUID.required(),
@@ -39,6 +42,7 @@ const schema = Joi.object<DeviceAttributes>({
   pincode: JOI_SIGNATURE.allow(null).required(),
   platform: Joi.string().required(),
   publicKey: Joi.string().required(),
+  trusted: Joi.boolean().required(),
   uniqueId: Joi.string().required(),
 });
 
@@ -51,10 +55,12 @@ export class Device extends LindormEntity<DeviceAttributes> {
   public readonly publicKey: string;
   public readonly uniqueId: string;
 
+  private _active: boolean;
   private _biometry: string | null;
   private _name: string;
   private _os: string;
   private _pincode: string | null;
+  private _trusted: boolean;
 
   public constructor(options: DeviceOptions) {
     super(options);
@@ -67,10 +73,20 @@ export class Device extends LindormEntity<DeviceAttributes> {
     this.publicKey = options.publicKey;
     this.uniqueId = options.uniqueId;
 
+    this._active = options.active === true;
     this._biometry = options.biometry || null;
     this._name = options.name;
     this._os = options.os;
     this._pincode = options.pincode || null;
+    this._trusted = options.trusted === true;
+  }
+
+  public get active(): boolean {
+    return this._active;
+  }
+  public set active(active: boolean) {
+    this._active = active;
+    this.addEvent(DeviceEvent.ACTIVE_CHANGED, { active });
   }
 
   public get biometry(): string | null {
@@ -105,6 +121,14 @@ export class Device extends LindormEntity<DeviceAttributes> {
     this.addEvent(DeviceEvent.PINCODE_CHANGED, { pincode });
   }
 
+  public get trusted(): boolean {
+    return this._trusted;
+  }
+  public set trusted(trusted: boolean) {
+    this._trusted = trusted;
+    this.addEvent(DeviceEvent.TRUSTED_CHANGED, { trusted });
+  }
+
   public create(): void {
     for (const evt of this.events) {
       if (evt.name !== DeviceEvent.CREATED) continue;
@@ -123,6 +147,7 @@ export class Device extends LindormEntity<DeviceAttributes> {
     return {
       ...this.defaultJSON(),
 
+      active: this.active,
       biometry: this.biometry,
       certificateMethod: this.certificateMethod,
       identityId: this.identityId,
@@ -133,6 +158,7 @@ export class Device extends LindormEntity<DeviceAttributes> {
       pincode: this.pincode,
       platform: this.platform,
       publicKey: this.publicKey,
+      trusted: this.trusted,
       uniqueId: this.uniqueId,
     };
   }

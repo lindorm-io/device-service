@@ -6,6 +6,7 @@ import { EnrolmentSession } from "../../entity";
 import { JOI_CERTIFICATE_METHOD } from "../../constant";
 import { config } from "../../config";
 import { getRandomString, stringToSeconds } from "@lindorm-io/core";
+import { isExternalChallengeRequired } from "../../handler";
 
 interface RequestData {
   certificateMethod: CertificateMethod;
@@ -17,6 +18,7 @@ interface ResponseData {
   certificateChallenge: string;
   enrolmentSessionToken: string;
   expiresIn: number;
+  externalChallengeRequired: boolean;
 }
 
 export const enrolmentInitialiseSchema = Joi.object<RequestData>({
@@ -45,14 +47,18 @@ export const enrolmentInitialiseController: Controller<Context<RequestData>> = a
   const certificateChallenge = getRandomString(128);
   const expiresIn = stringToSeconds(config.EXPIRY_CHALLENGE_SESSION);
 
+  const externalChallengeRequired = await isExternalChallengeRequired(ctx, identityId);
+
   const session = await enrolmentSessionCache.create(
     new EnrolmentSession({
       certificateChallenge,
       certificateMethod,
+      externalChallengeRequired,
       identityId,
       installationId,
       macAddress,
       name,
+      nonce: getRandomString(16),
       os,
       platform,
       publicKey,
@@ -71,10 +77,11 @@ export const enrolmentInitialiseController: Controller<Context<RequestData>> = a
   });
 
   return {
-    data: {
+    body: {
       certificateChallenge,
       enrolmentSessionToken: token,
       expiresIn,
+      externalChallengeRequired,
     },
   };
 };

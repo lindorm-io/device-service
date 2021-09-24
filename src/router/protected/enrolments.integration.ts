@@ -43,6 +43,7 @@ describe("/protected/enrolments", () => {
       certificate_challenge: expect.any(String),
       enrolment_session_token: expect.any(String),
       expires_in: 180,
+      external_challenge_required: false,
     });
   });
 

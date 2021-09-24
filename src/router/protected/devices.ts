@@ -1,10 +1,10 @@
 import { Context } from "../../typing";
 import {
-  assertionMiddleware,
-  createController,
-  paramsMiddleware,
   Router,
-  schemaMiddleware,
+  paramsMiddleware,
+  useAssertion,
+  useController,
+  useSchema,
 } from "@lindorm-io/koa";
 import {
   deviceGetController,
@@ -16,6 +16,8 @@ import {
   deviceUpdateBiometrySchema,
   deviceUpdatePincodeController,
   deviceUpdatePincodeSchema,
+  deviceUpdateTrustedController,
+  deviceUpdateTrustedSchema,
 } from "../../controller";
 import {
   bearerAuthMiddleware,
@@ -26,12 +28,12 @@ import {
 const router = new Router<unknown, Context>();
 export default router;
 
-router.get("/", bearerAuthMiddleware(), createController(deviceGetListController));
+router.get("/", bearerAuthMiddleware(), useController(deviceGetListController));
 
 router.get(
   "/:id",
   paramsMiddleware,
-  schemaMiddleware("data", deviceGetSchema),
+  useSchema(deviceGetSchema),
 
   deviceEntityMiddleware("data.id"),
 
@@ -41,13 +43,13 @@ router.get(
     },
   }),
 
-  createController(deviceGetController),
+  useController(deviceGetController),
 );
 
 router.delete(
   "/:id",
   paramsMiddleware,
-  schemaMiddleware("data", deviceRemoveSchema),
+  useSchema(deviceRemoveSchema),
 
   deviceEntityMiddleware("data.id"),
 
@@ -57,16 +59,16 @@ router.delete(
     },
   }),
 
-  createController(deviceRemoveController),
+  useController(deviceRemoveController),
 );
 
 router.put(
   "/:id/biometry",
   paramsMiddleware,
-  schemaMiddleware("data", deviceUpdateBiometrySchema),
+  useSchema(deviceUpdateBiometrySchema),
 
   challengeConfirmationTokenMiddleware("data.challengeConfirmationToken"),
-  assertionMiddleware({
+  useAssertion({
     fromPath: {
       expect: "data.id",
       actual: "token.challengeConfirmationToken.claims.deviceId",
@@ -81,16 +83,16 @@ router.put(
     },
   }),
 
-  createController(deviceUpdateBiometryController),
+  useController(deviceUpdateBiometryController),
 );
 
 router.put(
   "/:id/pincode",
   paramsMiddleware,
-  schemaMiddleware("data", deviceUpdatePincodeSchema),
+  useSchema(deviceUpdatePincodeSchema),
 
   challengeConfirmationTokenMiddleware("data.challengeConfirmationToken"),
-  assertionMiddleware({
+  useAssertion({
     fromPath: {
       expect: "data.id",
       actual: "token.challengeConfirmationToken.claims.deviceId",
@@ -105,5 +107,28 @@ router.put(
     },
   }),
 
-  createController(deviceUpdatePincodeController),
+  useController(deviceUpdatePincodeController),
+);
+
+router.put(
+  "/:id/trusted",
+  paramsMiddleware,
+  useSchema(deviceUpdateTrustedSchema),
+
+  challengeConfirmationTokenMiddleware("data.challengeConfirmationToken"),
+  deviceEntityMiddleware("data.id"),
+  useAssertion({
+    expect: false,
+    fromPath: {
+      actual: "entity.device.trusted",
+    },
+  }),
+
+  bearerAuthMiddleware({
+    fromPath: {
+      subject: "entity.device.identityId",
+    },
+  }),
+
+  useController(deviceUpdateTrustedController),
 );

@@ -1,10 +1,10 @@
 import { Context } from "../../typing";
 import {
-  assertionMiddleware,
-  createController,
-  paramsMiddleware,
   Router,
-  schemaMiddleware,
+  paramsMiddleware,
+  useAssertion,
+  useController,
+  useSchema,
 } from "@lindorm-io/koa";
 import {
   enrolmentConfirmController,
@@ -16,6 +16,7 @@ import {
 } from "../../controller";
 import {
   bearerAuthMiddleware,
+  challengeConfirmationTokenMiddleware,
   enrolmentSessionEntityMiddleware,
   enrolmentSessionTokenMiddleware,
 } from "../../middleware";
@@ -25,20 +26,20 @@ export default router;
 
 router.post(
   "/",
-  schemaMiddleware("data", enrolmentInitialiseSchema),
+  useSchema(enrolmentInitialiseSchema),
 
   bearerAuthMiddleware(),
 
-  createController(enrolmentInitialiseController),
+  useController(enrolmentInitialiseController),
 );
 
 router.post(
   "/:id/confirm",
   paramsMiddleware,
-  schemaMiddleware("data", enrolmentConfirmSchema),
+  useSchema(enrolmentConfirmSchema),
 
   enrolmentSessionTokenMiddleware("data.enrolmentSessionToken"),
-  assertionMiddleware({
+  useAssertion({
     fromPath: {
       expect: "data.id",
       actual: "token.enrolmentSessionToken.sessionId",
@@ -53,16 +54,20 @@ router.post(
     },
   }),
 
-  createController(enrolmentConfirmController),
+  challengeConfirmationTokenMiddleware("data.challengeConfirmationToken", {
+    optional: true,
+  }),
+
+  useController(enrolmentConfirmController),
 );
 
 router.post(
   "/:id/reject",
   paramsMiddleware,
-  schemaMiddleware("data", enrolmentRejectSchema),
+  useSchema(enrolmentRejectSchema),
 
   enrolmentSessionTokenMiddleware("data.enrolmentSessionToken"),
-  assertionMiddleware({
+  useAssertion({
     fromPath: {
       expect: "data.id",
       actual: "token.enrolmentSessionToken.sessionId",
@@ -77,5 +82,5 @@ router.post(
     },
   }),
 
-  createController(enrolmentRejectController),
+  useController(enrolmentRejectController),
 );

@@ -12,10 +12,12 @@ import {
 export interface EnrolmentSessionAttributes extends EntityAttributes {
   certificateChallenge: string;
   certificateMethod: CertificateMethod;
+  externalChallengeRequired: boolean;
   identityId: string;
   installationId: string;
   macAddress: string;
   name: string;
+  nonce: string;
   os: string;
   platform: string;
   publicKey: string;
@@ -29,10 +31,12 @@ const schema = Joi.object({
 
   certificateChallenge: JOI_CERTIFICATE_CHALLENGE.required(),
   certificateMethod: JOI_CERTIFICATE_METHOD.required(),
+  externalChallengeRequired: Joi.boolean().required(),
   identityId: Joi.string().guid().required(),
   installationId: Joi.string().guid().required(),
   macAddress: Joi.string().required(),
   name: Joi.string().required(),
+  nonce: Joi.string().required(),
   os: Joi.string().required(),
   platform: Joi.string().required(),
   publicKey: Joi.string().required(),
@@ -42,10 +46,12 @@ const schema = Joi.object({
 export class EnrolmentSession extends LindormEntity<EnrolmentSessionAttributes> {
   public readonly certificateChallenge: string;
   public readonly certificateMethod: CertificateMethod;
+  public readonly externalChallengeRequired: boolean;
   public readonly identityId: string;
   public readonly installationId: string;
   public readonly macAddress: string;
   public readonly name: string;
+  public readonly nonce: string;
   public readonly os: string;
   public readonly platform: string;
   public readonly publicKey: string;
@@ -56,10 +62,12 @@ export class EnrolmentSession extends LindormEntity<EnrolmentSessionAttributes> 
 
     this.certificateChallenge = options.certificateChallenge;
     this.certificateMethod = options.certificateMethod;
+    this.externalChallengeRequired = options.externalChallengeRequired;
     this.identityId = options.identityId;
     this.installationId = options.installationId;
     this.macAddress = options.macAddress;
     this.name = options.name;
+    this.nonce = options.nonce;
     this.os = options.os;
     this.platform = options.platform;
     this.publicKey = options.publicKey;
@@ -80,10 +88,12 @@ export class EnrolmentSession extends LindormEntity<EnrolmentSessionAttributes> 
 
       certificateChallenge: this.certificateChallenge,
       certificateMethod: this.certificateMethod,
+      externalChallengeRequired: this.externalChallengeRequired,
       identityId: this.identityId,
       installationId: this.installationId,
       macAddress: this.macAddress,
       name: this.name,
+      nonce: this.nonce,
       os: this.os,
       platform: this.platform,
       publicKey: this.publicKey,

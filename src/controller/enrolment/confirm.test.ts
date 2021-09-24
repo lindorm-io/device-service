@@ -1,9 +1,7 @@
-import MockDate from "mockdate";
-import { enrolmentConfirmController } from "./confirm";
 import { assertCertificateChallenge as _assertCertificateChallenge } from "../../util";
+import { enrolmentConfirmController } from "./confirm";
+import { getRandomString } from "@lindorm-io/core";
 import { getTestEnrolmentSession } from "../../test";
-
-MockDate.set("2021-01-01T08:00:00.000Z");
 
 jest.mock("../../instance", () => ({
   cryptoLayered: {
@@ -63,7 +61,7 @@ describe("enrolmentConfirmController", () => {
 
   test("should resolve enrolment session with implicit strategy", async () => {
     await expect(enrolmentConfirmController(ctx)).resolves.toStrictEqual({
-      data: {
+      body: {
         challengeConfirmationToken: "jwt.jwt.jwt",
         deviceId: expect.any(String),
         expiresIn: 60,
@@ -90,6 +88,7 @@ describe("enrolmentConfirmController", () => {
         pincode: "pincode-signature",
         platform: "iPhone",
         publicKey: expect.any(String),
+        trusted: true,
         uniqueId: "27a10522a6994bbca0e1fc666804b350",
       }),
     );
@@ -97,5 +96,39 @@ describe("enrolmentConfirmController", () => {
     expect(ctx.jwt.sign).toHaveBeenCalled();
 
     expect(ctx.cache.enrolmentSessionCache.destroy).toHaveBeenCalled();
+  });
+
+  test("should resolve enrolment session with trusted device", async () => {
+    const nonce = getRandomString(16);
+
+    ctx.entity.enrolmentSession = getTestEnrolmentSession({
+      externalChallengeRequired: true,
+      nonce,
+    });
+    ctx.token.challengeConfirmationToken = {
+      nonce,
+    };
+
+    await expect(enrolmentConfirmController(ctx)).resolves.toBeTruthy();
+
+    expect(ctx.repository.deviceRepository.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        trusted: true,
+      }),
+    );
+  });
+
+  test("should resolve enrolment session with non-trusted device", async () => {
+    ctx.entity.enrolmentSession = getTestEnrolmentSession({
+      externalChallengeRequired: true,
+    });
+
+    await expect(enrolmentConfirmController(ctx)).resolves.toBeTruthy();
+
+    expect(ctx.repository.deviceRepository.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        trusted: false,
+      }),
+    );
   });
 });

@@ -24,6 +24,6 @@ export const enrolmentRejectController: Controller<Context<RequestData>> = async
   await enrolmentSessionCache.destroy(enrolmentSession);
 
   return {
-    data: {},
+    body: {},
   };
 };

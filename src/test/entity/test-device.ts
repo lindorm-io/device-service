@@ -8,6 +8,7 @@ export const getTestDevice = async (
   options: Partial<DeviceOptions> = {},
 ): Promise<Device> =>
   new Device({
+    active: true,
     biometry: await cryptoLayered.encrypt(
       "0KV2dMmKRp9xDHSmtJFsxblPg3xtCCq5n6q3EfrEA1XcYGfI9HPEX9w9GyQ949V3DEgntyGOW07OY2uPROxLd9YAmtFMZgfC0rIg18OdoKBmEa3gpWIvRAZ6J0pjsIHz",
     ),
@@ -25,6 +26,7 @@ export const getTestDevice = async (
       "zYHwnjvTEZ6gSqtxcpwT6EgBAgxFolqjeInOis2I+tcfxcShwcfMZ/E7kgktP15w\n" +
       "dsAFDTzmso9VtnBNgbt8afNea1nK25Fa+Zq+gztxkI5pkw1WFm4FAgMBAAE=\n" +
       "-----END RSA PUBLIC KEY-----\n",
+    trusted: true,
     uniqueId: getRandomString(32),
     ...options,
   });

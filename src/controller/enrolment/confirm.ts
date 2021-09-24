@@ -7,7 +7,6 @@ import { JOI_BIOMETRY, JOI_GUID, JOI_JWT, JOI_PINCODE } from "../../constant";
 import { assertCertificateChallenge } from "../../util";
 import { config } from "../../config";
 import { cryptoLayered } from "../../instance";
-import { getRandomString } from "@lindorm-io/core";
 
 interface RequestData {
   id: string;
@@ -45,6 +44,7 @@ export const enrolmentConfirmController: Controller<Context<RequestData>> = asyn
     repository: { deviceRepository },
     token: {
       bearerToken: { subject: identityId },
+      challengeConfirmationToken,
     },
   } = ctx;
 
@@ -57,6 +57,7 @@ export const enrolmentConfirmController: Controller<Context<RequestData>> = asyn
 
   const device = await deviceRepository.create(
     new Device({
+      active: true,
       biometry: biometry ? await cryptoLayered.encrypt(biometry) : undefined,
       certificateMethod: enrolmentSession.certificateMethod,
       identityId,
@@ -67,6 +68,10 @@ export const enrolmentConfirmController: Controller<Context<RequestData>> = asyn
       pincode: pincode ? await cryptoLayered.encrypt(pincode) : undefined,
       platform: enrolmentSession.platform,
       publicKey: enrolmentSession.publicKey,
+      trusted:
+        !enrolmentSession.externalChallengeRequired ||
+        (enrolmentSession.externalChallengeRequired &&
+          enrolmentSession.nonce === challengeConfirmationToken?.nonce),
       uniqueId: enrolmentSession.uniqueId,
     }),
   );
@@ -78,7 +83,7 @@ export const enrolmentConfirmController: Controller<Context<RequestData>> = asyn
       strategy: ChallengeStrategy.IMPLICIT,
     },
     expiry: config.EXPIRY_CHALLENGE_CONFIRMATION_TOKEN,
-    nonce: getRandomString(16),
+    nonce: enrolmentSession.nonce,
     payload: {},
     scopes: ["enrolment"],
     sessionId: enrolmentSession.id,
@@ -90,7 +95,7 @@ export const enrolmentConfirmController: Controller<Context<RequestData>> = asyn
   await enrolmentSessionCache.destroy(enrolmentSession);
 
   return {
-    data: {
+    body: {
       challengeConfirmationToken: token,
       deviceId: device.id,
       expiresIn,

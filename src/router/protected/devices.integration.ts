@@ -39,18 +39,14 @@ describe("/protected/devices", () => {
       .expect(200);
 
     expect(response.body).toStrictEqual({
-      devices: [
-        {
+      devices: expect.arrayContaining([
+        expect.objectContaining({
           id: device.id,
-          name: "Test Person's iPhone",
-          platform: "iPhone",
-        },
-        {
+        }),
+        expect.objectContaining({
           id: device2.id,
-          name: "My Xperia 7",
-          platform: "Android",
-        },
-      ],
+        }),
+      ]),
     });
   });
 
@@ -89,12 +85,14 @@ describe("/protected/devices", () => {
 
     expect(response.body).toStrictEqual({
       id: device.id,
+      active: true,
       identity_id: device.identityId,
       installation_id: device.installationId,
       mac_address: "0B:ED:A0:D5:5A:2D",
       name: "Test Person's iPhone",
       os: "iPhone OS 13_5_1",
       platform: "iPhone",
+      trusted: true,
       unique_id: device.uniqueId,
     });
   });
@@ -153,5 +151,36 @@ describe("/protected/devices", () => {
     const result = await TEST_DEVICE_REPOSITORY.find({ id: device.id });
 
     expect(result.pincode).not.toBe(device.pincode);
+  });
+
+  test("PUT /:id/trusted", async () => {
+    const device = await TEST_DEVICE_REPOSITORY.create(
+      await getTestDevice({
+        trusted: false,
+      }),
+    );
+
+    const accessToken = getTestAccessToken({
+      subject: device.identityId,
+    });
+    const challengeConfirmationToken = getTestChallengeConfirmationToken({
+      claims: {
+        deviceId: device.id,
+      },
+      sessionId: randomUUID(),
+      subject: device.identityId,
+    });
+
+    await request(koa.callback())
+      .put(`/protected/devices/${device.id}/trusted`)
+      .set("Authorization", `Bearer ${accessToken}`)
+      .send({
+        challengeConfirmationToken,
+      })
+      .expect(200);
+
+    const result = await TEST_DEVICE_REPOSITORY.find({ id: device.id });
+
+    expect(result.trusted).toBe(true);
   });
 });

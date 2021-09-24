@@ -8,6 +8,10 @@ jest.mock("@lindorm-io/core", () => ({
   getRandomString: () => "random-value",
 }));
 
+jest.mock("../../handler", () => ({
+  isExternalChallengeRequired: async () => true,
+}));
+
 describe("enrolmentInitialiseController", () => {
   let ctx: any;
 
@@ -42,6 +46,17 @@ describe("enrolmentInitialiseController", () => {
           uniqueId: "uniqueId",
         },
       },
+      repository: {
+        deviceRepository: {
+          findMany: jest.fn().mockResolvedValue([
+            {
+              os: "os",
+              platform: "platform",
+              uniqueId: "uniqueId",
+            },
+          ]),
+        },
+      },
       token: {
         bearerToken: {
           subject: "identityId",
@@ -52,10 +67,11 @@ describe("enrolmentInitialiseController", () => {
 
   test("should resolve enrolment session", async () => {
     await expect(enrolmentInitialiseController(ctx)).resolves.toStrictEqual({
-      data: {
+      body: {
         certificateChallenge: "random-value",
         enrolmentSessionToken: "jwt.jwt.jwt",
         expiresIn: 180,
+        externalChallengeRequired: true,
       },
     });
 

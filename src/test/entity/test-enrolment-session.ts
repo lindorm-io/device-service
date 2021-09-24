@@ -1,6 +1,7 @@
 import { EnrolmentSession, EnrolmentSessionOptions } from "../../entity";
 import { CertificateMethod } from "../../enum";
 import { randomUUID } from "crypto";
+import { getRandomString } from "@lindorm-io/core";
 
 export const getTestEnrolmentSession = (
   options: Partial<EnrolmentSessionOptions> = {},
@@ -9,10 +10,12 @@ export const getTestEnrolmentSession = (
     certificateChallenge:
       "fU8ob4kqvPCfVCd5FdaM0hpXvpRoBx3VlPEWGarUP8DvTMj4AcFgieq2HMeH3uXK7MggvmLnG5iGGhUVMqDRhd7fRzW1XVveJe3CI7Pf3HlQpzqIOmrHGxes3yjZY3Es",
     certificateMethod: CertificateMethod.SHA512,
+    externalChallengeRequired: false,
     identityId: randomUUID(),
     installationId: randomUUID(),
     macAddress: "0B:ED:A0:D5:5A:2D",
     name: "Test Device Name",
+    nonce: getRandomString(16),
     os: "iPhone OS",
     platform: "iPhone",
     publicKey:
