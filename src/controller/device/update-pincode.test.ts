@@ -35,7 +35,7 @@ describe("deviceUpdatePincodeController", () => {
 
   test("should resolve and update device pincode", async () => {
     await expect(deviceUpdatePincodeController(ctx)).resolves.toStrictEqual({
-      data: {},
+      body: {},
     });
 
     expect(ctx.repository.deviceRepository.update).toHaveBeenCalledWith(
@@ -49,7 +49,7 @@ describe("deviceUpdatePincodeController", () => {
     ctx.metadata.agent.os = "os";
 
     await expect(deviceUpdatePincodeController(ctx)).resolves.toStrictEqual({
-      data: {},
+      body: {},
     });
 
     expect(ctx.repository.deviceRepository.update).toHaveBeenCalledWith(
@@ -63,7 +63,7 @@ describe("deviceUpdatePincodeController", () => {
     ctx.metadata.device.name = "name";
 
     await expect(deviceUpdatePincodeController(ctx)).resolves.toStrictEqual({
-      data: {},
+      body: {},
     });
 
     expect(ctx.repository.deviceRepository.update).toHaveBeenCalledWith(

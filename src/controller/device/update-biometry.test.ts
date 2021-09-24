@@ -35,7 +35,7 @@ describe("deviceUpdateBiometryController", () => {
 
   test("should resolve and update device biometry", async () => {
     await expect(deviceUpdateBiometryController(ctx)).resolves.toStrictEqual({
-      data: {},
+      body: {},
     });
 
     expect(ctx.repository.deviceRepository.update).toHaveBeenCalledWith(
@@ -49,7 +49,7 @@ describe("deviceUpdateBiometryController", () => {
     ctx.metadata.agent.os = "os";
 
     await expect(deviceUpdateBiometryController(ctx)).resolves.toStrictEqual({
-      data: {},
+      body: {},
     });
 
     expect(ctx.repository.deviceRepository.update).toHaveBeenCalledWith(
@@ -63,7 +63,7 @@ describe("deviceUpdateBiometryController", () => {
     ctx.metadata.device.name = "name";
 
     await expect(deviceUpdateBiometryController(ctx)).resolves.toStrictEqual({
-      data: {},
+      body: {},
     });
 
     expect(ctx.repository.deviceRepository.update).toHaveBeenCalledWith(

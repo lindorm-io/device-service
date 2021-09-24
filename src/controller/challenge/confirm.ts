@@ -105,7 +105,7 @@ export const challengeConfirmController: Controller<Context<RequestData>> = asyn
   await challengeSessionCache.destroy(challengeSession);
 
   return {
-    data: {
+    body: {
       challengeConfirmationToken: token,
       expiresIn,
     },

@@ -22,6 +22,6 @@ export const deviceRemoveController: Controller<Context<RequestData>> = async (
   await deviceRepository.destroy(device);
 
   return {
-    data: {},
+    body: {},
   };
 };

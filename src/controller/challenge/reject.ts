@@ -24,6 +24,6 @@ export const challengeRejectController: Controller<Context<RequestData>> = async
   await challengeSessionCache.destroy(challengeSession);
 
   return {
-    data: {},
+    body: {},
   };
 };

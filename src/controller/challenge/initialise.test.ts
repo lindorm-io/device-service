@@ -42,7 +42,7 @@ describe("challengeInitialiseController", () => {
 
   test("should resolve challenge session", async () => {
     await expect(challengeInitialiseController(ctx)).resolves.toStrictEqual({
-      data: {
+      body: {
         certificateChallenge: "random-value",
         challengeSessionToken: "jwt.jwt.jwt",
         expiresIn: 180,

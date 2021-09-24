@@ -63,7 +63,7 @@ describe("challengeConfirmController", () => {
 
   test("should resolve challenge session with IMPLICIT", async () => {
     await expect(challengeConfirmController(ctx)).resolves.toStrictEqual({
-      data: {
+      body: {
         challengeConfirmationToken: "jwt.jwt.jwt",
         expiresIn: 60,
       },

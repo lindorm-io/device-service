@@ -19,18 +19,30 @@ export const deviceGetController: Controller<Context<RequestData>> = async (
     entity: { device },
   } = ctx;
 
-  const { id, identityId, installationId, macAddress, name, os, platform, uniqueId } =
-    device;
+  const {
+    id,
+    active,
+    identityId,
+    installationId,
+    macAddress,
+    name,
+    os,
+    platform,
+    trusted,
+    uniqueId,
+  } = device;
 
   return {
-    data: {
+    body: {
       id,
+      active,
       identityId,
       installationId,
       macAddress,
       name,
       os,
       platform,
+      trusted,
       uniqueId,
     },
   };

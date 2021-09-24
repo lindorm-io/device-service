@@ -81,7 +81,7 @@ export const challengeInitialiseController: Controller<Context<RequestData>> = a
   });
 
   return {
-    data: {
+    body: {
       certificateChallenge,
       challengeSessionToken: token,
       expiresIn,

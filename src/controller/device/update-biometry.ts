@@ -42,6 +42,6 @@ export const deviceUpdateBiometryController: Controller<Context<RequestData>> = 
   await deviceRepository.update(device);
 
   return {
-    data: {},
+    body: {},
   };
 };

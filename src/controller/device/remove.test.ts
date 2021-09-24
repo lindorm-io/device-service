@@ -22,7 +22,7 @@ describe("deviceRemoveController", () => {
 
   test("should resolve and remove device", async () => {
     await expect(deviceRemoveController(ctx)).resolves.toStrictEqual({
-      data: {},
+      body: {},
     });
 
     expect(ctx.repository.deviceRepository.destroy).toHaveBeenCalled();

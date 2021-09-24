@@ -22,12 +22,14 @@ export const deviceGetListController: Controller<Context> = async (
   for (const device of list) {
     devices.push({
       id: device.id,
+      active: device.active,
       name: device.name,
       platform: device.platform,
+      trusted: device.trusted,
     });
   }
 
   return {
-    data: { devices },
+    body: { devices },
   };
 };

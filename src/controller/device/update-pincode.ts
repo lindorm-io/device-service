@@ -42,6 +42,6 @@ export const deviceUpdatePincodeController: Controller<Context<RequestData>> = a
   await deviceRepository.update(device);
 
   return {
-    data: {},
+    body: {},
   };
 };
